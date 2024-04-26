@@ -44,11 +44,9 @@
         <a asp-page="#">
             <div class="header--uocLogo--standard"></div>
         </a>
-
-
         <!--Obviously this will need an if statement and a retrieval of the username or the student name-->
         <div class="header--userAccount--standard">
-            <button  asp-page="#" type="button" class="header--accountBtn">username</button>
+            <partial name="_LoginPartial" />
             <a class="header--userPanel" asp-page="#"></a>
             <!--remove the style display none for implementation, replace with the if else for logged in account-->
             <button asp-page="#" type="button" class="header--accountBtn" style="display: none;">Create an account</button>

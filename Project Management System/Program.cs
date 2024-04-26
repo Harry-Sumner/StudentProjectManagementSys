@@ -1,4 +1,12 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Project_Management_System.Data;
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("SPMS_Context") ?? throw new InvalidOperationException("Connection string 'SPMS_ContextConnection' not found.");
+
+builder.Services.AddDbContext<SPMS_Context>(options => options.UseSqlServer(connectionString));
+
+builder.Services.AddDefaultIdentity<SPMS_User>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<SPMS_Context>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
