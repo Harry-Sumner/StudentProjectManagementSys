@@ -14,17 +14,16 @@
                 <button class="header--sidebar--userAccount">Example User</button>
             </div>
             <ul>
-                <!--Change the asp pages and the titles to what you want/add more by copy and pasting the 'li' elements-->
+             <!--Change the asp pages and the titles to what you want/add more by copy and pasting the 'li' elements-->
             <div class="header--sidebar--section">
-              <li asp-pge="#">Home</li>
+                <a asp-area="" asp-page="/Index">
+                    <li>Home</li>
+                </a>
             </div>
-
             <div class="header--sidebar--section">
-                <li asp-pge="#">About</li>
-            </div>
-
-            <div class="header--sidebar--section">
-                <li asp-pge="#">Contact</li>
+                <a asp-area="" asp-page="/Submit_Proposal">
+                    <li>Submit Proposal</li>
+                </a>
             </div>
 
             </ul>
@@ -61,12 +60,21 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - Project_Management_System - <a asp-area="" asp-page="/Privacy">Privacy</a>
+    <footer class="footer--standard">
+        <ul class="footer--ul">
+            <!--add the hrefs to the portal and Moodle-->
+            <a href="https://apps.chester.ac.uk/v2apps/moodle">
+                <li class="footer--li">Moodle</li>
+            </a>
+            <a href="https://portal1.chester.ac.uk/Pages/default.aspx">
+                <li class="footer--li">Portal</li>
+            </a>
+        </ul>
+        <!--same again for this section with the username-->
+        <div class="footer--userAccount">
+            <span class="footter--userAccont--username">You are currently logged in as: username</span>
         </div>
     </footer>
-
     
     <script src="~/js/site.js" asp-append-version="true"></script>
 
