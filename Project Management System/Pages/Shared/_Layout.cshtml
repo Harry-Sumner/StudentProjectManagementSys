@@ -4,31 +4,56 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Project_Management_System</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Project_Management_System.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">Project_Management_System</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
+   <header class="header--standard">
+        <div id="sidebar">
+            <div class="header--sidebar--header">
+                <button class="header--sidebar--userAccount">Example User</button>
             </div>
-        </nav>
+            <ul>
+                <!--Change the asp pages and the titles to what you want/add more by copy and pasting the 'li' elements-->
+            <div class="header--sidebar--section">
+              <li asp-pge="#">Home</li>
+            </div>
+
+            <div class="header--sidebar--section">
+                <li asp-pge="#">About</li>
+            </div>
+
+            <div class="header--sidebar--section">
+                <li asp-pge="#">Contact</li>
+            </div>
+
+            </ul>
+            <div class="header--hamburger--uocLogo"></div>
+          </div>
+
+          <div>
+            <button class="hamburgerButton" id="toggle">
+                <div class="hamburgerLine"></div>
+                <div class="hamburgerLine"></div>
+                <div class="hamburgerLine"></div>
+            </button>
+          <div>
+
+        <div class="header--divider--desktop"></div>
+
+        <!--Change the target to the index-->
+        <a asp-page="#">
+            <div class="header--uocLogo--standard"></div>
+        </a>
+
+
+        <!--Obviously this will need an if statement and a retrieval of the username or the student name-->
+        <div class="header--userAccount--standard">
+            <button  asp-page="#" type="button" class="header--accountBtn">username</button>
+            <a class="header--userPanel" asp-page="#"></a>
+            <!--remove the style display none for implementation, replace with the if else for logged in account-->
+            <button asp-page="#" type="button" class="header--accountBtn" style="display: none;">Create an account</button>
+        </div>
     </header>
     <div class="container">
         <main role="main" class="pb-3">
@@ -42,8 +67,7 @@
         </div>
     </footer>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
