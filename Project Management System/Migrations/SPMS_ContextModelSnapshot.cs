@@ -171,6 +171,11 @@ namespace Project_Management_System.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -213,11 +218,6 @@ namespace Project_Management_System.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StudentID")
-                        .IsRequired()
-                        .HasMaxLength(7)
-                        .HasColumnType("nvarchar(7)");
-
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasMaxLength(60)
@@ -241,6 +241,29 @@ namespace Project_Management_System.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("SPMS_User");
+
+                    b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("Project_Management_System.Data.SPMS_Staff", b =>
+                {
+                    b.HasBaseType("Project_Management_System.Data.SPMS_User");
+
+                    b.HasDiscriminator().HasValue("SPMS_Staff");
+                });
+
+            modelBuilder.Entity("Project_Management_System.Data.SPMS_Student", b =>
+                {
+                    b.HasBaseType("Project_Management_System.Data.SPMS_User");
+
+                    b.Property<string>("StudentID")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("nvarchar(7)");
+
+                    b.HasDiscriminator().HasValue("SPMS_Student");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
