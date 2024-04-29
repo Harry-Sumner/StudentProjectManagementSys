@@ -17,13 +17,13 @@ namespace Project_Management_System.Data
         public DbSet<SPMS_Student> SPMS_Student { get; set; }
         public DbSet<SPMS_Staff> SPMS_Staff { get; set; }
 
-        public DbSet<Topic> Topics { get; set; } = default!;
+        public DbSet<Topic> Topic { get; set; } = default!;
 
-        public DbSet<Division> Divisions { get; set; } = default!;
+        public DbSet<Division> Division { get; set; } = default!;
 
-        public DbSet<School> Schools { get; set; } = default!;
+        public DbSet<School> School { get; set; } = default!;
 
-        public DbSet<Course> Courses { get; set; } = default;
+        public DbSet<Course> Course { get; set; } = default;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

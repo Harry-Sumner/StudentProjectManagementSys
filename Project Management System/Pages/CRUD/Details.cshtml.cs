@@ -7,13 +7,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Project_Management_System.Data;
 
-namespace Project_Management_System.Pages.CRUD
+namespace Project_Management_System.Pages.crud
 {
     public class DetailsModel : PageModel
     {
-        private readonly Project_Management_System.Data.Project_Management_SystemContext _context;
+        private readonly Project_Management_System.Data.SPMS_Context _context;
 
-        public DetailsModel(Project_Management_System.Data.Project_Management_SystemContext context)
+        public DetailsModel(Project_Management_System.Data.SPMS_Context context)
         {
             _context = context;
         }
@@ -27,7 +27,7 @@ namespace Project_Management_System.Pages.CRUD
                 return NotFound();
             }
 
-            var topic = await _context.Topics.FirstOrDefaultAsync(m => m.TopicID == id);
+            var topic = await _context.Topic.FirstOrDefaultAsync(m => m.TopicID == id);
             if (topic == null)
             {
                 return NotFound();

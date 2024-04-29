@@ -8,13 +8,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Project_Management_System.Data;
 
-namespace Project_Management_System.Pages.CRUD
+namespace Project_Management_System.Pages.crud
 {
     public class EditModel : PageModel
     {
-        private readonly Project_Management_System.Data.Project_Management_SystemContext _context;
+        private readonly Project_Management_System.Data.SPMS_Context _context;
 
-        public EditModel(Project_Management_System.Data.Project_Management_SystemContext context)
+        public EditModel(Project_Management_System.Data.SPMS_Context context)
         {
             _context = context;
         }
@@ -29,7 +29,7 @@ namespace Project_Management_System.Pages.CRUD
                 return NotFound();
             }
 
-            var topic =  await _context.Topics.FirstOrDefaultAsync(m => m.TopicID == id);
+            var topic =  await _context.Topic.FirstOrDefaultAsync(m => m.TopicID == id);
             if (topic == null)
             {
                 return NotFound();
@@ -70,7 +70,7 @@ namespace Project_Management_System.Pages.CRUD
 
         private bool TopicExists(int id)
         {
-            return _context.Topics.Any(e => e.TopicID == id);
+            return _context.Topic.Any(e => e.TopicID == id);
         }
     }
 }

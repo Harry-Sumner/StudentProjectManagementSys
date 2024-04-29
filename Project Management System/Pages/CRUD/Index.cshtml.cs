@@ -7,13 +7,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Project_Management_System.Data;
 
-namespace Project_Management_System.Pages.CRUD
+namespace Project_Management_System.Pages.crud
 {
     public class IndexModel : PageModel
     {
-        private readonly Project_Management_System.Data.Project_Management_SystemContext _context;
+        private readonly Project_Management_System.Data.SPMS_Context _context;
 
-        public IndexModel(Project_Management_System.Data.Project_Management_SystemContext context)
+        public IndexModel(Project_Management_System.Data.SPMS_Context context)
         {
             _context = context;
         }
@@ -22,7 +22,7 @@ namespace Project_Management_System.Pages.CRUD
 
         public async Task OnGetAsync()
         {
-            Topic = await _context.Topics.ToListAsync();
+            Topic = await _context.Topic.ToListAsync();
         }
     }
 }

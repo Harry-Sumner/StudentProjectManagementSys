@@ -7,13 +7,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Project_Management_System.Data;
 
-namespace Project_Management_System.Pages.CRUD
+namespace Project_Management_System.Pages.crud
 {
     public class CreateModel : PageModel
     {
-        private readonly Project_Management_System.Data.Project_Management_SystemContext _context;
+        private readonly Project_Management_System.Data.SPMS_Context _context;
 
-        public CreateModel(Project_Management_System.Data.Project_Management_SystemContext context)
+        public CreateModel(Project_Management_System.Data.SPMS_Context context)
         {
             _context = context;
         }
@@ -34,7 +34,7 @@ namespace Project_Management_System.Pages.CRUD
                 return Page();
             }
 
-            _context.Topics.Add(Topic);
+            _context.Topic.Add(Topic);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
