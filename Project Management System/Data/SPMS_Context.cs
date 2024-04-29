@@ -15,6 +15,14 @@ namespace Project_Management_System.Data
 
         public DbSet<SPMS_User> SPMS_User { get; set; }
 
+        public DbSet<Topic> Topics { get; set; } = default!;
+
+        public DbSet<Division> Divisions { get; set; } = default!;
+
+        public DbSet<School> Schools { get; set; } = default!;
+
+        public DbSet<Course> Courses { get; set; } = default;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

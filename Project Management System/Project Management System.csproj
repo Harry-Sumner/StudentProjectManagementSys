@@ -8,7 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\CRUD\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 

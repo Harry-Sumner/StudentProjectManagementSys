@@ -1,0 +1,50 @@
+﻿@page
+@model Project_Management_System.Pages.CRUD.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Topic</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Topic.TopicID" />
+            <div class="form-group">
+                <label asp-for="Topic.TopicName" class="control-label"></label>
+                <input asp-for="Topic.TopicName" class="form-control" />
+                <span asp-validation-for="Topic.TopicName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Topic.TopicDescription" class="control-label"></label>
+                <input asp-for="Topic.TopicDescription" class="form-control" />
+                <span asp-validation-for="Topic.TopicDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Topic.SupervisorID" class="control-label"></label>
+                <input asp-for="Topic.SupervisorID" class="form-control" />
+                <span asp-validation-for="Topic.SupervisorID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Topic.MarkerID" class="control-label"></label>
+                <input asp-for="Topic.MarkerID" class="form-control" />
+                <span asp-validation-for="Topic.MarkerID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

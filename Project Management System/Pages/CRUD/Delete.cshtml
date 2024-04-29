@@ -1,0 +1,46 @@
+﻿@page
+@model Project_Management_System.Pages.CRUD.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Topic</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Topic.TopicName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Topic.TopicName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Topic.TopicDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Topic.TopicDescription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Topic.SupervisorID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Topic.SupervisorID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Topic.MarkerID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Topic.MarkerID)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="Topic.TopicID" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>
