@@ -75,10 +75,23 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
+            /// 
+
+            [Required, DataType(DataType.Text), Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Required, DataType(DataType.Text), Display(Name = "Surname")]
+            public string Surname { get; set; }
+
+            [Required, DataType(DataType.Text), Display(Name = "StudentID")]
+            public string StudentID { get; set; }
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
+
+            public byte[] ProfilePicture { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -113,11 +126,23 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = CreateUser();
+                var user = CreateStudent();
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                user.FirstName = Input.FirstName;
+                user.Surname = Input.Surname;
+                user.StudentID = Input.StudentID;
+                foreach (var file in Request.Form.Files)
+                {
+                    MemoryStream stream = new MemoryStream();
+                    file.CopyTo(stream);
+                    user.ProfilePicture = stream.ToArray();
+                    stream.Close();
+                    stream.Dispose();
+                }
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                
 
                 if (result.Succeeded)
                 {
@@ -155,16 +180,30 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private SPMS_User CreateUser()
+        private SPMS_Student CreateStudent()
         {
             try
             {
-                return Activator.CreateInstance<SPMS_User>();
+                return Activator.CreateInstance<SPMS_Student>();
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(SPMS_User)}'. " +
-                    $"Ensure that '{nameof(SPMS_User)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(SPMS_Student)}'. " +
+                    $"Ensure that '{nameof(SPMS_Student)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                    $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
+            }
+        }
+
+        private SPMS_Staff CreateStaff()
+        {
+            try
+            {
+                return Activator.CreateInstance<SPMS_Staff>();
+            }
+            catch
+            {
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(SPMS_Staff)}'. " +
+                    $"Ensure that '{nameof(SPMS_Staff)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
