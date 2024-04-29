@@ -11,7 +11,8 @@ namespace Project_Management_System.Data
         [PersonalData, Required, StringLength(60)]
         public string Surname { get; set; }
         public string Name { get { return $"{FirstName} {Surname}"; } }
-        public byte[] ProfilePicture{ get; set; }
+      
+        public byte[]? ProfilePicture{ get; set; }
     }
 
     public class SPMS_Student : SPMS_User

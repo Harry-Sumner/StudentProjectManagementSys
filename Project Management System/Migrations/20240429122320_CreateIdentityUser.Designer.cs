@@ -12,7 +12,7 @@ using Project_Management_System.Data;
 namespace Project_Management_System.Migrations
 {
     [DbContext(typeof(SPMS_Context))]
-    [Migration("20240429095332_CreateIdentityUser")]
+    [Migration("20240429122320_CreateIdentityUser")]
     partial class CreateIdentityUser
     {
         /// <inheritdoc />
@@ -215,7 +215,6 @@ namespace Project_Management_System.Migrations
                         .HasColumnType("bit");
 
                     b.Property<byte[]>("ProfilePicture")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("SecurityStamp")

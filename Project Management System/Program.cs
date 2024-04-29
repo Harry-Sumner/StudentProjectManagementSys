@@ -6,7 +6,17 @@ var connectionString = builder.Configuration.GetConnectionString("SPMS_Context")
 
 builder.Services.AddDbContext<SPMS_Context>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<SPMS_User>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<SPMS_Context>();
+builder.Services.AddIdentity<SPMS_User, IdentityRole>(
+
+    options =>
+    {
+        options.Stores.MaxLengthForKeys = 128;
+    })
+
+.AddEntityFrameworkStores<SPMS_Context>()
+.AddRoles<IdentityRole>()
+.AddDefaultUI()
+.AddDefaultTokenProviders();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -29,5 +39,15 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<SPMS_Context>();
+    context.Database.Migrate();
+    var userMgr = services.GetRequiredService<UserManager<SPMS_User>>(); //Implementes HarrysPizzaUser so extra fields are implemented into identity.
+    var roleMgr = services.GetRequiredService<RoleManager<IdentityRole>>();
+    SPMS_SeedUsers.Initialize(context, userMgr, roleMgr).Wait();
+}
 
 app.Run();
