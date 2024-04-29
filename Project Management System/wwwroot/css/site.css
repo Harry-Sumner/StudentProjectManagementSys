@@ -244,3 +244,7 @@ footer {
     font-size: 1.2em;
     margin-right: 10px;
 }
+
+h2.text-danger {
+    padding: 30px;
+}
