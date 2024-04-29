@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Project_Management_System.Data;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Builder;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("SPMS_Context") ?? throw new InvalidOperationException("Connection string 'SPMS_ContextConnection' not found.");
 
@@ -38,7 +39,15 @@ if (!app.Environment.IsDevelopment())
 else
 {
     app.UseDeveloperExceptionPage();
-    app.UseMigrationEndPoint();
+    app.UseMigrationsEndPoint();
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    var context = services.GetRequiredService<SPMS_Context>();
+    context.Database.EnsureCreated();
 }
 
 app.UseHttpsRedirection();
