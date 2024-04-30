@@ -6,10 +6,9 @@ namespace Project_Management_System.Data
     {
         [Required]
         public int CourseID { get; set; }
+        public string CourseName { get; set; }
         [Required]
-        public string? CourseName { get; set; }
-        [Required]
-        public int? DivisionID { get; set; }
+        public int DivisionID { get; set; }
 
     }
 }
