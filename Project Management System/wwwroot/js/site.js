@@ -23,4 +23,13 @@
         // Toggle the button's appearance as well
         toggle.toggleClass('button-open button-close');
     });
+
+    $('.header--accountBtn').click(function () {
+        var $dropdownMenu = $('.dropdown-menu');
+        if ($dropdownMenu.is(':visible')) {
+            $dropdownMenu.slideUp(); // Animates the hiding of the dropdown
+        } else {
+            $dropdownMenu.slideDown(); // Animates the showing of the dropdown
+        }
+    });
 });
