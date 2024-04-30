@@ -13,9 +13,7 @@ namespace Project_Management_System.Data
 
         public string TopicDescription { get; set; }
 
-        [Required]
-        public string SupervisorID { get; set; }
-        [Required]
-        public string MarkerID { get; set; }
+        public string? SupervisorID { get; set; }
+        public string? MarkerID { get; set; }
     }
 }

@@ -49,7 +49,7 @@
         <div class="header--divider--desktop"></div>
 
         <!--Change the target to the index-->
-        <a asp-page="#">
+        <a asp-page="/Index">
             <div class="header--uocLogo--standard"></div>
         </a>
                 @if (SignInManager.IsSignedIn(User))
@@ -99,6 +99,11 @@
             <a href="/crud/Index">
             <li class="footer--li">Browse Topics</li>
             </a>
+            </a>
+            <a href="/crud/Create">
+            <li class="footer--li">Browse Topics</li>
+            </a>
+            
         </ul>
         <!--same again for this section with the username-->
         <div class="footer--userAccount">

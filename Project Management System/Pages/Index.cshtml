@@ -8,3 +8,35 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+<div class="text-center">
+    <h2 class="display-4">Topics</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+
+
+
+        <tbody>
+            @foreach (var tblTopic in Model.Topic)
+            {
+                <tr>
+                    <td>@tblTopic.TopicID</td>
+                    <td>@tblTopic.TopicName</td>
+                    <td>@tblTopic.TopicDescription</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<h2>Search</h2>
+<form method="post">
+    <div>Search <input asp-for="Search"/></div>
+    <button type="submit" asp-page-handler="Search">Submit</button>
+</form>
