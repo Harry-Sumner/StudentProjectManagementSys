@@ -13,9 +13,18 @@ namespace Project_Management_System.Data
     {
         public SPMS_Context(DbContextOptions<SPMS_Context> options) : base(options) { }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<SPMS_User>().Ignore(e => e.Name);
+            modelBuilder.Entity<SPMS_Staff>().ToTable("Staff");
+            modelBuilder.Entity<SPMS_Student>().ToTable("Student");
+
+        }
+
         public DbSet<SPMS_User> SPMS_Account { get; set; }
-        public DbSet<SPMS_Student> SPMS_Student { get; set; }
-        public DbSet<SPMS_Staff> SPMS_Staff { get; set; }
+        public DbSet<SPMS_Student> Student { get; set; }
+        public DbSet<SPMS_Staff> Staff { get; set; }
 
         public DbSet<Topic> Topic { get; set; } = default!;
 
@@ -24,11 +33,5 @@ namespace Project_Management_System.Data
         public DbSet<School> School { get; set; } = default!;
 
         public DbSet<Course> Course { get; set; } = default;
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<SPMS_User>().Ignore(e => e.Name);
-        }
     }
 }

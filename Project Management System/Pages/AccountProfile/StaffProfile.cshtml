@@ -1,0 +1,129 @@
+﻿@page
+@model Project_Management_System.Pages.AccountProfile.StaffProfileModel
+@{
+}
+
+@inject SignInManager<SPMS_User> SignInManager
+@inject UserManager<SPMS_User> UserManager
+
+@using Microsoft.AspNetCore.Identity
+@using Project_Management_System.Data
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Staff</title>
+<link rel="stylesheet" href="~/css/staffProfile.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="~/js/staffInfoBoxes.js"></script>
+
+<h3>@ViewData["Title"]</h3> 
+
+
+<div class="body--profile--container">
+    <div class="body--profile--name">
+        <span>
+            @{
+                var user = await UserManager.GetUserAsync(User);
+            }
+            @(user.Name)<!-- Greet user by there name rather than username -->
+        </span>
+    </div>
+
+    <div class="body--profile--profilePicture">
+        <!--Change the src to the proper byte system, keep the demoIMG for when there is no profile picture-->
+       
+        @{
+            try
+            {
+                <img src="@string.Format("data:image/jpg;base64, {0}", Convert.ToBase64String(@user.ProfilePicture))" alt="Profile Image" />
+            } //Try converting data inside sql database into an image, if there are issues then a thumbnail image is used instead
+            catch
+            {
+                
+            }
+        }
+        <!--Have this hidden for anyone but there profile-->
+        <div class="body--profile--updatePicture">
+
+            <button class="updateIMG"></button>
+        </div>
+    </div>
+
+    <div class="body--profile--infoSection">
+        <div class="body--profile--infoGroup">
+            <label for="department">Department</label>
+            <div class="staffInfoBox">
+                <span name="department" class="body--profile--department">Example Department</span>
+                <button class="editInfo"></button>
+            </div>
+        </div>
+
+        <div class="body--profile--infoGroup">
+            <label for="email">Email</label>
+            <div class="staffInfoBox">
+                <span name="email" class="body--profile--email">
+                    @(user.Email)<!-- Greet user by there name rather than username -->
+                </span>
+                <button class="editInfo"></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="body--profile--infoBoxes">
+        <div class="infoBox" id="expertise">
+            <button class="editInfo"></button>
+            <div class="infobox--icon"></div>
+            <span class="infobox--title">Areas of Expertise</span>
+            <div class="content" style="display: none;">
+                <li>Example Expertise</li>
+                <li>Example Expertise</li>
+                <li>Example Expertise</li>
+            </div>
+        </div>
+
+        <div class="infoBox" id="interests">
+            <button class="editInfo"></button>
+            <div class="infobox--icon"></div>
+            <span class="infobox--title">Lists of interests</span>
+            <div class="content" style="display: none;">
+                <li>Example Interest</li>
+                <li>Example Interest</li>
+                <li>Example Interest</li>
+            </div>
+        </div>
+
+        <div class="infoBox" id="projects">
+            <button class="editInfo"></button>
+            <div class="infobox--icon"></div>
+            <span class="infobox--title">Current / Past Projects</span>
+            <div class="content" style="display: none;">
+                <li>Example Project</li>
+                <li>Example Project</li>
+                <li>Example Project</li>
+            </div>
+        </div>
+    </div>
+
+    <!--
+    <div class="row">
+        <div class="col-md-6">
+            <form id="profile-form" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
+                    <label asp-for="Username" class="form-label"></label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number."/>
+                    <label asp-for="Input.PhoneNumber" class="form-label"></label>
+                    <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                </div>
+                <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+    -->
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }

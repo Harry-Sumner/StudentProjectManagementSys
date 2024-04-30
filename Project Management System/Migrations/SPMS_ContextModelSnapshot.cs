@@ -159,6 +159,46 @@ namespace Project_Management_System.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Project_Management_System.Data.Course", b =>
+                {
+                    b.Property<int>("CourseID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CourseID"));
+
+                    b.Property<string>("CourseName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DivisionID")
+                        .HasColumnType("int");
+
+                    b.HasKey("CourseID");
+
+                    b.ToTable("Course");
+                });
+
+            modelBuilder.Entity("Project_Management_System.Data.Division", b =>
+                {
+                    b.Property<int>("DivisionID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DivisionID"));
+
+                    b.Property<string>("DepartmentName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SchoolID")
+                        .HasColumnType("int");
+
+                    b.HasKey("DivisionID");
+
+                    b.ToTable("Division");
+                });
+
             modelBuilder.Entity("Project_Management_System.Data.SPMS_User", b =>
                 {
                     b.Property<string>("Id")
@@ -170,11 +210,6 @@ namespace Project_Management_System.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("nvarchar(13)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -241,16 +276,58 @@ namespace Project_Management_System.Migrations
 
                     b.ToTable("AspNetUsers", (string)null);
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("SPMS_User");
+                    b.UseTptMappingStrategy();
+                });
 
-                    b.UseTphMappingStrategy();
+            modelBuilder.Entity("Project_Management_System.Data.School", b =>
+                {
+                    b.Property<int>("SchoolID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SchoolID"));
+
+                    b.Property<string>("SchoolName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SchoolID");
+
+                    b.ToTable("School");
+                });
+
+            modelBuilder.Entity("Project_Management_System.Data.Topic", b =>
+                {
+                    b.Property<int>("TopicID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TopicID"));
+
+                    b.Property<string>("MarkerID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SupervisorID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TopicDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TopicName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TopicID");
+
+                    b.ToTable("Topic");
                 });
 
             modelBuilder.Entity("Project_Management_System.Data.SPMS_Staff", b =>
                 {
                     b.HasBaseType("Project_Management_System.Data.SPMS_User");
 
-                    b.HasDiscriminator().HasValue("SPMS_Staff");
+                    b.ToTable("Staff", (string)null);
                 });
 
             modelBuilder.Entity("Project_Management_System.Data.SPMS_Student", b =>
@@ -262,7 +339,7 @@ namespace Project_Management_System.Migrations
                         .HasMaxLength(7)
                         .HasColumnType("nvarchar(7)");
 
-                    b.HasDiscriminator().HasValue("SPMS_Student");
+                    b.ToTable("Student", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -312,6 +389,24 @@ namespace Project_Management_System.Migrations
                     b.HasOne("Project_Management_System.Data.SPMS_User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Project_Management_System.Data.SPMS_Staff", b =>
+                {
+                    b.HasOne("Project_Management_System.Data.SPMS_User", null)
+                        .WithOne()
+                        .HasForeignKey("Project_Management_System.Data.SPMS_Staff", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Project_Management_System.Data.SPMS_Student", b =>
+                {
+                    b.HasOne("Project_Management_System.Data.SPMS_User", null)
+                        .WithOne()
+                        .HasForeignKey("Project_Management_System.Data.SPMS_Student", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

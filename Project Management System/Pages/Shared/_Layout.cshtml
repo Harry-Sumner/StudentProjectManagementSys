@@ -62,9 +62,16 @@
                             @(user.Name)<!-- Greet user by there name rather than username -->
                         </button>
                         <div class="dropdown-menu" style="display: none;">
-                            <a asp-area="Identity" asp-page="/Account/Manage/Index" class="dropdown-item">Profile</a>
+                            @if (User.IsInRole("Staff"))
+                            {
+                                <a asp-page="/AccountProfile/StaffProfile" class="dropdown-item">Profile</a>
+                            }
+                            else
+                            {
+                                <a asp-area="Identity" asp-page="/Account/Manage/Index" class="dropdown-item">Profile</a>
+                            }
                             <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
-                                <a>Logout</a>
+                                <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
                             </form>
                             
                         </div>
@@ -106,7 +113,17 @@
         </ul>
         <!--same again for this section with the username-->
         <div class="footer--userAccount">
-            <span class="footter--userAccont--username">You are currently logged in as: username</span>
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <span class="footer--userAccount--username">
+                    You are currently logged in as:   
+                    @{
+                        var user = await UserManager.GetUserAsync(User);
+                    }
+                    @(user.UserName)<!-- Greet user by there name rather than username -->
+                </span>
+               
+            }
         </div>
     </footer>
     

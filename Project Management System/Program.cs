@@ -22,8 +22,6 @@ builder.Services.AddIdentity<SPMS_User, IdentityRole>(
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddDbContext<Project_Management_SystemContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Project_Management_SystemContext") ?? throw new InvalidOperationException("Connection string 'Project_Management_SystemContext' not found.")));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
