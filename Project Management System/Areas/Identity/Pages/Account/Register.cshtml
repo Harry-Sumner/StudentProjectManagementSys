@@ -42,14 +42,11 @@
                 <label asp-for="Input.ConfirmPassword">Confirm Password</label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Input.ProfilePicture" class="control-label">Upload Profile Image</label>
-
-                <input type="file" id="file1"
-                       name="file1"
-                       multiple="multiple" />
+            <div class="from-group">
+                <span class="label"><label for="Photo">Photo: </label></span>
+                <asp:FileUpload ID="PhotoUpload" runat="server" />
             </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary" asp-page-handler="Register">Register</button>
         </form>
     </div>
     <div class="col-md-6 col-md-offset-2">
