@@ -341,3 +341,12 @@ footer {
     cursor: pointer;
     color: blue;
 }
+
+.container2 {
+    background-color: #F0F0F0;
+}
+
+.form-control {
+    width:80%;
+    margin: 50px;
+}
