@@ -201,6 +201,20 @@ body {
     cursor: pointer;
 }
 
+.topicBtn {
+    width: 120px;
+    height: 40px;
+    border: none;
+    outline: none;
+    background: none;
+    transition: border 0.2s;
+    font-size: 1.2em;
+    border-bottom: 2px solid red;
+    transition: all 0.2s;
+    color: #1478ED;
+    cursor: pointer;
+}
+
     .header--accountBtn:hover {
         background-color: #D9D9D9;
     }
@@ -272,3 +286,4 @@ footer {
     font-size: 1.2em;
     margin-right: 10px;
 }
+
