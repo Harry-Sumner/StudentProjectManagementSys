@@ -12,6 +12,8 @@ using Project_Management_System.Data;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Text.Encodings.Web;
 using System.Text;
+using Microsoft.AspNetCore.Components;
+using Project_Management_System.ViewModels;
 
 namespace Project_Management_System.Areas.Identity.Pages.Account
 {
@@ -40,8 +42,12 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
         }
 
         [BindProperty]
-        public LoginInputModel LoginInput { get; set; }
-        public RegisterInputModel RegisterInput { get; set; }
+        public LoginViewModel LoginInput { get; set; }
+
+        [BindProperty]
+        public StudentRegisterViewModel RegisterInput { get; set; }
+
+        public StaffRegisterViewModel StaffRegisterInput { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
@@ -51,47 +57,8 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
         public string ErrorMessage { get; set; }
 
       
-        public class RegisterInputModel
-        {
-            [Required, DataType(DataType.Text), Display(Name = "First Name")]
-            public string FirstName { get; set; }
-
-            [Required, DataType(DataType.Text), Display(Name = "Surname")]
-            public string Surname { get; set; }
-
-            [Required, DataType(DataType.Text), Display(Name = "StudentID")]
-            public string StudentID { get; set; }
-
-            [Required]
-            [EmailAddress]
-            [Display(Name = "Email")]
-            public string Email { get; set; }
-
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-            [DataType(DataType.Password)]
-            [Display(Name = "Password")]
-            public string Password { get; set; }
-
-            [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-            public string ConfirmPassword { get; set; }
-
-        }
-        public class LoginInputModel
-        {
-            [Required]
-            [EmailAddress]
-            public string Email { get; set; }
-
-            [Required]
-            [DataType(DataType.Password)]
-            public string Password { get; set; }
-
-            [Display(Name = "Remember me?")]
-            public bool RememberMe { get; set; }
-        }
+        
+       
 
         public async Task OnGetAsync(string returnUrl = null)
         {
@@ -112,6 +79,7 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostLoginAsync(string returnUrl = null)
         {
+            ModelState.Clear();
             returnUrl ??= Url.Content("~/");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -148,6 +116,7 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostRegisterAsync(string returnUrl = null)
         {
+            ModelState.Clear();
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)

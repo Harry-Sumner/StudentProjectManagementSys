@@ -164,6 +164,23 @@
     align-items: center;
 }
 
+.registerFormStaff {
+    position: relative;
+    top: 30px;
+    width: 80%;
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+    .registerFormStaff select {
+        margin: 10px;
+        font-size: 16px;
+    }
+
 .body--register--errorMessage {
     position: relative;
     top: 50px;
@@ -174,3 +191,37 @@
     text-align: center;
     font-size: 16px;
 }
+
+.body--register--staffToggler {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    height: 80px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+    .body--register--staffToggler button, .body--register--staffToggler span {
+        background-color: transparent;
+        border: none;
+        margin: 0 20px;
+    }
+
+.body--register--staffFormToggler span {
+    font-size: 16px;
+}
+
+.body--register--staffToggler button {
+    height: 40px;
+    padding: 4px 8px;
+    background-color: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+    .body--register--staffToggler button:hover {
+        border-bottom: 2px solid red;
+    }
