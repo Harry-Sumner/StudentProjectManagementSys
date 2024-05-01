@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -12,13 +11,8 @@ using Project_Management_System.Data;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Text.Encodings.Web;
 using System.Text;
-using Microsoft.AspNetCore.Components;
 using Project_Management_System.ViewModels;
-using Project_Management_System.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
-using System;
-using System.Collections;
 
 namespace Project_Management_System.Areas.Identity.Pages.Account
 {
@@ -33,7 +27,7 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
         private readonly SPMS_Context _db;
 
 
-        public StaffDivision DivisionLink = new StaffDivision();
+        public StaffDivision StaffDivisions = new();
 
 
         public LoginModel(
@@ -78,9 +72,9 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
 
         public void NewDivision(string StaffID, int DivisionID)
         {
-            DivisionLink.StaffID = StaffID;
-            DivisionLink.DivisionID = DivisionID; // links user account to basket
-            _db.StaffDivision.Add(DivisionLink);
+            StaffDivisions.StaffID = StaffID;
+            StaffDivisions.DivisionID = DivisionID; // links user account to basket
+            _db.StaffDivision.Add(StaffDivisions);
             _db.SaveChanges();
             // function that assigns basket to user and saves to database
         }
@@ -266,8 +260,6 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
-
-      
 
         private SPMS_Student CreateStudent()
         {

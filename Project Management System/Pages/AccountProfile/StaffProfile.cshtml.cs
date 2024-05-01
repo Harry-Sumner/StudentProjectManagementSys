@@ -53,7 +53,6 @@ namespace Project_Management_System.Pages.AccountProfile
             
             Username = userName;
 
-            
         }
 
         public async Task<IActionResult> OnGetAsync()

@@ -78,16 +78,7 @@
 
         <select asp-for="StaffRegisterInput.DivisionID" name="newDivision" id="newDepartment" placeholder="Select your Department..." required>
             <option value="null"></option>
-            
-           
-
         </select>
-
-        <form method="post" asp-action="AddToArray">
-            <input type="text" name="value" required />
-            <button type="submit">Add to array</button>
-        </form>
-
         
         <input asp-for="StaffRegisterInput.Email" placeholder="name@example.com" required>
         <input asp-for="StaffRegisterInput.Password" placeholder=" New Password" required>
