@@ -19,6 +19,9 @@
     </div>
 
     <form class="loginForm" method="post">
+        @{
+            ModelState.Clear();
+        }
         <input asp-for="LoginInput.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="Email" />
         <input asp-for="LoginInput.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Password" />
 
@@ -31,9 +34,19 @@
 
         <a asp-page="./ForgotPassword" id="forgot-password">Forgotten your username or password?</a>
         <button id="login-submit" type="submit" class="body--login--submitButton" asp-page-handler="Login">Login</button>
+        <div asp-validation-summary="ModelOnly" class="body--register--errorMessage"></div>
     </form>
 
+    <div class="body--register--staffToggler" style="display: none;">
+        <button class="studentBtn">Student</button>
+        <span> / </span>
+        <button class="staffBtn">Staff</button>
+    </div>
+
     <form class="registerForm" method="post" style="display: none;">
+        @{
+            ModelState.Clear();
+        }
         <input asp-for="RegisterInput.FirstName" placeholder="Your first Name" required>
         <input asp-for="RegisterInput.Surname" placeholder="Your last Name" required>
 
@@ -44,14 +57,39 @@
         <input asp-for="RegisterInput.ConfirmPassword" placeholder="Confirm Password" required>
 
         <button id="registerSubmit" type="submit" class="body--register--submitButton" asp-page-handler="Register">Register</button>
-        <span class="body--register--errorMessage">TEST</span>
+        <div asp-validation-summary="ModelOnly" class="body--register--errorMessage"></div>
+    </form>
+
+    <form class="registerFormStaff" method="post" style="display: none;">
+        @{
+            ModelState.Clear();
+        }
+        <input asp-for="StaffRegisterInput.FirstName" placeholder="Your first Name" required>
+        <input asp-for="StaffRegisterInput.Surname" placeholder="Your last Name" required>
+
+        <select asp-for="StaffRegisterInput.School" name="newSchool" id="newSchool" placeholder="Select your School..." required>
+            <option value="null"></option>
+            <option value="value1">Example School</option>
+            <option value="value2">Example School</option>
+        </select>
+
+        <select asp-for="StaffRegisterInput.Department" name="newDepartment" id="newDepartment" placeholder="Select your Department..." required>
+            <option value="null"></option>
+            <option value="value1">Example Department</option>
+            <option value="value2">Example Department</option>
+        </select>
+        <input asp-for="StaffRegisterInput.Email" placeholder="name@example.com" required>
+        <input asp-for="StaffRegisterInput.Password" placeholder=" New Password" required>
+        <input asp-for="StaffRegisterInput.ConfirmPassword" placeholder="Confirm Password" required>
+
+        <button id="StaffRegisterSubmit" type="submit" class="body--register--submitButton" asp-page-handler="StaffRegister">Register</button>
+        <div asp-validation-summary="ModelOnly" class="body--register--errorMessage"></div>
     </form>
 
 
     <div class="body--register--newUserToggler">
         <span class="body--login--newUser">New here? Register below: </span>
         <button class="body--register--inputToggle">Register</button>
-        <a asp-page="/Account/Register">Register</a>
     </div>
 </div>
 
