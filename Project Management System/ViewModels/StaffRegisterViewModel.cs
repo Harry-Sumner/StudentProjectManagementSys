@@ -13,8 +13,8 @@ namespace Project_Management_System.ViewModels
         [Required, DataType(DataType.Text), Display(Name = "School")]
         public string School { get; set; }
 
-        [Required, DataType(DataType.Text), Display(Name = "Department")]
-        public string Department { get; set; }
+        [Required, Display(Name = "Division")]
+        public int DivisionID { get; set; }
 
         [Required]
         [EmailAddress]

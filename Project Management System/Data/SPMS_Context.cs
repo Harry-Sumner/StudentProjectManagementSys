@@ -19,12 +19,15 @@ namespace Project_Management_System.Data
             modelBuilder.Entity<SPMS_User>().Ignore(e => e.Name);
             modelBuilder.Entity<SPMS_Staff>().ToTable("Staff");
             modelBuilder.Entity<SPMS_Student>().ToTable("Student");
+            modelBuilder.Entity<StaffDivision>().HasKey(t => new { t.DivisionID, t.StaffID });
 
         }
 
         public DbSet<SPMS_User> SPMS_Account { get; set; }
         public DbSet<SPMS_Student> Student { get; set; }
         public DbSet<SPMS_Staff> Staff { get; set; }
+
+        public DbSet<StaffDivision> StaffDivision { get; set; } = default!;
 
         public DbSet<Topic> Topic { get; set; } = default!;
 
