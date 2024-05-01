@@ -29,29 +29,76 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Topic) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TopicName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TopicDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SupervisorID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MarkerID)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.TopicID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.TopicID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.TopicID">Delete</a>
-            </td>
-        </tr>
-}
+            <style>
+                /* Your CSS styles here */
+                /* Style the dropdown container */
+                .dropdown {
+                    position: relative;
+                    display: inline-block;
+                }
 
-   
+                /* Style the dropdown content */
+                .dropdown-content {
+                    display: none;
+                    position: absolute;
+                    background-color: #f9f9f9;
+                    min-width: 160px;
+                    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                    z-index: 1;
+                }
+
+                    /* Style the links inside the dropdown */
+                    .dropdown-content a {
+                        color: black;
+                        padding: 12px 16px;
+                        text-decoration: none;
+                        display: block;
+                    }
+
+                        /* Change color of dropdown links on hover */
+                        .dropdown-content a:hover {
+                            background-color: #f1f1f1;
+                        }
+
+                /* Show the dropdown menu on hover */
+                .dropdown:hover .dropdown-content {
+                    display: block;
+                }
+            </style>
+        <body>
+
+            <h1>Checkbox select</h1>
+
+            <form id="make_checkbox_select">
+
+                <div class="dropdown">
+                    <span class="drop-trigger">Select Topic</span>
+                    <div class="dropdown-content">
+                        @foreach (var item in Model.Topic)
+                        {
+                            <a href="#" data-topic="@item.TopicID">@item.TopicName</a>
+                        }
+                    </div>
+                </div>
+
+
+            </form>
+
+            <script>
+
+                $(function () {
+                    // Event listener for when a topic is clicked
+                    $(".dropdown-content a").on("click", function (e) {
+                        e.preventDefault();
+                        var topicName = $(this).text();
+                        alert("Topic Name: " + topicName);
+                    });
+                });
+
+            </script>
+
+        </body>
+    </html>
     </tbody>
 
 </table>
