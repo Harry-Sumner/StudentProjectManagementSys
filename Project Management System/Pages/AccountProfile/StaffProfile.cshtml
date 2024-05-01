@@ -46,15 +46,20 @@
         <!--Have this hidden for anyone but there profile-->
         <div class="body--profile--updatePicture">
             <input type="file" accept="image/jpeg, image/png, image/jpg" id="file-upload" class="updateIMG">
- 
         </div>
     </div>
 
     <div class="body--profile--infoSection">
         <div class="body--profile--infoGroup">
-            <label for="department">Department</label>
+            <label for="Division">Division</label>
             <div class="staffInfoBox">
-                <span name="department" class="body--profile--department">Example Department</span>
+                    @foreach (var divisionlink in Model.StaffDivisions.Where(i => i.StaffID == user.Id))
+                    {
+                        @foreach (var division in Model.Divisions.Where(i => i.DivisionID == divisionlink.DivisionID))
+                        {
+                            <span name="department" class="body--profile--department">@Html.ValueFor(modelDivisions => division.DivisionName)</span>
+                        }
+                    }
                 <button class="editInfo"></button>
             </div>
         </div>
@@ -64,8 +69,6 @@
             <div class="staffInfoBox">
                 <span name="email" class="body--profile--email">
                     @(user.Email)<!-- Greet user by there name rather than username -->
-                </span>
-                <button class="editInfo"></button>
             </div>
         </div>
     </div>

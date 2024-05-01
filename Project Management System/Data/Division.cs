@@ -9,7 +9,7 @@ namespace Project_Management_System.Data
         public int DivisionID { get; set; }
 
         [Required]
-        public string DepartmentName { get; set; }
+        public string DivisionName { get; set; }
 
         [Required]
         public int SchoolID { get; set; }

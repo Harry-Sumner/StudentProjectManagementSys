@@ -19,7 +19,7 @@ namespace Project_Management_System.Data
             modelBuilder.Entity<SPMS_User>().Ignore(e => e.Name);
             modelBuilder.Entity<SPMS_Staff>().ToTable("Staff");
             modelBuilder.Entity<SPMS_Student>().ToTable("Student");
-            modelBuilder.Entity<StaffDivision>().HasKey(t => new { t.DivisionID, t.StaffID });
+            modelBuilder.Entity<StaffDivision>().HasKey(t => new {t.StaffID,t.DivisionID});
 
         }
 
