@@ -32,4 +32,11 @@
             $dropdownMenu.slideDown(); // Animates the showing of the dropdown
         }
     });
+    document.getElementById('logout').addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent the default action of following the link
+        document.getElementById('logoutForm').submit(); // Submit the form
+        // Show a popup notification
+        alert("You have been logged out.");
+    });
+
 });

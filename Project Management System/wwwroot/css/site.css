@@ -200,6 +200,7 @@ body {
     color: #1478ED;
     cursor: pointer;
     padding: 0px;
+    text-align: center;
 }
 
 .topicBtn {
@@ -291,5 +292,13 @@ footer {
 .footer--userAccount--username {
     font-size: 1.2em;
     margin-right: 10px;
+}
+
+.form-inline {
+    padding: 0px;
+    text-decoration: none;
+    color: black;
+    border-bottom: 1px solid black;
+    transition: all 0.2s;
 }
 
