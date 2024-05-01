@@ -68,16 +68,20 @@
         <input asp-for="StaffRegisterInput.Surname" placeholder="Your last Name" required>
 
         <select asp-for="StaffRegisterInput.School" name="newSchool" id="newSchool" placeholder="Select your School..." required>
+      W
             <option value="null"></option>
-            <option value="value1">Example School</option>
-            <option value="value2">Example School</option>
+            @foreach (var school in Model.School)
+            {
+                <option value="@Html.ValueFor(modelSchool => school.SchoolID)">@Html.ValueFor(modelSchool => school.SchoolName)</option>
+            }
         </select>
 
-        <select asp-for="StaffRegisterInput.Department" name="newDepartment" id="newDepartment" placeholder="Select your Department..." required>
+        <select asp-for="StaffRegisterInput.DivisionID" name="newDivision" id="newDepartment" placeholder="Select your Department..." required>
             <option value="null"></option>
-            <option value="value1">Example Department</option>
-            <option value="value2">Example Department</option>
+            
+            
         </select>
+        
         <input asp-for="StaffRegisterInput.Email" placeholder="name@example.com" required>
         <input asp-for="StaffRegisterInput.Password" placeholder=" New Password" required>
         <input asp-for="StaffRegisterInput.ConfirmPassword" placeholder="Confirm Password" required>

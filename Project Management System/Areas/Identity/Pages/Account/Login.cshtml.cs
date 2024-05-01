@@ -14,6 +14,11 @@ using System.Text.Encodings.Web;
 using System.Text;
 using Microsoft.AspNetCore.Components;
 using Project_Management_System.ViewModels;
+using Project_Management_System.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
+using System;
+using System.Collections;
 
 namespace Project_Management_System.Areas.Identity.Pages.Account
 {
@@ -25,14 +30,23 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<SPMS_User> _emailStore;
         private readonly ILogger<LoginModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly SPMS_Context _db;
+
+
+        public StaffDivision DivisionLink = new StaffDivision();
+
 
         public LoginModel(
             UserManager<SPMS_User> userManager,
             IUserStore<SPMS_User> userStore,
             SignInManager<SPMS_User> signInManager,
             ILogger<LoginModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            Project_Management_System.Data.SPMS_Context context,
+            SPMS_Context db)
         {
+            _db = db;
+            _context = context;
             _userManager = userManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
@@ -40,6 +54,8 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
         }
+
+        private readonly Project_Management_System.Data.SPMS_Context _context;
 
         [BindProperty]
         public LoginViewModel LoginInput { get; set; }
@@ -49,6 +65,10 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
 
         public StaffRegisterViewModel StaffRegisterInput { get; set; }
 
+        public IList<Division> Division { get; set; } = default!;
+
+        public IList<School> School { get; set; } = default!;
+
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
         public string ReturnUrl { get; set; }
@@ -56,12 +76,28 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
         [TempData]
         public string ErrorMessage { get; set; }
 
-      
-        
-       
+        public void NewDivision(string StaffID, int DivisionID)
+        {
+            DivisionLink.StaffID = StaffID;
+            DivisionLink.DivisionID = DivisionID; // links user account to basket
+            _db.StaffDivision.Add(DivisionLink);
+            _db.SaveChanges();
+            // function that assigns basket to user and saves to database
+        }
+
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            if (_context.Division != null)
+            {
+                Division = await _context.Division.ToListAsync();
+            }
+
+            if (_context.School != null)
+            {
+                School = await _context.School.ToListAsync();
+            }
+
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
                 ModelState.AddModelError(string.Empty, ErrorMessage);
@@ -174,6 +210,64 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
+
+
+        public async Task<IActionResult> OnPostStaffRegisterAsync(string returnUrl = null)
+        {
+            ModelState.Clear();
+            returnUrl ??= Url.Content("~/");
+            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            if (ModelState.IsValid)
+            {
+                var user = CreateStaff();
+
+                await _userStore.SetUserNameAsync(user, StaffRegisterInput.Email, CancellationToken.None);
+                await _emailStore.SetEmailAsync(user, StaffRegisterInput.Email, CancellationToken.None);
+                user.FirstName = StaffRegisterInput.FirstName;
+                user.Surname = StaffRegisterInput.Surname;
+                var result = await _userManager.CreateAsync(user, StaffRegisterInput.Password);
+
+
+                if (result.Succeeded)
+                {
+                    _logger.LogInformation("User created a new account with password.");
+
+                    var userId = await _userManager.GetUserIdAsync(user);
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                    var callbackUrl = Url.Page(
+                        "/Account/ConfirmEmail",
+                        pageHandler: null,
+                        values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
+                        protocol: Request.Scheme);
+
+                    await _emailSender.SendEmailAsync(StaffRegisterInput.Email, "Confirm your email",
+                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    {
+                        return RedirectToPage("RegisterConfirmation", new { email = StaffRegisterInput.Email, returnUrl = returnUrl });
+                    }
+                    else
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+
+                        NewDivision(userId, StaffRegisterInput.DivisionID);
+
+                        return LocalRedirect(returnUrl);
+                    }
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return Page();
+        }
+
+      
 
         private SPMS_Student CreateStudent()
         {
