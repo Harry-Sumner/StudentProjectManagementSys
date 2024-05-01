@@ -59,6 +59,7 @@
     background-repeat: no-repeat;
     cursor: pointer;
     transition: 0.3s all;
+    font-size: 0px;
 }
 
     .updateIMG:hover {
