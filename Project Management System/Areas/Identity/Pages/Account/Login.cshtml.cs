@@ -142,10 +142,12 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    await OnGetAsync();
                     return Page();
                 }
             }
 
+            await OnGetAsync();
             // If we got this far, something failed, redisplay form
             return Page();
         }
@@ -202,6 +204,7 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
             }
 
             // If we got this far, something failed, redisplay form
+            await OnGetAsync();
             return Page();
         }
 
@@ -265,6 +268,7 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
                 }
             }
 
+            await OnGetAsync();
             // If we got this far, something failed, redisplay form
             return Page();
         }
