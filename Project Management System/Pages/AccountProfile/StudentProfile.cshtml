@@ -45,8 +45,8 @@
         }
         <!--Have this hidden for anyone but there profile-->
         <div class="body--profile--updatePicture">
-            <<form id="uploadForm" method="post" asp-page-handler="UpdateProfilePic">
-                <input type="file" id="fileUploadControl" name="fileUploadControl" onchange="document.getElementById('uploadForm').submit();" />
+            <form method="post" enctype="multipart/form-data">
+                <input type="file" name="uploadedImage" onchange="this.form.submit();" />
             </form>
         </div>
     </div>

@@ -45,8 +45,9 @@
         }
         <!--Have this hidden for anyone but there profile-->
         <div class="body--profile--updatePicture">
-            <input type="file" accept="image/jpeg, image/png, image/jpg" id="file-upload" onchange="this.form.submit()" class="updateIMG">
- 
+            <form method="post" enctype="multipart/form-data">
+                <input type="file" name="uploadedImage" onchange="this.form.submit();" />
+            </form>
         </div>
     </div>
 
@@ -71,7 +72,7 @@
             <label for="email">Email</label>
             <div class="staffInfoBox">
                 <span name="email" class="body--profile--email">
-                    @(user.Email)<!-- Greet user by there name rather than username -->
+                    @(user.Email)
             </div>
         </div>
     </div>
