@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Project_Management_System.Data;
 
@@ -20,7 +17,12 @@ namespace Project_Management_System.Pages.crud
         }
 
         [BindProperty]
-        public Topic Topic { get; set; } = default!;
+        public Topic Topic { get; set; } = new Topic();
+
+        [BindProperty]
+        public int TopicID { get; set; }
+
+        public IList<Topic> Topics { get; set; } = new List<Topic>();
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,17 +31,18 @@ namespace Project_Management_System.Pages.crud
                 return NotFound();
             }
 
-            var topic =  await _context.Topic.FirstOrDefaultAsync(m => m.TopicID == id);
+            var topic = await _context.Topic.FirstOrDefaultAsync(m => m.TopicID == id);
             if (topic == null)
             {
                 return NotFound();
             }
             Topic = topic;
+
+            Topics = await _context.Topic.ToListAsync();
+
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -47,7 +50,17 @@ namespace Project_Management_System.Pages.crud
                 return Page();
             }
 
-            _context.Attach(Topic).State = EntityState.Modified;
+            var topicToUpdate = await _context.Topic.FindAsync(TopicID);
+
+            if (topicToUpdate == null)
+            {
+                return NotFound();
+            }
+
+            topicToUpdate.TopicName = Topic.TopicName;
+            topicToUpdate.TopicDescription = Topic.TopicDescription;
+            topicToUpdate.SupervisorID = Topic.SupervisorID;
+            topicToUpdate.MarkerID = Topic.MarkerID;
 
             try
             {
@@ -55,7 +68,7 @@ namespace Project_Management_System.Pages.crud
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TopicExists(Topic.TopicID))
+                if (!TopicExists(TopicID))
                 {
                     return NotFound();
                 }

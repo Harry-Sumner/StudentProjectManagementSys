@@ -12,30 +12,37 @@
 <div class="row">
     <div class="col-md-4">
         <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Topic.TopicID" />
             <div class="form-group">
-                <label asp-for="Topic.TopicName" class="control-label"></label>
-                <input asp-for="Topic.TopicName" class="form-control" />
-                <span asp-validation-for="Topic.TopicName" class="text-danger"></span>
+                <label asp-for="TopicID" class="control-label"></label>
+                <select asp-for="TopicID" class="form-control" onchange="showForm(this)">
+                    <option value="">-- Select Topic --</option>
+                    @foreach (var topic in Model.Topics)
+                    {
+                        <option value="@topic.TopicID" data-name="@topic.TopicName" data-description="@topic.TopicDescription" data-supervisor="@topic.SupervisorID" data-marker="@topic.MarkerID">@topic.TopicName</option>
+                    }
+                </select>
+                <span asp-validation-for="TopicID" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Topic.TopicDescription" class="control-label"></label>
-                <input asp-for="Topic.TopicDescription" class="form-control" />
-                <span asp-validation-for="Topic.TopicDescription" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Topic.SupervisorID" class="control-label"></label>
-                <input asp-for="Topic.SupervisorID" class="form-control" />
-                <span asp-validation-for="Topic.SupervisorID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Topic.MarkerID" class="control-label"></label>
-                <input asp-for="Topic.MarkerID" class="form-control" />
-                <span asp-validation-for="Topic.MarkerID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div id="topicDetails" style="display:none">
+                <div class="form-group">
+                    <label class="control-label">Topic Name</label>
+                    <input id="topicName" asp-for="Topic.TopicName" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Description</label>
+                    <input id="topicDescription" asp-for="Topic.TopicDescription" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Supervisor ID</label>
+                    <input id="supervisorID" asp-for="Topic.SupervisorID" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Marker ID</label>
+                    <input id="markerID" asp-for="Topic.MarkerID" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
             </div>
         </form>
     </div>
@@ -46,5 +53,28 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        function showForm(select) {
+            var selectedIndex = select.selectedIndex;
+            var topicDetails = document.getElementById("topicDetails");
+            var topicNameInput = document.getElementById("topicName");
+            var topicDescriptionInput = document.getElementById("topicDescription");
+            var supervisorIDInput = document.getElementById("supervisorID");
+            var markerIDInput = document.getElementById("markerID");
+
+            if (selectedIndex > 0) {
+                var selectedOption = select.options[selectedIndex];
+                topicNameInput.value = selectedOption.getAttribute("data-name");
+                topicDescriptionInput.value = selectedOption.getAttribute("data-description");
+                supervisorIDInput.value = selectedOption.getAttribute("data-supervisor");
+                markerIDInput.value = selectedOption.getAttribute("data-marker");
+                topicDetails.style.display = "block";
+            } else {
+                topicDetails.style.display = "none";
+            }
+        }
+    </script>
 }
