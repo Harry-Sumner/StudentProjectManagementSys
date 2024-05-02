@@ -35,6 +35,7 @@ namespace Project_Management_System.Pages.AccountProfile
         public IList<Course> Course { get; set; } = default!;
 
 
+
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -46,13 +47,11 @@ namespace Project_Management_System.Pages.AccountProfile
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
-            
-   
-            
             Username = userName;
-
         }
+
+
+       
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -74,13 +73,28 @@ namespace Project_Management_System.Pages.AccountProfile
             return Page();
         }
 
-        public async Task<IActionResult> OnPostUpdateProfilePicAsync()
+        [BindProperty]
+        public IFormFile UploadedImage { get; set; }
+
+        public async Task<IActionResult> OnPostAsync(IFormFile uploadedImage)
         {
-            return Page();
+            if (uploadedImage != null && uploadedImage.Length > 0)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await uploadedImage.CopyToAsync(memoryStream);
+                    byte[] imageBytes = memoryStream.ToArray();
+                    
+                    // You can now use the byte array to store the image in your database
+                    
+                    var user = await _userManager.GetUserAsync(User);
+                    user.ProfilePicture = imageBytes;
+                    await _userManager.UpdateAsync(user);
+                    await _signInManager.RefreshSignInAsync(user);
+                }
+            }
+
+            return RedirectToPage();
         }
-
-
-      
-            
     }
 }

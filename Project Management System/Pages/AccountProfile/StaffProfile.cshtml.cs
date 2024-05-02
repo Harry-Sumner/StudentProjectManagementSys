@@ -48,9 +48,9 @@ namespace Project_Management_System.Pages.AccountProfile
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            
-   
-            
+
+
+
             Username = userName;
 
         }
@@ -78,33 +78,24 @@ namespace Project_Management_System.Pages.AccountProfile
             return Page();
         }
 
-        public async Task<IActionResult> OnUpdateProfilePicAsync()
+        public async Task<IActionResult> OnPostAsync(IFormFile uploadedImage)
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
+            if (uploadedImage != null && uploadedImage.Length > 0)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                using (var memoryStream = new MemoryStream())
+                {
+                    await uploadedImage.CopyToAsync(memoryStream);
+                    byte[] imageBytes = memoryStream.ToArray();
+
+                    // You can now use the byte array to store the image in your database
+
+                    var user = await _userManager.GetUserAsync(User);
+                    user.ProfilePicture = imageBytes;
+                    await _userManager.UpdateAsync(user);
+                    await _signInManager.RefreshSignInAsync(user);
+                }
             }
 
-            if (!ModelState.IsValid)
-            {
-                await LoadAsync(user);
-                return Page();
-            }
-
-            foreach (var file in Request.Form.Files)
-            {
-                MemoryStream stream = new MemoryStream();
-                file.CopyTo(stream);
-                user.ProfilePicture = stream.ToArray();
-
-                stream.Close();
-                stream.Dispose();
-            }
-
-            await _userManager.UpdateAsync(user);
-            await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
             return RedirectToPage();
         }
     }
