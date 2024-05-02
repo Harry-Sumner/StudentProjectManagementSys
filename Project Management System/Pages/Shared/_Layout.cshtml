@@ -67,7 +67,11 @@
                             {
                                 <a asp-page="/AccountProfile/StaffProfile" class="dropdown-item">Profile</a>
                             }
-                            else
+                            else if (User.IsInRole("Student"))
+                            {
+                                <a asp-page="/AccountProfile/StudentProfile" class="dropdown-item">Profile</a>
+                            }
+                            else 
                             {
                                 <a asp-area="Identity" asp-page="/Account/Manage/Index" class="dropdown-item">Profile</a>
                             }

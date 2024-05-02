@@ -8,17 +8,16 @@ var connectionString = builder.Configuration.GetConnectionString("SPMS_Context")
 
 builder.Services.AddDbContext<SPMS_Context>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddIdentity<SPMS_User, IdentityRole>(
 
-    options =>
-    {
-        options.Stores.MaxLengthForKeys = 128;
-    })
 
-.AddEntityFrameworkStores<SPMS_Context>()
-.AddRoles<IdentityRole>()
-.AddDefaultUI()
-.AddDefaultTokenProviders();
+builder.Services.AddDefaultIdentity<SPMS_User>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
+    .AddDefaultUI()
+    .AddDefaultTokenProviders()
+    .AddEntityFrameworkStores<SPMS_Context>();
+
+builder.Services.AddIdentityCore<SPMS_Student>().AddEntityFrameworkStores<SPMS_Context>();
+builder.Services.AddIdentityCore<SPMS_Staff>().AddEntityFrameworkStores<SPMS_Context>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();

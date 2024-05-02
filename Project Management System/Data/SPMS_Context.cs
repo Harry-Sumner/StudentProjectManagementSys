@@ -34,6 +34,6 @@ namespace Project_Management_System.Data
 
         public DbSet<School> School { get; set; } = default!;
 
-        public DbSet<Course> Course { get; set; } = default;
+        public DbSet<Course> Course { get; set; } = default!;
     }
 }
