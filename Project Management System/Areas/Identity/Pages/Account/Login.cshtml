@@ -53,6 +53,13 @@
         <!--Student Number has a max length of 7 for the input field, may need changing for requirements-->
         <input asp-for="RegisterInput.StudentID" placeholder="Your Student Number" maxlength="7" required>
         <input asp-for="RegisterInput.Email" placeholder="name@example.com" required>
+        <select asp-for="RegisterInput.CourseID" required>
+            <option value="null"></option>
+            @foreach (var course in Model.Course)
+            {
+                <option value="@course.CourseID">@Html.ValueFor(modelDivision => course.CourseName)</option>
+            }
+        </select>
         <input asp-for="RegisterInput.Password" placeholder=" New Password" required>
         <input asp-for="RegisterInput.ConfirmPassword" placeholder="Confirm Password" required>
 

@@ -17,8 +17,11 @@ namespace Project_Management_System.Data
 
     public class SPMS_Student : SPMS_User
     {
-        [PersonalData, StringLength(7)]
+        [Required,PersonalData, StringLength(7)]
         public string StudentID { get; set; }
+
+        [Required]
+        public int CourseID { get; set; }
     }
 
     public class SPMS_Staff : SPMS_User

@@ -12,8 +12,8 @@ using Project_Management_System.Data;
 namespace Project_Management_System.Migrations
 {
     [DbContext(typeof(SPMS_Context))]
-    [Migration("20240430185829_CreateIdentity")]
-    partial class CreateIdentity
+    [Migration("20240502084830_CreateUser")]
+    partial class CreateUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -190,7 +190,7 @@ namespace Project_Management_System.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DivisionID"));
 
-                    b.Property<string>("DepartmentName")
+                    b.Property<string>("DivisionName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -299,6 +299,32 @@ namespace Project_Management_System.Migrations
                     b.ToTable("School");
                 });
 
+            modelBuilder.Entity("Project_Management_System.Data.StaffDivision", b =>
+                {
+                    b.Property<string>("StaffID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("DivisionID")
+                        .HasColumnType("int");
+
+                    b.HasKey("StaffID", "DivisionID");
+
+                    b.ToTable("StaffDivision");
+                });
+
+            modelBuilder.Entity("Project_Management_System.Data.StudentCourse", b =>
+                {
+                    b.Property<string>("StudentID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("CourseID")
+                        .HasColumnType("int");
+
+                    b.HasKey("StudentID", "CourseID");
+
+                    b.ToTable("StudentCourse");
+                });
+
             modelBuilder.Entity("Project_Management_System.Data.Topic", b =>
                 {
                     b.Property<int>("TopicID")
@@ -336,6 +362,9 @@ namespace Project_Management_System.Migrations
             modelBuilder.Entity("Project_Management_System.Data.SPMS_Student", b =>
                 {
                     b.HasBaseType("Project_Management_System.Data.SPMS_User");
+
+                    b.Property<int>("CourseID")
+                        .HasColumnType("int");
 
                     b.Property<string>("StudentID")
                         .IsRequired()

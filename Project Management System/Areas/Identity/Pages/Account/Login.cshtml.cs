@@ -29,7 +29,6 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
 
         public StaffDivision StaffDivisions = new();
 
-
         public LoginModel(
             UserManager<SPMS_User> userManager,
             IUserStore<SPMS_User> userStore,
@@ -62,6 +61,8 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
 
         public IList<Division> Division { get; set; } = default!;
 
+        public IList<Course> Course { get; set; } = default!;
+
         public IList<School> School { get; set; } = default!;
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
@@ -80,8 +81,6 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
             // function that assigns basket to user and saves to database
         }
 
-
-
         public async Task OnGetAsync(string returnUrl = null)
         {
             if (_context.Division != null)
@@ -92,6 +91,11 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
             if (_context.School != null)
             {
                 School = await _context.School.ToListAsync();
+            }
+
+            if (_context.Course != null)
+            {
+                Course = await _context.Course.ToListAsync();
             }
 
             if (!string.IsNullOrEmpty(ErrorMessage))
@@ -160,6 +164,7 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
                 user.FirstName = RegisterInput.FirstName;
                 user.Surname = RegisterInput.Surname;
                 user.StudentID = RegisterInput.StudentID;
+                user.CourseID = RegisterInput.CourseID;
                 var result = await _userManager.CreateAsync(user, RegisterInput.Password);
 
 
