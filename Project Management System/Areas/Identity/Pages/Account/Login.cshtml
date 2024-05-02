@@ -56,7 +56,7 @@
         <input asp-for="RegisterInput.Password" placeholder=" New Password" required>
         <input asp-for="RegisterInput.ConfirmPassword" placeholder="Confirm Password" required>
 
-        <button id="registerSubmit" type="submit" class="body--register--submitButton" asp-page-handler="Register">Register</button>
+        <button id="StudentRegisterSubmit" type="submit" class="body--register--submitButton" asp-page-handler="StudentRegister">Register</button>
         <div asp-validation-summary="ModelOnly" class="body--register--errorMessage"></div>
     </form>
 
@@ -66,28 +66,26 @@
         }
         <input asp-for="StaffRegisterInput.FirstName" placeholder="Your first Name" required>
         <input asp-for="StaffRegisterInput.Surname" placeholder="Your last Name" required>
-
-        <select asp-for="StaffRegisterInput.School" name="newSchool" id="newSchool" placeholder="Select your School..." required>
-      W
+        <input asp-for="StaffRegisterInput.Email" placeholder="name@example.com" required>
+        <select asp-for="StaffRegisterInput.DivisionID" required>
             <option value="null"></option>
-            @foreach (var school in Model.School)
+            @foreach (var division in Model.Division)
             {
-                <option value="@Html.ValueFor(modelSchool => school.SchoolID)">@Html.ValueFor(modelSchool => school.SchoolName)</option>
+                <option value="@division.DivisionID">@Html.ValueFor(modelDivision => division.DivisionName)</option>
             }
         </select>
-
-        <select asp-for="StaffRegisterInput.DivisionID" name="newDivision" id="newDepartment" placeholder="Select your Department..." required>
-            <option value="null"></option>
-        </select>
-        
-        <input asp-for="StaffRegisterInput.Email" placeholder="name@example.com" required>
         <input asp-for="StaffRegisterInput.Password" placeholder=" New Password" required>
         <input asp-for="StaffRegisterInput.ConfirmPassword" placeholder="Confirm Password" required>
+        <div class="body--loginForm--checkboxContainer">
+            <label asp-for="StaffRegisterInput.ProjectCoordinator" class="form-label">
+                <input class="form-check-input" asp-for="StaffRegisterInput.ProjectCoordinator" />
+                @Html.DisplayNameFor(m => m.StaffRegisterInput.ProjectCoordinator)
+            </label>
+        </div>
 
         <button id="StaffRegisterSubmit" type="submit" class="body--register--submitButton" asp-page-handler="StaffRegister">Register</button>
         <div asp-validation-summary="ModelOnly" class="body--register--errorMessage"></div>
     </form>
-
 
     <div class="body--register--newUserToggler">
         <span class="body--login--newUser">New here? Register below: </span>
@@ -98,3 +96,13 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+
+@* <select asp-for="StaffRegisterInput.School" name="newSchool" id="newSchool" placeholder="Select your School..." required>
+
+    <option value="null"></option>
+    @foreach (var school in Model.School)
+    {
+    <option value="@Html.ValueFor(modelSchool => school.SchoolID)">@Html.ValueFor(modelSchool => school.SchoolName)</option>
+    }
+    </select> *@

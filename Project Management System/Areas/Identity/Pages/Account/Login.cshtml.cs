@@ -57,6 +57,7 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
         [BindProperty]
         public StudentRegisterViewModel RegisterInput { get; set; }
 
+        [BindProperty]
         public StaffRegisterViewModel StaffRegisterInput { get; set; }
 
         public IList<Division> Division { get; set; } = default!;
@@ -78,6 +79,7 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
             _db.SaveChanges();
             // function that assigns basket to user and saves to database
         }
+
 
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -144,7 +146,7 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
             return Page();
         }
 
-        public async Task<IActionResult> OnPostRegisterAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostStudentRegisterAsync(string returnUrl = null)
         {
             ModelState.Clear();
             returnUrl ??= Url.Content("~/");
@@ -158,20 +160,13 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
                 user.FirstName = RegisterInput.FirstName;
                 user.Surname = RegisterInput.Surname;
                 user.StudentID = RegisterInput.StudentID;
-                foreach (var file in Request.Form.Files)
-                {
-                    MemoryStream stream = new MemoryStream();
-                    file.CopyTo(stream);
-                    user.ProfilePicture = stream.ToArray();
-                    stream.Close();
-                    stream.Dispose();
-                }
                 var result = await _userManager.CreateAsync(user, RegisterInput.Password);
 
 
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+                    await _userManager.AddToRoleAsync(user, "Student");
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -205,7 +200,6 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
             return Page();
         }
 
-
         public async Task<IActionResult> OnPostStaffRegisterAsync(string returnUrl = null)
         {
             ModelState.Clear();
@@ -226,7 +220,18 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
+
+                    if (StaffRegisterInput.ProjectCoordinator)
+                    {
+                        await _userManager.AddToRoleAsync(user, "Co-ordinator");
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, "Staff");
+                    }
+
                     var userId = await _userManager.GetUserIdAsync(user);
+                    NewDivision(userId, StaffRegisterInput.DivisionID);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
@@ -245,8 +250,6 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
-
-                        NewDivision(userId, StaffRegisterInput.DivisionID);
 
                         return LocalRedirect(returnUrl);
                     }

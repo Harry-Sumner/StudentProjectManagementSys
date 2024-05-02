@@ -51,18 +51,20 @@
     </div>
 
     <div class="body--profile--infoSection">
+
         <div class="body--profile--infoGroup">
-            <label for="Division">Division</label>
-            <div class="staffInfoBox">
-                    @foreach (var divisionlink in Model.StaffDivisions.Where(i => i.StaffID == user.Id))
+            <label for="department">Divisions</label>
+            <!--For each loop here to display all departments, just use one li element-->
+            <ul class="departmentList">
+                @foreach (var divisionlink in Model.StaffDivisions.Where(i => i.StaffID == user.Id))
+                {
+                    @foreach (var division in Model.Divisions.Where(i => i.DivisionID == divisionlink.DivisionID))
                     {
-                        @foreach (var division in Model.Divisions.Where(i => i.DivisionID == divisionlink.DivisionID))
-                        {
-                            <span name="department" class="body--profile--department">@Html.ValueFor(modelDivisions => division.DivisionName)</span>
-                        }
+                        <li>@Html.ValueFor(modelDivisions => division.DivisionName)</li>
+                        <button class="editInfo"></button>
                     }
-                <button class="editInfo"></button>
-            </div>
+                }
+            </ul>
         </div>
 
         <div class="body--profile--infoGroup">

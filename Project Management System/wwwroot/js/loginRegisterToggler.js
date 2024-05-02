@@ -36,24 +36,18 @@ $(document).ready(function () {
 
     // Button events for toggling between student and staff registration forms
     $('.studentBtn').click(function () {
+        $('.staffBtn').css('border', 'none'); // corrected the selector here
         $('.registerFormStaff').hide();
         $('.registerForm').show();
+        $('.studentBtn').css('border-bottom', '2px solid red');
     });
 
     $('.staffBtn').click(function () {
+        $('.studentBtn').css('border', 'none'); // corrected the selector here
         $('.registerForm').hide();
         $('.registerFormStaff').show();
+        $('.staffBtn').css('border-bottom', '2px solid red');
     });
-    $('#newDepartment').prop('disabled', true);
 
-    // Listen for changes on the school select
-    $('#newSchool').change(function () {
-        var schoolValue = $(this).val();
-        if (schoolValue !== 'null') {
-            $('#newDepartment').prop('disabled', false);
-        } else {
-            $('#newDepartment').prop('disabled', true);
-            $('#newDepartment').val('null');
-        }
-    });
+   
 });

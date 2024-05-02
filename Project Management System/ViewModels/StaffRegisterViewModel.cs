@@ -10,8 +10,8 @@ namespace Project_Management_System.ViewModels
         [Required, DataType(DataType.Text), Display(Name = "Surname")]
         public string Surname { get; set; }
 
-        [Required, DataType(DataType.Text), Display(Name = "School")]
-        public string School { get; set; }
+        /*[Required, DataType(DataType.Text), Display(Name = "School")]
+        public string School { get; set; }*/
 
         [Required, Display(Name = "Division")]
         public int DivisionID { get; set; }
@@ -31,6 +31,9 @@ namespace Project_Management_System.ViewModels
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "Project Co-ordinator?")]
+        public bool ProjectCoordinator { get; set; }
 
     }
 }
