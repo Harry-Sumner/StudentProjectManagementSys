@@ -45,15 +45,16 @@
         }
         <!--Have this hidden for anyone but there profile-->
         <div class="body--profile--updatePicture">
-            <input type="file" accept="image/jpeg, image/png, image/jpg" id="file-upload" onchange="this.form.submit()" class="updateIMG">
- 
+            <<form id="uploadForm" method="post" asp-page-handler="UpdateProfilePic">
+                <input type="file" id="fileUploadControl" name="fileUploadControl" onchange="document.getElementById('uploadForm').submit();" />
+            </form>
         </div>
     </div>
 
     <div class="body--profile--infoSection">
 
         <div class="body--profile--infoGroup">
-            <label for="studentid">Email</label>
+            <label for="studentid">StudentID</label>
             <div class="staffInfoBox">
                 <span name="studentid" class="body--profile--email">
                     @(user.StudentID)<!-- Greet user by there name rather than username -->
@@ -72,7 +73,7 @@
         }
 
         <div class="body--profile--infoGroup">
-            <label for="email">Student ID</label>
+            <label for="email">Email</label>
             <div class="staffInfoBox">
                 <span name="email" class="body--profile--email">
                     @(user.Email)<!-- Greet user by there name rather than username -->

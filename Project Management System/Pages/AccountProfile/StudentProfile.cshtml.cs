@@ -74,34 +74,13 @@ namespace Project_Management_System.Pages.AccountProfile
             return Page();
         }
 
-        public async Task<IActionResult> OnUpdateProfilePicAsync()
+        public async Task<IActionResult> OnPostUpdateProfilePicAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                await LoadAsync(user);
-                return Page();
-            }
-
-            foreach (var file in Request.Form.Files)
-            {
-                MemoryStream stream = new MemoryStream();
-                file.CopyTo(stream);
-                user.ProfilePicture = stream.ToArray();
-
-                stream.Close();
-                stream.Dispose();
-            }
-
-            await _userManager.UpdateAsync(user);
-            await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
-            return RedirectToPage();
+            return Page();
         }
+
+
+      
+            
     }
 }
