@@ -31,25 +31,24 @@
     </div>
 
     <div class="body--profile--profilePicture">
-        <!--Change the src to the proper byte system, keep the demoIMG for when there is no profile picture-->
-       
         @{
             try
             {
-                <img src="@string.Format("data:image/jpg;base64, {0}", Convert.ToBase64String(@user.ProfilePicture))" alt="Profile Image" />
-            } //Try converting data inside sql database into an image, if there are issues then a thumbnail image is used instead
+                <img src="@string.Format("data:image/jpg;base64, {0}", Convert.ToBase64String(@user.ProfilePicture))" alt="Profile Image" style="width: 301px; height: 301px;" />
+            }
             catch
             {
-                
+                <!-- Handle if there's no profile picture -->
             }
         }
-        <!--Have this hidden for anyone but there profile-->
+        <!--Have this hidden for anyone but their profile-->
         <div class="body--profile--updatePicture">
             <form method="post" enctype="multipart/form-data">
                 <input type="file" name="uploadedImage" onchange="this.form.submit();" />
             </form>
         </div>
     </div>
+
 
     <div class="body--profile--infoSection">
 
