@@ -42,6 +42,7 @@
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-primary" />
+                    <input type="submit" value="Delete" name="command" class="btn btn-danger" />
                 </div>
             </div>
         </form>
@@ -51,30 +52,3 @@
 <div>
     <a asp-page="./Index">Back to List</a>
 </div>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-    <script>
-        function showForm(select) {
-            var selectedIndex = select.selectedIndex;
-            var topicDetails = document.getElementById("topicDetails");
-            var topicNameInput = document.getElementById("topicName");
-            var topicDescriptionInput = document.getElementById("topicDescription");
-            var supervisorIDInput = document.getElementById("supervisorID");
-            var markerIDInput = document.getElementById("markerID");
-
-            if (selectedIndex > 0) {
-                var selectedOption = select.options[selectedIndex];
-                topicNameInput.value = selectedOption.getAttribute("data-name");
-                topicDescriptionInput.value = selectedOption.getAttribute("data-description");
-                supervisorIDInput.value = selectedOption.getAttribute("data-supervisor");
-                markerIDInput.value = selectedOption.getAttribute("data-marker");
-                topicDetails.style.display = "block";
-            } else {
-                topicDetails.style.display = "none";
-            }
-        }
-    </script>
-}
