@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿// Inside your Edit.cshtml.cs file
+
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -24,14 +25,10 @@ namespace Project_Management_System.Pages.crud
 
         public IList<Topic> Topics { get; set; } = new List<Topic>();
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var topic = await _context.Topic.FirstOrDefaultAsync(m => m.TopicID == id);
+            var topic = await _context.Topic.FirstOrDefaultAsync();
             if (topic == null)
             {
                 return NotFound();
@@ -43,42 +40,61 @@ namespace Project_Management_System.Pages.crud
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string command)
         {
-            if (!ModelState.IsValid)
+            if (command == "Delete")
             {
-                return Page();
-            }
+                var topicToDelete = await _context.Topic.FindAsync(TopicID);
 
-            var topicToUpdate = await _context.Topic.FindAsync(TopicID);
-
-            if (topicToUpdate == null)
-            {
-                return NotFound();
-            }
-
-            topicToUpdate.TopicName = Topic.TopicName;
-            topicToUpdate.TopicDescription = Topic.TopicDescription;
-            topicToUpdate.SupervisorID = Topic.SupervisorID;
-            topicToUpdate.MarkerID = Topic.MarkerID;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TopicExists(TopicID))
+                if (topicToDelete == null)
                 {
                     return NotFound();
                 }
-                else
+
+                _context.Topic.Remove(topicToDelete);
+                await _context.SaveChangesAsync();
+
+                return RedirectToPage("./Index");
+            }
+            else if (command == "Save")
+            {
+                if (!ModelState.IsValid)
                 {
-                    throw;
+                    return Page();
                 }
+
+                var topicToUpdate = await _context.Topic.FindAsync(TopicID);
+
+                if (topicToUpdate == null)
+                {
+                    return NotFound();
+                }
+
+                topicToUpdate.TopicName = Topic.TopicName;
+                topicToUpdate.TopicDescription = Topic.TopicDescription;
+                topicToUpdate.SupervisorID = Topic.SupervisorID;
+                topicToUpdate.MarkerID = Topic.MarkerID;
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!TopicExists(TopicID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return RedirectToPage("./Index");
             }
 
-            return RedirectToPage("./Index");
+            return Page();
         }
 
         private bool TopicExists(int id)

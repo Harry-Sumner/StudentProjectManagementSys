@@ -103,22 +103,23 @@
 
     <footer class="footer--standard">
         <ul class="footer--ul">
-            <!--add the hrefs to the portal and Moodle-->
+            <!-- Add the hrefs to the portal and Moodle -->
             <a href="https://apps.chester.ac.uk/v2apps/moodle">
-                <li class="footer--li">Moodle</li>
+            <li class="footer--li">Moodle</li>
             </a>
             <a href="https://portal1.chester.ac.uk/Pages/default.aspx">
-                <li class="footer--li">Portal</li>
+            <li class="footer--li">Portal</li>
             </a>
             <a href="/crud/Index">
             <li class="footer--li">Browse Topics</li>
             </a>
+            <a href="/Shared/EditTopic">
+                <a asp-page="/crud/Edit" asp-route-id="4459">Edit Page</a>
+
             </a>
-            <a href="/crud/Create">
-            <li class="footer--li">Browse Topics</li>
-            </a>
-            
         </ul>
+   
+
         <!--same again for this section with the username-->
         <div class="footer--userAccount">
             @if (SignInManager.IsSignedIn(User))
