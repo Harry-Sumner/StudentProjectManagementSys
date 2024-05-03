@@ -15,5 +15,6 @@ namespace Project_Management_System.Data
 
         public string? SupervisorID { get; set; }
         public string? MarkerID { get; set; }
+        public string? StudentID { get; set; }
     }
 }

@@ -174,9 +174,25 @@ namespace Project_Management_System.Migrations
                     b.Property<int>("DivisionID")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Postgraduate")
+                        .HasColumnType("bit");
+
                     b.HasKey("CourseID");
 
                     b.ToTable("Course");
+                });
+
+            modelBuilder.Entity("Project_Management_System.Data.CourseTopic", b =>
+                {
+                    b.Property<int>("CourseID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TopicID")
+                        .HasColumnType("int");
+
+                    b.HasKey("CourseID", "TopicID");
+
+                    b.ToTable("CourseTopic");
                 });
 
             modelBuilder.Entity("Project_Management_System.Data.Division", b =>
@@ -197,6 +213,19 @@ namespace Project_Management_System.Migrations
                     b.HasKey("DivisionID");
 
                     b.ToTable("Division");
+                });
+
+            modelBuilder.Entity("Project_Management_System.Data.PostgraduateProposal", b =>
+                {
+                    b.Property<string>("StudentID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("TopicID")
+                        .HasColumnType("int");
+
+                    b.HasKey("StudentID", "TopicID");
+
+                    b.ToTable("PostgraduateProposal");
                 });
 
             modelBuilder.Entity("Project_Management_System.Data.SPMS_User", b =>
@@ -309,19 +338,6 @@ namespace Project_Management_System.Migrations
                     b.ToTable("StaffDivision");
                 });
 
-            modelBuilder.Entity("Project_Management_System.Data.StudentCourse", b =>
-                {
-                    b.Property<string>("StudentID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("CourseID")
-                        .HasColumnType("int");
-
-                    b.HasKey("StudentID", "CourseID");
-
-                    b.ToTable("StudentCourse");
-                });
-
             modelBuilder.Entity("Project_Management_System.Data.Topic", b =>
                 {
                     b.Property<int>("TopicID")
@@ -331,6 +347,9 @@ namespace Project_Management_System.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TopicID"));
 
                     b.Property<string>("MarkerID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentID")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SupervisorID")
@@ -349,6 +368,19 @@ namespace Project_Management_System.Migrations
                     b.ToTable("Topic");
                 });
 
+            modelBuilder.Entity("Project_Management_System.Data.TopicBasket", b =>
+                {
+                    b.Property<string>("StudentID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("TopicID")
+                        .HasColumnType("int");
+
+                    b.HasKey("StudentID", "TopicID");
+
+                    b.ToTable("TopicBasket");
+                });
+
             modelBuilder.Entity("Project_Management_System.Data.SPMS_Staff", b =>
                 {
                     b.HasBaseType("Project_Management_System.Data.SPMS_User");
@@ -363,7 +395,7 @@ namespace Project_Management_System.Migrations
                     b.Property<int>("CourseID")
                         .HasColumnType("int");
 
-                    b.Property<string>("StudentID")
+                    b.Property<string>("StudentNo")
                         .IsRequired()
                         .HasMaxLength(7)
                         .HasColumnType("nvarchar(7)");

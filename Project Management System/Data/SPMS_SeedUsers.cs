@@ -39,7 +39,7 @@ namespace Project_Management_System.Data
                     Email = "student@chester.ac.uk",
                     FirstName = "Student",
                     Surname = "User",
-                    StudentID = "1234567"
+                    StudentNo = "1234567"
                 };
                 var result = await userManager.CreateAsync(user);
                 if (result.Succeeded)

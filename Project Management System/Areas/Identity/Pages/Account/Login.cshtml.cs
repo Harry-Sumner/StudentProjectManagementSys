@@ -165,7 +165,7 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
                 await _emailStore.SetEmailAsync(user, RegisterInput.Email, CancellationToken.None);
                 user.FirstName = RegisterInput.FirstName;
                 user.Surname = RegisterInput.Surname;
-                user.StudentID = RegisterInput.StudentID;
+                user.StudentNo = RegisterInput.StudentNo;
                 user.CourseID = RegisterInput.CourseID;
                 var result = await _userManager.CreateAsync(user, RegisterInput.Password);
 

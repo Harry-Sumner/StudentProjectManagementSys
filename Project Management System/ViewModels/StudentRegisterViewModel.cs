@@ -11,7 +11,7 @@ namespace Project_Management_System.ViewModels
         public string Surname { get; set; }
 
         [Required, DataType(DataType.Text), Display(Name = "StudentID")]
-        public string StudentID { get; set; }
+        public string StudentNo { get; set; }
 
         [Required]
         [EmailAddress]

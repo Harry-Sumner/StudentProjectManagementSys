@@ -20,20 +20,22 @@ namespace Project_Management_System.Data
             modelBuilder.Entity<SPMS_Staff>().ToTable("Staff");
             modelBuilder.Entity<SPMS_Student>().ToTable("Student");
             modelBuilder.Entity<StaffDivision>().HasKey(t => new {t.StaffID,t.DivisionID});
+            modelBuilder.Entity<CourseTopic>().HasKey(t => new { t.CourseID, t.TopicID });
+            modelBuilder.Entity<TopicBasket>().HasKey(t => new { t.StudentID, t.TopicID });
+            modelBuilder.Entity<PostgraduateProposal>().HasKey(t => new { t.StudentID, t.TopicID });
         }
 
         public DbSet<SPMS_User> SPMS_Account { get; set; }
         public DbSet<SPMS_Student> Student { get; set; }
         public DbSet<SPMS_Staff> Staff { get; set; }
-
+        public DbSet<School> School { get; set; }
+        public DbSet<Division> Division { get; set; }
         public DbSet<StaffDivision> StaffDivision { get; set; } = default!;
-
-        public DbSet<Topic> Topic { get; set; } = default!;
-
-        public DbSet<Division> Division { get; set; } = default!;
-
-        public DbSet<School> School { get; set; } = default!;
-
-        public DbSet<Course> Course { get; set; } = default!;
+        public DbSet<Topic> Topic { get; set; }
+        public DbSet<Course> Course { get; set; }
+        public DbSet<CourseTopic> CourseTopic { get; set; } = default!;
+        /*public DbSet<UndergraduateProposal> UndergraduateProposal { get; set; }
+        public DbSet<PostgraduateProposal> PostgraduateProposal { get; set; }
+        public DbSet<TopicBasket> TopicBasket { get; set; } = default!;*/
     }
 }
