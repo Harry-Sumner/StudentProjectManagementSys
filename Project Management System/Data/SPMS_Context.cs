@@ -22,7 +22,8 @@ namespace Project_Management_System.Data
             modelBuilder.Entity<StaffDivision>().HasKey(t => new {t.StaffID,t.DivisionID});
             modelBuilder.Entity<CourseTopic>().HasKey(t => new { t.CourseID, t.TopicID });
             modelBuilder.Entity<TopicBasket>().HasKey(t => new { t.StudentID, t.TopicID });
-            modelBuilder.Entity<PostgraduateProposal>().HasKey(t => new { t.StudentID, t.TopicID });
+            modelBuilder.Entity<PostgraduateProposal>().HasKey(t => new { t.StudentID});
+            modelBuilder.Entity<UndergraduateProposal>().HasKey(t => new { t.StudentID });
         }
 
         public DbSet<SPMS_User> SPMS_Account { get; set; }
@@ -34,8 +35,8 @@ namespace Project_Management_System.Data
         public DbSet<Topic> Topic { get; set; }
         public DbSet<Course> Course { get; set; }
         public DbSet<CourseTopic> CourseTopic { get; set; } = default!;
-        /*public DbSet<UndergraduateProposal> UndergraduateProposal { get; set; }
+        public DbSet<UndergraduateProposal> UndergraduateProposal { get; set; }
         public DbSet<PostgraduateProposal> PostgraduateProposal { get; set; }
-        public DbSet<TopicBasket> TopicBasket { get; set; } = default!;*/
+        public DbSet<TopicBasket> TopicBasket { get; set; } = default!;
     }
 }

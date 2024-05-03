@@ -10,6 +10,5 @@ namespace Project_Management_System.Data
         [Required]
         public int TopicID { get; set; }
 
-        
     }
 }
