@@ -8,7 +8,7 @@ namespace Project_Management_System.Pages
 {
     public class Submit_ProposalModel : PageModel
     {
-        public UndergraduateProposal proposal = new(); //Create new instance of Order
+        public UndergraduateProposal proposal = new(); //Create new instance of Proposal
         private readonly SPMS_Context _db;
         private readonly UserManager<SPMS_Student> _UserManager;
         private readonly SignInManager<SPMS_User> _signInManager;
