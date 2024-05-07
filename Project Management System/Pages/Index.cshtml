@@ -4,6 +4,11 @@
     ViewData["Title"] = "Home page";
 }
 
+@inject UserManager<SPMS_Staff> StaffManager
+
+@using Microsoft.AspNetCore.Identity
+@using Project_Management_System.Data
+
 <link rel="stylesheet" href="~/css/browseTopics.css">
 <script src="~/js/listBoxExpansion.js"></script>
 
@@ -21,11 +26,15 @@
         {
             <div class="topicBox">
                 <span class="topicTitle">@topic.TopicName</span>
-
-                <div class="SupervisorGroup">
-                    <span class="topicSupervisor">Example Supervisor</span>
-                    <div class="supervisorIcon"></div>
-                </div>
+                @if (topic.SupervisorID != null)
+                {
+                    var staff = await StaffManager.FindByIdAsync(topic.SupervisorID);
+                    <div class="SupervisorGroup">
+                        <span class="topicSupervisor">@staff.Name</span>
+                        <div class="supervisorIcon"></div>
+                    </div>
+                }
+               
 
                 <div class="topicDescription">@topic.TopicDescription</div>
 
@@ -34,11 +43,14 @@
                         <div class="expandIcon"></div>
                     </button>
                     <!--adjust the form as needed-->
-                    <form method="post">
-                        <button type="submit" class="addTopic">
-                            <div class="addIcon"></div>
-                        </button>
-                    </form>
+                    @if (User.IsInRole("Student"))
+                    {
+                        <form method="post">
+                            <button type="submit" class="addTopic" asp-page-handler="Add" asp-route-topicID="@topic.TopicID">
+                                <div class="addIcon"></div>
+                            </button>
+                        </form>
+                    }
                 </div>
             </div>
         }
