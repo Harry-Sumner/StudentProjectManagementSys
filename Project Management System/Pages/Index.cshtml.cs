@@ -1,37 +1,45 @@
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Project_Management_System.Data;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Project_Management_System.Pages
 {
-   // [Authorize]
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly SPMS_Context _context;
+
         public IndexModel(SPMS_Context context, ILogger<IndexModel> logger)
         {
             _context = context;
             _logger = logger;
         }
 
-        public IList<Topic> Topic { get; set; } = default!;
-        [BindProperty]
+        public IList<Topic> Topic { get; set; } = new List<Topic>();
+
+        // Bind the search query parameter from the URL
         public string Search { get; set; }
 
-        public void OnGet()
+        // Handle GET request for search functionality
+        public void OnGet(string search)
         {
-            Topic = _context.Topic.FromSqlRaw("Select * FROM Topic").ToList();
+            // If a search query is provided, filter topics
+            if (!string.IsNullOrEmpty(search))
+            {
+                Topic = _context.Topic
+                    .Where(t => EF.Functions.Like(t.TopicName, $"%{search}%"))
+                    .ToList();
+            }
+            else
+            {
+                // If no search query is provided, retrieve all topics
+                Topic = _context.Topic.ToList();
+            }
         }
-
-
-        public IActionResult OnPostSearch()
-        {
-            Topic = _context.Topic.FromSqlRaw("SELECT * FROM Topic WHERE TopicName LIKE '" + Search + "%'").ToList();
-            return Page();
-        }
-        
     }
 }

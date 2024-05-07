@@ -7,11 +7,14 @@
 <link rel="stylesheet" href="~/css/browseTopics.css">
 <script src="~/js/listBoxExpansion.js"></script>
 
-<body>
-    <form method="post" class="body--search--container">
-        <input type="text" name="searchbar" placeholder="Search for a topic">
-        <button for="searchbar" asp-page-handler="Search"></button>
-    </form>
+<form method="get" class="body--search--container">
+    <input type="text" name="Search" placeholder="Search for a topic">
+    <button type="submit"></button>
+</form>
+
+
+
+
 
     <div class="body--Topics--container">
         @foreach (var topic in Model.Topic)
@@ -40,5 +43,3 @@
             </div>
         }
     </div>
-
-</body>
