@@ -29,12 +29,13 @@
                     <li>Home</li>
                 </a>
             </div>
-            <div class="header--sidebar--section">
-                <a asp-area="" asp-page="/Submit_Proposal">
-                    <li>Submit Proposal</li>
-                </a>
-            </div>
-
+            @if (User.IsInRole("Student")){
+                <div class="header--sidebar--section">
+                    <a asp-area="" asp-page="/Submit_Proposal">
+                        <li>Submit Proposal</li>
+                    </a>
+                </div>
+            }
             </ul>
             <div class="header--hamburger--uocLogo"></div>
           </div>

@@ -1,0 +1,351 @@
+﻿.body--submitLevel6--container {
+    position: absolute;
+    top: 140px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    height: 750px;
+    background-color: #F0F0F0;
+    box-shadow: 2px 2px 9px#888888;
+    border-radius: 6px;
+}
+
+.body--submitLevel6--title {
+    position: relative;
+    top: 20px;
+    left: 20px;
+    font-size: 28px;
+}
+
+.body--submitLevel6--studentDetails {
+    position: relative;
+    top: 40px;
+    left: 0;
+    width: 40%;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+    .body--submitLevel6--studentDetails li {
+        font-size: 18px;
+        height: 40px;
+        min-width: 400px;
+        background-color: white;
+        margin-bottom: 10px;
+        list-style-type: none;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        padding-left: 10px;
+        box-shadow: 2px 2px 9px #888888;
+    }
+
+.confirmDetailsContianer {
+    position: relative;
+    top: 40px;
+    left: 10px;
+    width: 80%;
+    height: 30px;
+    font-size: 18px;
+}
+
+    .confirmDetailsContianer label {
+        position: relative;
+        margin: auto 0;
+    }
+
+.incorrectDetails {
+    text-decoration: underline;
+    color: #4E9FFE;
+    cursor: pointer;
+}
+
+.additionalInfo {
+    display: none;
+    position: absolute;
+    top: 25px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background-color: #3b3b3b;
+    color: white;
+    padding: 10px;
+    font-size: 18px;
+    text-decoration: none;
+    z-index: 100;
+}
+
+
+.confirmDetailsContianer input {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    margin: 0 10px;
+}
+
+.topicProposalContainer {
+    transition: height 0.3s ease-in-out;
+}
+
+
+.proposalsTitle {
+    position: relative;
+    top: 130px;
+    left: 20px;
+    font-size: 22px;
+}
+
+.proposalsPriority {
+    position: absolute;
+    bottom: 100px;
+    left: 20px;
+    width: 80%;
+    height: 270px;
+    background-color: #D9D9D9;
+}
+
+.proposalBox {
+    position: relative;
+    width: 90%;
+    height: 60px;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    box-shadow: 3px 3px 3px #888888;
+    cursor: move;
+}
+
+.over {
+    border: 2px dashed #000;
+}
+
+.proposalDivider {
+    position: absolute;
+    top: 50%;
+    left: 50px;
+    height: 90%;
+    width: 2px;
+    transform: translateY(-50%);
+    background-color: black;
+}
+
+.proposalID {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    font-size: 22px;
+}
+
+.proposalBox h1 {
+    position: relative;
+    margin: auto 0;
+    margin-left: 80px;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.informationIconContainer {
+    position: absolute;
+    bottom: 30px;
+    left: 20px;
+    width: 20%;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+}
+
+.informationIcon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%); /* Offset by half its size for perfect centering */
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #4E9FFE;
+    color: white;
+    display: flex; /* Use flexbox to center the content inside */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    font-size: 20px; /* Adjust font size as needed */
+    text-align: center; /* Ensure text is centered if it wraps */
+}
+
+.informationIconContainer span {
+    position: absolute;
+    top: 50%;
+    left: 50px;
+    transform: translateY(-50%);
+    white-space: nowrap;
+}
+
+.submitProposal {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 100px;
+    height: 40px;
+    font-size: 16px;
+    background-color: #4E9FFE;
+    color: white;
+    border: none;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+    .submitProposal:hover {
+        background-color: #2B80E4;
+        color: white;
+    }
+
+.body--submitLevel7--container {
+    position: absolute;
+    top: 940px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    height: 650px;
+    background-color: #F0F0F0;
+    box-shadow: 2px 2px 9px#888888;
+    border-radius: 6px;
+}
+
+.body--submitLevel7--title {
+    position: relative;
+    top: 20px;
+    left: 20px;
+    font-size: 28px;
+}
+
+.proposalsPriorityLevel7 {
+    position: relative;
+    top: 130px;
+}
+
+.body--proposal--Toggler {
+    position: absolute;
+    top: 280px;
+    left: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 80px;
+    margin-top: 10px;
+}
+
+    .body--proposal--Toggler button span {
+        background-color: transparent;
+        border: none;
+        margin: 20px 20px;
+    }
+
+    .body--proposal--Toggler button {
+        height: 40px;
+        padding: 4px 8px;
+        border: none;
+        font-size: 22px;
+        cursor: pointer;
+    }
+
+        .body--proposal--Toggler button:hover {
+            background-color: #F0F0F0;
+            border-bottom: 2px solid red;
+        }
+
+.formUploadContainer {
+    display: none;
+    position: relative;
+    top: 240px;
+    left: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+    .formUploadContainer span {
+        font-size: 26px;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+@media(max-width: 768px) {
+
+    .body--submitLevel6--title span {
+        font-size: 22px;
+    }
+
+    .body--submitLevel7--title span {
+        font-size: 22px;
+    }
+
+    .body--submitLevel6--studentDetails {
+        position: relative;
+        width: 90%;
+        left: 50%;
+        transform: translateX(-50%);
+        padding-left: 0px;
+    }
+
+        .body--submitLevel6--studentDetails li {
+            min-width: 80%;
+            font-size: 14px;
+            white-space: wrap;
+        }
+
+    .confirmDetailsContianer label {
+        font-size: 14px;
+    }
+
+    .additionalInfo {
+        height: 180px;
+    }
+
+    .proposalBox {
+        left: -30px;
+        width: 100%;
+    }
+
+        .proposalBox h1 {
+            font-size: 14px;
+            margin-left: 60px;
+        }
+
+    .informationIconContainer {
+        position: absolute;
+        bottom: 60px;
+        width: 90%;
+    }
+
+        .informationIconContainer span {
+            font-size: 14px;
+        }
+
+    .body--proposal--Toggler {
+        top: 320px;
+    }
+
+    .body--proposal--Toggler {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 18px;
+        white-space: nowrap;
+    }
+
+    .proposalsTitle {
+        position: relative;
+        font-size: 12px;
+        width: 90%;
+        display: block;
+    }
+
+    .formUploadContainer {
+        top: 150px;
+    }
+}

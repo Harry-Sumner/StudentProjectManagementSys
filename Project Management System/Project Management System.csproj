@@ -9,10 +9,12 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\js\loginRegisterToggler.js" />
+    <Content Remove="wwwroot\js\proposalDragDrop.js" />
   </ItemGroup>
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\js\loginRegisterToggler.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\proposalDragDrop.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +23,7 @@
 
   <ItemGroup>
     <None Include="wwwroot\js\loginRegisterToggler.js" />
+    <None Include="wwwroot\js\proposalDragDrop.js" />
   </ItemGroup>
 
   <ItemGroup>

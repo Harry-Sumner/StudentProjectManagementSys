@@ -11,35 +11,44 @@ namespace Project_Management_System.Pages
         public UndergraduateProposal proposal = new(); //Create new instance of Order
         private readonly SPMS_Context _db;
         private readonly UserManager<SPMS_Student> _UserManager;
+        private readonly SignInManager<SPMS_User> _signInManager;
         private readonly Project_Management_System.Data.SPMS_Context _context;
         public IList<TopicBasket> TopicsBasket { get; private set; } //Create a list implementing CheckoutItem class called Items; declare getters and setters.
 
         public IList<TopicBasket> TopicBasket { get; set; }
+        public IList<Course> Course { get; set; }
         public IList<Topic> Topics { get; private set; }
 
-        public Submit_ProposalModel(Project_Management_System.Data.SPMS_Context context, SPMS_Context db, UserManager<SPMS_Student> userManager)
+        public Submit_ProposalModel(Project_Management_System.Data.SPMS_Context context, SPMS_Context db, UserManager<SPMS_Student> userManager, SignInManager<SPMS_User> signInManager)
         {
             _context = context;
             _db = db;
             _UserManager = userManager;
+            _signInManager = signInManager;
 
         }
         public async Task OnGetAsync()
         {
             var user = await _UserManager.GetUserAsync(User);
 
-            if (_context.TopicBasket != null)
+            if (_context.TopicBasket != null && user != null)
             {
                 TopicsBasket = await _context.TopicBasket.ToListAsync();
-                foreach(var basket in TopicsBasket.Where(i => i.StudentID == user.Id))
+                /*foreach(var basket in TopicsBasket.Where(i => i.StudentID == user.Id))
                 {
                     TopicBasket.Add(basket);
-                }
+                   
+                }*/
             }
 
             if (_context.Topic != null)
             {
                 Topics = await _context.Topic.ToListAsync();
+            }
+
+            if (_context.Course != null)
+            {
+                Course = await _context.Course.ToListAsync();
             }
         }
         public async Task<IActionResult> OnPostSubmitAsync()
