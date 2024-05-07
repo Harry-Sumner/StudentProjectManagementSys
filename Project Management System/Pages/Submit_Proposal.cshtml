@@ -63,8 +63,9 @@
                 {
                     @foreach (var topic in Model.Topics.Where(i => i.TopicID == proposal.TopicID))
                     {
+                        Model.Priority += 1;
                         <li class="proposalBox" draggable="true" id="propsal1">
-                            <span class="proposalID">1</span>
+                            <span class="proposalID">@Model.Priority</span>
                             <div class="proposalDivider"></div>
                             <h1>@topic.TopicName</h1>
                             @if(topic.SupervisorID != null)

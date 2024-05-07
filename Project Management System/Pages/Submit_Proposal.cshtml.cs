@@ -17,6 +17,7 @@ namespace Project_Management_System.Pages
         public IList<TopicBasket> TopicBasket { get; set; }
         public IList<Course> Course { get; set; }
         public IList<Topic> Topics { get; private set; }
+        public int Priority { get; set; }
 
         public Submit_ProposalModel(Project_Management_System.Data.SPMS_Context context, SPMS_Context db, UserManager<SPMS_Student> userManager, SignInManager<SPMS_User> signInManager)
         {
