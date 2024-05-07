@@ -21,6 +21,7 @@
 
 
 
+
     <div class="body--Topics--container">
         @foreach (var topic in Model.Topic)
         {
@@ -46,10 +47,11 @@
                     @if (User.IsInRole("Student"))
                     {
                         <form method="post">
-                            <button type="submit" class="addTopic" asp-page-handler="Add" asp-route-topicID="@topic.TopicID">
+                            <button onclick="myFunction()" type="submit" class="addTopic" asp-page-handler="Add" asp-route-topicID="@topic.TopicID">
                                 <div class="addIcon"></div>
                             </button>
                         </form>
+
                     }
                 </div>
             </div>
