@@ -1,0 +1,226 @@
+﻿b.body--search--container {
+    position: absolute;
+    top: 160px;
+    left: 60%;
+    width: 30%;
+    max-width: 400px;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    background-color: #ECECEC;
+}
+
+.body--search--container input {
+    position: absolute;
+    top: 50%;
+    width: 85%;
+    height: 35px;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: 1px solid black;
+}
+
+.body--search--container button {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    background-image: url(../images/SearchIcon.svg);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 80%;
+    width: 12%;
+    border: none;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+    .body--search--container button:hover {
+        border: 1px solid black;
+    }
+
+.body--Topics--container {
+    position: absolute;
+    top: 250px;
+    left: 50%;
+    width: 90%;
+    height: 600px;
+    transform: translateX(-50%);
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    background-color: #CECECE;
+    border-radius: 5px;
+    padding: 10px 0;
+}
+
+.topicBox {
+    position: relative;
+    width: 90%;
+    min-height: 80px; /* Default height */
+    margin: 12px auto; /* Automatically align and provide space between boxes */
+    display: flex;
+    align-items: center; /* Align items in the middle */
+    background-color: white;
+    border: 2px solid #6E6E6E;
+    box-shadow: 3px 3px 3px #888888;
+    transition: min-height 0.3s ease-in-out;
+    overflow: hidden; /* Hide overflow content when not expanded */
+}
+
+    .topicBox span {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        transition: all 0.3s;
+    }
+
+.topicTitle {
+    position: absolute;
+    left: 50px;
+}
+
+.SupervisorGroup {
+    position: absolute;
+    top: 50%;
+    left: 35%;
+    min-width: 150px;
+    height: 50px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: row;
+    transition: all 0.3s;
+}
+
+.topicSupervisor {
+    text-decoration: underline;
+    cursor: pointer;
+    color: black;
+}
+
+.topicButtonContainer {
+    position: absolute;
+    right: 10px;
+    height: 100%;
+    width: 100px;
+    display: flex;
+    flex-direction: row;
+}
+
+    .topicButtonContainer form {
+        width: 50%;
+    }
+
+        .topicButtonContainer form button {
+            width: 100%;
+            border-right: 1px solid black;
+            background-color: #6BEB56;
+        }
+
+    .topicButtonContainer button {
+        position: relative;
+        width: 50%;
+        height: 100%;
+        border: none;
+        border-left: 1px solid black;
+        background-color: #4E9FFE;
+        cursor: pointer;
+    }
+
+.supervisorIcon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: -40px;
+    background-image: url(../images/SupervisorLogo.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+}
+
+.topicDescription {
+    display: none;
+    transition: 0.3s ease-in-out;
+}
+
+.expandIcon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url(../images/ExpandListBox.svg);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+}
+
+.addIcon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url(../images/AddTopicListBox.svg);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+}
+
+.topicBox.expanded {
+    min-height: 300px;
+}
+
+    .topicBox.expanded .topicTitle {
+        top: 25px;
+    }
+
+    .topicBox.expanded .SupervisorGroup {
+        top: 25px;
+    }
+
+    .topicBox.expanded .topicDescription {
+        display: block;
+        position: absolute;
+        bottom: 10px;
+        width: 60%;
+        left: 10px;
+        font-size: 12px;
+    }
+
+footer {
+    top: 1000px !important;
+}
+
+@media(max-width: 768px) {
+
+    .body--search--container {
+        right: 40%;
+        top: 130px;
+        width: 60%;
+        transform: translateX(-50%);
+    }
+
+    .body--Topics--container {
+        top: 180px;
+    }
+
+    .topicTitle {
+        left: 10px;
+        top: 15px !important;
+    }
+
+    .SupervisorGroup {
+        left: 10px !important;
+        top: 55px;
+    }
+
+    .topicBox.expanded .SupervisorGroup {
+        top: 55px;
+    }
+}

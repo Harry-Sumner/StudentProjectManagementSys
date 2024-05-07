@@ -4,37 +4,41 @@
     ViewData["Title"] = "Home page";
 }
 
+<link rel="stylesheet" href="~/css/browseTopics.css">
+<script src="~/js/listBoxExpansion.js"></script>
 
+<body>
+    <form method="post" class="body--search--container">
+        <input type="text" name="searchbar" placeholder="Search for a topic">
+        <button for="searchbar" asp-page-handler="Search"></button>
+    </form>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>This web application is still in development. Please report any core functionality bugs on Issue board on GitLab.</p>
-</div>
+    <div class="body--Topics--container">
+        @foreach (var topic in Model.Topic)
+        {
+            <div class="topicBox">
+                <span class="topicTitle">@topic.TopicName</span>
 
-<div class="text-center">
-    <h2 class="display-4">Topics</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-            </tr>
-        </thead>
+                <div class="SupervisorGroup">
+                    <span class="topicSupervisor">Example Supervisor</span>
+                    <div class="supervisorIcon"></div>
+                </div>
 
-        <tbody>
-            @foreach (var tblTopic in Model.Topic)
-            {
-                <tr>
-                    <td>@tblTopic.TopicName</td>
-                    <td>@tblTopic.TopicDescription</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+                <div class="topicDescription">@topic.TopicDescription</div>
 
-<h2>Search</h2>
-<form method="post">
-    <div>Search <input asp-for="Search"/></div>
-    <button type="submit" asp-page-handler="Search">Submit</button>
-</form>
+                <div class="topicButtonContainer">
+                    <button class="expandTopic">
+                        <div class="expandIcon"></div>
+                    </button>
+                    <!--adjust the form as needed-->
+                    <form method="post">
+                        <button type="submit" class="addTopic">
+                            <div class="addIcon"></div>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+
+</body>
