@@ -4,7 +4,8 @@
 }
 
 @inject SignInManager<SPMS_User> SignInManager
-@inject UserManager<SPMS_Student> UserManager
+@inject UserManager<SPMS_Student> StudentManager
+@inject UserManager<SPMS_Staff> StaffManager
 
 @using Microsoft.AspNetCore.Identity
 @using Project_Management_System.Data
@@ -15,7 +16,8 @@
 <script src="~/js/proposalDragDrop.js"></script>
 
 @{
-    var user = await UserManager.GetUserAsync(User);
+    var student = await StudentManager.GetUserAsync(User);
+    
 }
 
 <div class="body--submitLevel6--container">
@@ -24,9 +26,9 @@
     </div>
 
     <ul class="body--submitLevel6--studentDetails">
-        <li>Student Name: @user.Name</li>
-        <li>Student Number: @user.StudentNo</li>
-        @foreach (var course in Model.Course.Where(i => i.CourseID == user.CourseID))
+        <li>Student Name: @student.Name</li>
+        <li>Student Number: @student.StudentNo</li>
+        @foreach (var course in Model.Course.Where(i => i.CourseID == student.CourseID))
         {
             <li>Degree Programme: @course.CourseName</li>
         }
@@ -57,7 +59,7 @@
 
             <span class="proposalsTitle">Please order your three preferred project Topics with #1 being your <b>Top</b> Preference</span>
             <ul class="proposalsPriority">
-                @foreach (var proposal in Model.TopicsBasket.Where(i => i.StudentID == user.Id))
+                @foreach (var proposal in Model.TopicsBasket.Where(i => i.StudentID == student.Id))
                 {
                     @foreach (var topic in Model.Topics.Where(i => i.TopicID == proposal.TopicID))
                     {
@@ -65,7 +67,11 @@
                             <span class="proposalID">1</span>
                             <div class="proposalDivider"></div>
                             <h1>@topic.TopicName</h1>
-                            <h1>Example Supervisor</h1>
+                            @if(topic.SupervisorID != null)
+                            {
+                                var staff = await StaffManager.FindByIdAsync(topic.SupervisorID);
+                                <h1>@staff.Name</h1>
+                            }
                         </li>
 
                     }
