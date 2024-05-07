@@ -35,7 +35,7 @@
         
     </ul>
     
-    @if(Model.TopicsBasket.Count() == 0)
+    @if(Model.TopicBasket.Count() == 0)
     {
         <ul class="body--submitLevel6--studentDetails">
             <li>You have not added any topics.</li>
@@ -59,7 +59,7 @@
 
             <span class="proposalsTitle">Please order your three preferred project Topics with #1 being your <b>Top</b> Preference</span>
             <ul class="proposalsPriority">
-                @foreach (var proposal in Model.TopicsBasket.Where(i => i.StudentID == student.Id))
+                @foreach (var proposal in Model.TopicBasket)
                 {
                     @foreach (var topic in Model.Topics.Where(i => i.TopicID == proposal.TopicID))
                     {

@@ -13,7 +13,6 @@ namespace Project_Management_System.Pages
         private readonly UserManager<SPMS_Student> _UserManager;
         private readonly SignInManager<SPMS_User> _signInManager;
         private readonly Project_Management_System.Data.SPMS_Context _context;
-        public IList<TopicBasket> TopicsBasket { get; private set; } //Create a list implementing CheckoutItem class called Items; declare getters and setters.
 
         public IList<TopicBasket> TopicBasket { get; set; }
         public IList<Course> Course { get; set; }
@@ -31,14 +30,11 @@ namespace Project_Management_System.Pages
         {
             var user = await _UserManager.GetUserAsync(User);
 
-            if (_context.TopicBasket != null && user != null)
+            if (user != null)
             {
-                TopicsBasket = await _context.TopicBasket.ToListAsync();
-                /*foreach(var basket in TopicsBasket.Where(i => i.StudentID == user.Id))
-                {
-                    TopicBasket.Add(basket);
-                   
-                }*/
+                TopicBasket = _db.TopicBasket //select data from database
+                .FromSqlRaw("SELECT * FROM TopicBasket WHERE StudentID = {0}", user.Id)
+                .ToList();
             }
 
             if (_context.Topic != null)
