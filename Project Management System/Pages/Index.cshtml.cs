@@ -6,7 +6,7 @@ using Project_Management_System.Data;
 
 namespace Project_Management_System.Pages
 {
-    [Authorize]
+   // [Authorize]
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;

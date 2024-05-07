@@ -73,6 +73,4 @@ $(document).ready(function () {
         // Handle the exception here, or you can choose not to handle it if you don't want to display any message to the user
         console.error("An exception occurred:", error);
     }
-
-
 });

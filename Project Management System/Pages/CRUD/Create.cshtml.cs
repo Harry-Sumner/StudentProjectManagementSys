@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Project_Management_System.Data;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Project_Management_System.Pages.crud
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly Project_Management_System.Data.SPMS_Context _context;
@@ -24,7 +27,7 @@ namespace Project_Management_System.Pages.crud
         }
 
         [BindProperty]
-        public Topic Topic { get; set; } = default!;
+        public Topic Topic { get; set; } = new Topic(); // Ensure Topic is initialized
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
@@ -33,6 +36,9 @@ namespace Project_Management_System.Pages.crud
             {
                 return Page();
             }
+
+            // Set SupervisorID here based on the logged-in user, if needed
+            // Example: Topic.SupervisorID = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             _context.Topic.Add(Topic);
             await _context.SaveChangesAsync();
