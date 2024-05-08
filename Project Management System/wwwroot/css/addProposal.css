@@ -1,0 +1,71 @@
+﻿body {
+}
+
+.body--addProposal--container {
+    position: absolute;
+    top: 180px;
+    left: 50%;
+    width: 90%;
+    height: 750px;
+    transform: translateX(-50%);
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #888888;
+    display: flex;
+    flex-direction: column;
+}
+
+.addTitle {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 24px;
+    border-bottom: 2px solid red;
+}
+
+.addGroup {
+    position: relative;
+    top: 80px;
+    left: 20px;
+    margin-top: 20px;
+    width: 40%;
+    padding: 10px;
+    max-width: 600px;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 2px #888888;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+    .addGroup input {
+        font-size: 18px;
+        padding: 8px;
+    }
+
+    .addGroup textarea {
+        resize: none;
+        height: 200px;
+    }
+
+    .addGroup label {
+        font-size: 20px;
+    }
+
+.addBtn {
+    position: relative;
+    left: 50%;
+    width: 40%;
+    height: 50px;
+    transform: translateX(-50%);
+    border: none;
+    background-color: #4E9FFE;
+    color: white;
+    font-size: 18px;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+    .addBtn:hover {
+        background-color: #2B80E4;
+    }
+
