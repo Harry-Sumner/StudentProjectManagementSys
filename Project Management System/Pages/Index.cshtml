@@ -16,6 +16,17 @@
     <input type="text" name="Search" placeholder="Search for a topic">
     <button type="submit"></button>
 </form>
+<div class="dropdown">
+    <button onclick="filterFunction1()" class="dropbtn">Course</button>
+    <div id="myDropdown" class="dropdown-content">
+        <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+        <!-- You can replace the example links with your dynamic data -->
+        @foreach (var course in Model.Course)
+        {
+            <a href="#">@course.CourseName</a>
+        }
+    </div>
+</div>
 
 
 
@@ -43,6 +54,7 @@
                     <button class="expandTopic">
                         <div class="expandIcon"></div>
                     </button>
+
                     <!--adjust the form as needed-->
                     @if (User.IsInRole("Student"))
                     {

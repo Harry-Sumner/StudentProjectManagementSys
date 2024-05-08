@@ -284,8 +284,8 @@ footer {
 .footer--userAccount {
     position: relative;
     top: 30%;
-    margin-left: 10px;
-    width: 180px;
+    margin-left: 900px;
+    width: 200px;
     overflow: hidden;
 }
 
@@ -499,9 +499,61 @@ footer {
 .form-groupedit {
     padding-bottom: 5px
 }
-
-/* Optional: Style for error messages */
-.text-danger {
-    color: #dc3545;
-    font-size: 14px;
+/* Dropdown for courses */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    top: 55px;
+    float: right;
+    left: 20px;
 }
+
+/* Dropdown button */
+.dropbtn {
+    background-color: gray;
+    color: white; /*Colour for heading*/
+    padding: 10px 20px; /*padding for dropdown*/
+    font-size: 16px;
+    border: none; /*no border on dropdown */
+    cursor: pointer; /* when hovered over the cursor points*/
+    border-radius: 4px; /*makes the button more round*/
+}
+
+/* Dropdown content */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+    /* Links inside the dropdown */
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+        /* Change color of dropdown links on hover */
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+/* Show the dropdown when hovering over the button */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Style the search input */
+.dropdown input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
