@@ -1,4 +1,4 @@
-﻿b.body--search--container {
+﻿.body--search--container {
     position: absolute;
     top: 160px;
     left: 60%;
@@ -10,17 +10,35 @@
     background-color: #ECECEC;
 }
 
-.body--search--container input {
-    position: absolute;
-    bottom: 76%;
-    width: 20%;
-    right: 40%;
-    height: 35px;
-    transform: translateY(-50%);
-    background-color: transparent;
-    border: 1px solid black;
-}
+    .body--search--container input {
+        position: absolute;
+        top: 50%;
+        width: 85%;
+        height: 35px;
+        transform: translateY(-50%);
+        background-color: transparent;
+        border: 1px solid black;
+    }
 
+    .body--search--container button {
+        position: absolute;
+        top: 50%;
+        right: 5px;
+        transform: translateY(-50%);
+        background-image: url(../images/SearchIcon.svg);
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 80%;
+        width: 12%;
+        border: none;
+        border-radius: 5px;
+        transition: all 0.3s;
+    }
+
+        .body--search--container button:hover {
+            border: 1px solid black;
+        }
 
 .body--Topics--container {
     position: absolute;
@@ -37,35 +55,13 @@
     padding: 10px 0;
 }
 
-
-.body--search--container button {
-    position: absolute;
-    top: 160px;
-    left: 68%; /* Adjusted to center horizontally */
-    transform: translateX(-50%); /* Center horizontally */
-    background-image: url(../images/SearchIcon.svg);
-    width: 10%;
-    max-width: 400px;
-    height: 50px;
-    display: flex;
-    flex-direction: row;
-    background-color: #ECECEC;
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-}
-
-    .body--search--container button:hover {
-        border: 1px solid black;
-    }
-
 .topicBox {
     position: relative;
     width: 90%;
-    min-height: 80px; /* Default height */
-    margin: 12px auto; /* Automatically align and provide space between boxes */
+    min-height: 80px;
+    margin: 12px auto;
     display: flex;
-    align-items: center; /* Align items in the middle */
+    align-items: center;
     background-color: white;
     border: 2px solid #6E6E6E;
     box-shadow: 3px 3px 3px #888888;
@@ -203,19 +199,12 @@ footer {
 
 @media(max-width: 768px) {
 
-   .body--search--container {
-    position: absolute;
-    top: 160px;
-    left: 50%; /* Adjusted to center horizontally */
-    transform: translateX(-50%); /* Center horizontally */
-    width: 30%;
-    max-width: 400px;
-    height: 50px;
-    display: flex;
-    flex-direction: row;
-    background-color: #ECECEC;
-}
-
+    .body--search--container {
+        right: 40%;
+        top: 130px;
+        width: 60%;
+        transform: translateX(-50%);
+    }
 
     .body--Topics--container {
         top: 180px;
