@@ -20,6 +20,8 @@ namespace Project_Management_System.Pages
         public IList<Topic> Topics { get; private set; }
         public int Priority { get; set; }
 
+        public bool Postgraduate { get; set; }
+
         public Submit_ProposalModel(Project_Management_System.Data.SPMS_Context context, SPMS_Context db, UserManager<SPMS_Student> userManager, SignInManager<SPMS_User> signInManager)
         {
             _context = context;
@@ -37,16 +39,23 @@ namespace Project_Management_System.Pages
                 TopicBasket = _db.TopicBasket //select data from database
                 .FromSqlRaw("SELECT * FROM TopicBasket WHERE StudentID = {0}", user.Id)
                 .ToList();
+
+                Course = _db.Course //select data from database
+                .FromSqlRaw("SELECT * FROM Course WHERE CourseID = {0}", user.CourseID)
+                .ToList();
+
+                foreach(var course in Course)
+                {
+                    if (course.Postgraduate)
+                    {
+                        Postgraduate = true;
+                    }
+                }
             }
 
             if (_context.Topic != null)
             {
                 Topics = await _context.Topic.ToListAsync();
-            }
-
-            if (_context.Course != null)
-            {
-                Course = await _context.Course.ToListAsync();
             }
         }
         public async Task<IActionResult> OnPostSubmitAsync()

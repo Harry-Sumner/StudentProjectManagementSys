@@ -22,135 +22,146 @@
     
 }
 
-<div class="body--submitLevel6--container">
-    <div class="body--submitLevel6--title">
-        <span>Dissertation Project Preferences</span>
-    </div>
-
-    <ul class="body--submitLevel6--studentDetails">
-        <li>Student Name: @student.Name</li>
-        <li>Student Number: @student.StudentNo</li>
-        @foreach (var course in Model.Course.Where(i => i.CourseID == student.CourseID))
-        {
-            <li>Degree Programme: @course.CourseName</li>
-        }
-    </ul>
-
-    <form method="post" action="">
-        <div class="confirmDetailsContianer">
-            <input type="checkbox" class="detailsCorrect" name="confirmDetails">
-            <label for="confirmDetails">I confirm that these Details are correct,</label>
-            <label class="incorrectDetails" for="confirmDetails">
-                My details are incorrect
-                <div class="additionalInfo">
-                    <span>Please contact your PAT or your head of department immediately if your details are incorrect</span>
-                </div>
-            </label>
+@if(Model.Postgraduate){
+    <div class="body--submitLevel7--container">
+        <div class="body--submitLevel7--title">
+            <span>Dissertation Project Preferences</span>
         </div>
 
-        <div class="body--proposal--Toggler">
-            <button class="TopicsBtn">Topics</button>
-            <span> / </span>
-            <button class="FormUploadBtn">Form Upload</button>
-        </div>
+        <ul class="body--submitLevel6--studentDetails">
+            <li>Student Name: @student.Name</li>
+            <li>Student Number: @student.StudentNo</li>
+            @foreach (var course in Model.Course)
+            {
+                <li>Degree Programme: @course.CourseName</li>
+            }
+        </ul>
 
-        @if (Model.TopicBasket.Count() > 0)
-        {
-            <span class="proposalsTitle">Please order your <b>three</b> preferred project Topics with #1 being your <b>Top</b> Preference</span>
-            <ul class="proposalsPriority">
-                @foreach (var proposal in Model.TopicBasket)
-                {
-                    @foreach (var topic in Model.Topics.Where(i => i.TopicID == proposal.TopicID))
-                    {
-                        Model.Priority += 1;
-                        <li class="proposalBox" draggable="true" id="propsal1">
-                            <span class="proposalID">@Model.Priority</span>
-                            <div class="proposalDivider"></div>
-                            <h1>@topic.TopicName</h1>
-                            @if (topic.SupervisorID != null)
-                            {
-                                var staff = await StaffManager.FindByIdAsync(topic.SupervisorID);
-                                <h1>@staff.Name</h1>
-                            }
-
-                            <form method="post">
-                                <button class="removeBox" type="submit" asp-page-handler="Delete" asp-route-topicID="@topic.TopicID">
-                                    <div class="removeIcon"></div>
-                                </button>
-                            </form>
-                        </li>
-
-                    }
-                }
-            </ul>
-            <div class="informationIconContainer">
-                <div class="informationIcon">!</div>
-                <span>Drag and Drop the proposals to order them</span>
+        <form method="post" action="">
+            <div class="confirmDetailsContianer">
+                <input type="checkbox" class="detailsCorrect" name="confirmDetails">
+                <label for="confirmDetails">I confirm that these Details are correct,</label>
+                <label class="incorrectDetails" for="confirmDetails">
+                    My details are incorrect
+                    <div class="additionalInfo">
+                        <span>Please contact your PAT or your head of department immediately if your details are incorrect</span>
+                    </div>
+                </label>
             </div>
 
-        } else
-        {
-            <ul class="body--submitLevel6--studentDetails">
-                <li>You have not added any topics.</li>
-            </ul>
-        }
-        <div class="formUploadContainer">
-            <span class="ProposalTitleFormUpload">Upload your completed proposal form: </span>
-            <input type="file" class="fileUpload" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword">
-        </div>
+            <div class="body--proposal--Toggler">
+                <button class="TopicsBtn">Topics</button>
+                <span> / </span>
+                <button class="FormUploadBtn">Form Upload</button>
+            </div>
 
-        <button type="submit" class="submitProposal">Submit</button>
-    </form>
-</div>
+            <div class="topicProposalContainer">
+                <ul class="proposalsPriorityLevel7">
+                    <li class="proposalBox" id="propsal1">
+                        <span class="proposalID">1</span>
+                        <div class="proposalDivider"></div>
+                        <h1>Example Proposal</h1>
+                        <h1>Example Supervisor</h1>
+                    </li>
+                </ul>
+            </div>
 
+            <div class="formUploadContainer">
+                <span class="ProposalTitleFormUpload">Upload your completed proposal form: </span>
+                <input type="file" class="fileUpload" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword">
+            </div>
 
-@* <div class="body--submitLevel7--container">
-    <div class="body--submitLevel7--title">
-        <span>CO#### Dissertation Project Preferences</span>
+            <button type="submit" class="submitProposal">Submit</button>
+        </form>
     </div>
+}
+else
+{
+    <div class="body--submitLevel6--container">
+        <div class="body--submitLevel6--title">
+            <span>Dissertation Project Preferences</span>
+        </div>
 
-    <ul class="body--submitLevel6--studentDetails">
-        <li>Student Name: Example Student</li>
-        <li>Student Number: 1234567</li>
-        <li>Degree Programme:  BSc Computer Science</li>
-    </ul>
+        <ul class="body--submitLevel6--studentDetails">
+            <li>Student Name: @student.Name</li>
+            <li>Student Number: @student.StudentNo</li>
+            @foreach (var course in Model.Course)
+            {
+                <li>Degree Programme: @course.CourseName</li>
+            }
+        </ul>
 
-    <form method="post" action="">
-        <div class="confirmDetailsContianer">
-            <input type="checkbox" class="detailsCorrect" name="confirmDetails">
-            <label for="confirmDetails">I confirm that these Details are correct,</label>
-            <label class="incorrectDetails" for="confirmDetails">
-                My details are incorrect
-                <div class="additionalInfo">
-                    <span>Please contact your PAT or your head of department immediately if your details are incorrect</span>
+        <form method="post" action="">
+            <div class="confirmDetailsContianer">
+                <input type="checkbox" class="detailsCorrect" name="confirmDetails">
+                <label for="confirmDetails">I confirm that these Details are correct,</label>
+                <label class="incorrectDetails" for="confirmDetails">
+                    My details are incorrect
+                    <div class="additionalInfo">
+                        <span>Please contact your PAT or your head of department immediately if your details are incorrect</span>
+                    </div>
+                </label>
+            </div>
+
+            <div class="body--proposal--Toggler">
+                <button class="TopicsBtn">Topics</button>
+                <span> / </span>
+                <button class="FormUploadBtn">Form Upload</button>
+            </div>
+
+            @if (Model.TopicBasket.Count() > 0)
+            {
+                <span class="proposalsTitle">Please order your <b>three</b> preferred project Topics with #1 being your <b>Top</b> Preference</span>
+                <ul class="proposalsPriority">
+                    @foreach (var proposal in Model.TopicBasket)
+                    {
+                        @foreach (var topic in Model.Topics.Where(i => i.TopicID == proposal.TopicID))
+                        {
+                            Model.Priority += 1;
+                            <li class="proposalBox" draggable="true" id="propsal1">
+                                <span class="proposalID">@Model.Priority</span>
+                                <div class="proposalDivider"></div>
+                                <h1>@topic.TopicName</h1>
+                                @if (topic.SupervisorID != null)
+                                {
+                                    var staff = await StaffManager.FindByIdAsync(topic.SupervisorID);
+                                    <h1>@staff.Name</h1>
+                                }
+
+                                <form method="post">
+                                    <button class="removeBox" type="submit" asp-page-handler="Delete" asp-route-topicID="@topic.TopicID">
+                                        <div class="removeIcon"></div>
+                                    </button>
+                                </form>
+                            </li>
+
+                        }
+                    }
+                </ul>
+                <div class="informationIconContainer">
+                    <div class="informationIcon">!</div>
+                    <span>Drag and Drop the proposals to order them</span>
                 </div>
-            </label>
-        </div>
 
-        <div class="body--proposal--Toggler">
-            <button class="TopicsBtn">Topics</button>
-            <span> / </span>
-            <button class="FormUploadBtn">Form Upload</button>
-        </div>
+            }
+            else
+            {
+                <ul class="body--submitLevel6--studentDetails">
+                    <li>You have not added any topics.</li>
+                </ul>
+            }
+            <div class="formUploadContainer">
+                <span class="ProposalTitleFormUpload">Upload your completed proposal form: </span>
+                <input type="file" class="fileUpload" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword">
+            </div>
 
-        <div class="topicProposalContainer">
-            <ul class="proposalsPriorityLevel7">
-                <li class="proposalBox" id="propsal1">
-                    <span class="proposalID">1</span>
-                    <div class="proposalDivider"></div>
-                    <h1>Example Proposal</h1>
-                    <h1>Example Supervisor</h1>
-                </li>
-            </ul>
-        </div>
+            <button type="submit" class="submitProposal">Submit</button>
+        </form>
+    </div>
+}
 
-        <div class="formUploadContainer">
-            <span class="ProposalTitleFormUpload">Upload your completed proposal form: </span>
-            <input type="file" class="fileUpload" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword">
-        </div>
 
-        <button type="submit" class="submitProposal">Submit</button>
-    </form>
-</div> *@
+
+
 
 
