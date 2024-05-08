@@ -31,10 +31,11 @@ namespace Project_Management_System.Pages.AccountProfile
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public string Username { get; set; }
-
         public IList<Division> Divisions { get; set; } = default!;
+        public IList<Topic> Topic { get; set; } = default!;
 
         public IList<StaffDivision> StaffDivisions = default!;
+        public IList<StaffInterest> StaffInterest { get; private set; }
 
 
         /// <summary>
@@ -49,10 +50,7 @@ namespace Project_Management_System.Pages.AccountProfile
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
-
-
             Username = userName;
-
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -74,6 +72,21 @@ namespace Project_Management_System.Pages.AccountProfile
             {
                 Divisions = await _context.Division.ToListAsync();
             }
+
+            /*if (_context.StaffInterest!= null)
+            {
+                StaffInterest = await _context.StaffInterest.ToListAsync();
+            }*/
+
+            Topic = _db.Topic //select data from database
+                .FromSqlRaw("SELECT * FROM Topic WHERE SupervisorID = {0}", user.Id)
+                .ToList();
+
+            StaffInterest = _db.StaffInterest //select data from database
+                .FromSqlRaw("SELECT * FROM StaffInterest WHERE StaffID = {0}", user.Id)
+                .ToList();
+
+            
 
             return Page();
         }
