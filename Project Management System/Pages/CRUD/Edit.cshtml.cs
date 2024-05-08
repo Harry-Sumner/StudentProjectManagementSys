@@ -60,7 +60,7 @@ namespace Project_Management_System.Pages.crud
             {
                 if (!ModelState.IsValid)
                 {
-                    return Page();
+                    return RedirectToPage("./Index");
                 }
 
                 var topicToUpdate = await _context.Topic.FindAsync(TopicID);
