@@ -30,7 +30,7 @@ namespace Project_Management_System.Pages
         }
 
         public IList<Topic> Topic { get; set; } = new List<Topic>();
-
+        public IList<Course> Course { get; set; } = new List<Course>();
         // Bind the search query parameter from the URL
         public string Search { get; set; }
 
@@ -47,6 +47,11 @@ namespace Project_Management_System.Pages
             {
                 // If no search query is provided, retrieve all topics
                 Topic = await _context.Topic.ToListAsync();
+            }
+
+            if(_context.Course != null)
+            {
+                Course = await _context.Course.ToListAsync();
             }
         }
 

@@ -187,9 +187,9 @@
     .topicBox.expanded .topicDescription {
         display: block;
         position: absolute;
-        bottom: 10px;
+        bottom: 50px;
         width: 60%;
-        left: 10px;
+        left: 30px;
         font-size: 12px;
     }
 
@@ -223,4 +223,5 @@ footer {
     .topicBox.expanded .SupervisorGroup {
         top: 55px;
     }
+
 }
