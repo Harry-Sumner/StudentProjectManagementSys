@@ -18,7 +18,7 @@ namespace Project_Management_System.Pages.crud
         }
 
         [BindProperty]
-        public Topic Topic { get; set; } = new Topic();
+        public Topic Topic { get; set; }
 
         [BindProperty]
         public int TopicID { get; set; }
@@ -58,11 +58,10 @@ namespace Project_Management_System.Pages.crud
             }
             else if (command == "Save")
             {
-                if (!ModelState.IsValid)
-                {
-                    return RedirectToPage("./Index");
-                }
+                await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
 
+            }
                 var topicToUpdate = await _context.Topic.FindAsync(TopicID);
 
                 if (topicToUpdate == null)
@@ -94,8 +93,8 @@ namespace Project_Management_System.Pages.crud
                 return RedirectToPage("./Index");
             }
 
-            return Page();
-        }
+        
+    
 
         private bool TopicExists(int id)
         {
