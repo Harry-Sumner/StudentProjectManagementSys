@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Project_Management_System.Data;
+using Project_Management_System.Migrations;
 
 namespace Project_Management_System.Pages
 {
@@ -56,23 +57,16 @@ namespace Project_Management_System.Pages
          
 
             await _db.SaveChangesAsync(); //save all changes to sql database
-            return RedirectToPage("/Index"); //return to home page once order complete
+            return RedirectToPage("/Index"); //return to home page
         }
 
-        public async Task<IActionResult> OnPostDeleteAsync(int id) //takes id passed from button
+        public async Task<IActionResult> OnPostDeleteAsync(int topicID) //takes id passed from button
         {
-            var users = await _UserManager.GetUserAsync(User);
-            
-
-            return RedirectToPage(); //return to checkout page
-        }
-
-        public async Task<IActionResult> OnPostAddAsync(int id) //id of item is passed in via button page handler
-        {
-            var users = await _UserManager.GetUserAsync(User);
-           
-
-            return RedirectToPage(); //return back to checkout upon completion
+            var user = await _UserManager.GetUserAsync(User);
+            var topic = await _db.TopicBasket.FindAsync(user.Id, topicID);
+            _db.TopicBasket.Remove(topic);
+            await _db.SaveChangesAsync(); //save changes
+            return RedirectToPage(); //return to page
         }
     }
 }

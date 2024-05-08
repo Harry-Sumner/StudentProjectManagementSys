@@ -1,25 +1,43 @@
 $(document).ready(function () {
     var draggedItem = null;
-    $('.TopicsBtn').css('border-bottom', '2px solid red');
-    $('.formUploadContainer').css('display', 'none');
 
-    $('.TopicsBtn').click(function (e) {
+    initializePage();
+
+    $('.body--submitLevel6--container .TopicsBtn, .body--submitLevel7--container .TopicsBtn').click(function (e) {
         e.preventDefault();
-        $('.formUploadContainer').slideUp(400, function () {
-            $('.topicProposalContainer').slideDown(400);
-        });
-        $(this).css('border-bottom', '2px solid red');
-        $('.FormUploadBtn').css('border', 'none');
+        toggleSections($(this), false);
     });
 
-    $('.FormUploadBtn').click(function (e) {
+
+    $('.body--submitLevel6--container .FormUploadBtn, .body--submitLevel7--container .FormUploadBtn').click(function (e) {
         e.preventDefault();
-        $('.topicProposalContainer').slideUp(400, function () {
-            $('.formUploadContainer').slideDown(400);
-        });
-        $(this).css('border-bottom', '2px solid red');
-        $('.TopicsBtn').css('border', 'none');
+        toggleSections($(this), true);
     });
+
+
+    function toggleSections(button, isUpload) {
+        var $container = button.closest('div[class^="body--submitLevel"]');
+        if (isUpload) {
+            $container.find('.topicProposalContainer, .proposalsPriority').slideUp(400, function () {
+                $container.find('.formUploadContainer').slideDown(400);
+            });
+            button.css('border-bottom', '2px solid red');
+            $container.find('.TopicsBtn').css('border', 'none');
+        } else {
+            $container.find('.formUploadContainer').slideUp(400, function () {
+                $container.find('.topicProposalContainer, .proposalsPriority').slideDown(400);
+            });
+            button.css('border-bottom', '2px solid red');
+            $container.find('.FormUploadBtn').css('border', 'none');
+        }
+    }
+
+    // Initialize default page state
+    function initializePage() {
+        $('.body--submitLevel6--container .TopicsBtn, .body--submitLevel7--container .TopicsBtn').css('border-bottom', '2px solid red');
+        $('.formUploadContainer').hide();
+        $('.proposalsPriority, .topicProposalContainer').show();
+    }
 
     $('.incorrectDetails').click(function () {
         $('.additionalInfo').slideToggle();
@@ -31,18 +49,16 @@ $(document).ready(function () {
     });
 
     $('.proposalBox').on('dragend', function (e) {
-        setTimeout(() => {
-            $(this).show();
-            draggedItem = null;
-        }, 0);
+        setTimeout(() => $(this).show(), 0);
+        draggedItem = null;
     });
 
     $('.proposalBox').on('dragover', function (e) {
-        e.preventDefault();  // Allow dropping by preventing default behavior
+        e.preventDefault();
     });
 
     $('.proposalBox').on('dragenter', function (e) {
-        e.preventDefault();  // Necessary for the drop event to fire correctly
+        e.preventDefault();
         $(this).addClass('over');
     });
 
@@ -53,12 +69,9 @@ $(document).ready(function () {
     $('.proposalBox').on('drop', function (e) {
         $(this).removeClass('over');
         if (!draggedItem) return;
-
-        // Determine whether to place the dragged item before or after
         const targetRect = this.getBoundingClientRect();
         const targetMidpoint = targetRect.top + targetRect.height / 2;
         const afterTarget = e.originalEvent.clientY > targetMidpoint;
-
         if (afterTarget && this.nextSibling) {
             $(draggedItem).insertAfter($(this));
         } else {
