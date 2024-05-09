@@ -174,12 +174,14 @@
 
 
 .infobox--title {
-    position: relative;
-    /* Remove all absolute positioning and translation */
-    padding: 10px 0; /* Gives some padding around the text */
+    position: absolute;
+    left: 50%;
+    bottom: 10px;
+    width: 80%;
+    padding: 10px;
     font-size: 20px;
     font-weight: 500;
-    bottom: -30px;
+    transform: translateX(-50%);
     transition: margin-top 0.3s ease;
     -webkit-user-select: none;
     -ms-user-select: none;
@@ -254,7 +256,8 @@
 }
 
 .infoBox.active .infobox--title {
-    margin-top: -180px !important;
+    top: 180px !important;
+    font-size: 18px;
 }
 
 .infoBox.active .content {
@@ -274,6 +277,10 @@
         margin-bottom: 8px;
     }
 
+footer {
+    top: 900px;
+}
+
 @media(max-width: 930px) {
     .body--profile--infoBoxes {
         position: absolute;
@@ -290,7 +297,18 @@
 
 @media(max-width: 768px) {
     .body--profile--container {
-        height: 1200px;
+        height: 1500px;
+    }
+
+    .body--profile--name {
+        font-size: 22px;
+    }
+
+    .body--profile--profilePicture {
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
     }
 
     .body--profile--infoBoxes {
@@ -310,10 +328,7 @@
 
     .body--profile--infoGroup {
         max-width: 400px;
-    }
-
-    .body--profile--infoGroup {
-        margin-bottom: 40px;
+        margin-bottom: 50px;
     }
 
     .departmentList {
@@ -321,14 +336,12 @@
     }
 
         .departmentList li {
+            top: -15px;
+            left: -40px;
             margin-bottom: 10px;
         }
-}
 
-.staffimg{
-    width: 301px;
-    height: 301px;
-}
-
-.uploadedImage{
+    footer {
+        top: 1800px !important;
+    }
 }

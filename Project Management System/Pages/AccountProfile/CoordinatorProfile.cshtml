@@ -1,125 +1,136 @@
 ﻿@page
-@model Project_Management_System.Pages.AccountProfile.CoordinatorProfileModel
+@model Project_Management_System.Pages.AccountProfile.IndexModel
 @{
 }
 
-@inject SignInManager<SPMS_User> SignInManager
-@inject UserManager<SPMS_User> UserManager
+<script src="../js/projectCoordinatorBoxes.js"></script>
+<link rel="stylesheet" href="../css/staffProfile.css">
+<link rel="stylesheet" href="../css/coordinatorProfile.css">
 
-@using Microsoft.AspNetCore.Identity
-@using Project_Management_System.Data
+<body>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Staff</title>
-<link rel="stylesheet" href="~/css/staffProfile.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <span class="body--coordinator--title">Project Co-ordinator</span>
 
-<script src="~/js/staffInfoBoxes.js"></script>
-
-<h3>@ViewData["Title"]</h3> 
-
-
-@{
-    var user = await UserManager.GetUserAsync(User);
-}
-
-@if(user != null){
     <div class="body--profile--container">
         <div class="body--profile--name">
-            <span>
-
-                @(user.Name)<!-- Greet user by there name rather than username -->
-            </span>
+            <span>Example Name</span>
         </div>
 
         <div class="body--profile--profilePicture">
-            @{
-                try
-                {
-                    <img src="@string.Format("data:image/jpg;base64, {0}", Convert.ToBase64String(@user.ProfilePicture))" alt="Profile Image" class="staffimg" />
-                }
-                catch
-                {
-                    <!-- Handle if there's no profile picture -->
-                }
-            }
-            <!--Have this hidden for anyone but their profile-->
+            <!--Change the src to the proper byte system, keep the demoIMG for when there is no profile picture-->
+            <div class="demoIMG"></div>
+            <img src="#" alt="#">
+            <!--Have this hidden for anyone but there profile-->
             <div class="body--profile--updatePicture">
-                <form method="post" enctype="multipart/form-data">
-                    <input type="file" name="uploadedImage" onchange="this.form.submit();" />
-                </form>
+                <button class="updateIMG"></button>
             </div>
         </div>
 
-
         <div class="body--profile--infoSection">
+            <div class="body--profile--infoGroup">
+                <label for="school ">School</label>
+                <div class="staffInfoBox">
+                    <span name="department" class="body--profile--department">Example School</span>
+                </div>
+            </div>
 
             <div class="body--profile--infoGroup">
-                <label for="department">Divisions</label>
+                <label for="department">Departments</label>
                 <!--For each loop here to display all departments, just use one li element-->
                 <ul class="departmentList">
-                    @foreach (var divisionlink in Model.StaffDivisions.Where(i => i.StaffID == user.Id))
-                    {
-                        @foreach (var division in Model.Divisions.Where(i => i.DivisionID == divisionlink.DivisionID))
-                        {
-                            <li>@Html.ValueFor(modelDivisions => division.DivisionName)</li>
-                            <button class="editInfo"></button>
-                        }
-                    }
+                    <li>Department 1</li>
+                    <li>Department 2</li>
                 </ul>
             </div>
 
             <div class="body--profile--infoGroup">
                 <label for="email">Email</label>
                 <div class="staffInfoBox">
-                    <span name="email" class="body--profile--email">
-                        @(user.Email)
-                    </span>
-
+                    <span name="email" class="body--profile--email">exampleEmail@example.com</span>
                 </div>
             </div>
         </div>
 
+
         <div class="body--profile--infoBoxes">
-            <div class="infoBox" id="expertise">
+
+            <div class="infoBox" id="studentSubmissions">
                 <button class="editInfo"></button>
                 <div class="infobox--icon"></div>
-                <span class="infobox--title">Areas of Expertise</span>
-                <div class="content" style="display: none;">
-                    @foreach (var expertise in Model.StaffExpertise)
-                    {
-                        <li>@expertise.Expertise</li>
-                    }
-                </div>
+                <span class="infobox--title">Student Project Submissions</span>
+                <ul class="content">
+                    <li class="coordinatorContent">
+                        <div class="item-header">
+                            <span>Example Submission 2</span>
+                        </div>
+                        <div class="item-header">Example Content</div>
+                    </li>
+                    <li class="coordinatorContent">
+                        <div class="item-header">
+                            <span>Example Submission 2</span>
+                        </div>
+                        <div class="item-header">Example Content</div>
+                    </li>
+                    <li class="coordinatorContent">
+                        <div class="item-header">
+                            <span>Example Submission 2</span>
+                        </div>
+                        <div class="item-header">Example Content</div>
+                    </li>
+                </ul>
             </div>
 
-            <div class="infoBox" id="interests">
+            <div class="infoBox" id="staffMembers">
                 <button class="editInfo"></button>
                 <div class="infobox--icon"></div>
-                <span class="infobox--title">Lists of interests</span>
-                <div class="content" style="display: none;">
-                    @foreach (var interest in Model.StaffInterest)
-                    {
-                        <li>@interest.Interest</li>
-                    }
-                </div>
+                <span class="infobox--title">Staff Members</span>
+                <ul class="content">
+                    <li class="coordinatorContent">
+                        <div class="item-header">
+                            <span>Example Submission 2</span>
+                        </div>
+                        <div class="item-header">Example Content</div>
+                    </li>
+                    <li class="coordinatorContent">
+                        <div class="item-header">
+                            <span>Example Submission 2</span>
+                        </div>
+                        <div class="item-header">Example Content</div>
+                    </li>
+                    <li class="coordinatorContent">
+                        <div class="item-header">
+                            <span>Example Submission 2</span>
+                        </div>
+                        <div class="item-header">Example Content</div>
+                    </li>
+                </ul>
             </div>
 
-            <div class="infoBox" id="projects">
+            <div class="infoBox" id="pairings">
                 <button class="editInfo"></button>
                 <div class="infobox--icon"></div>
-                <span class="infobox--title">Current / Past Projects</span>
-                <div class="content" style="display: none;">
-                    @foreach (var topics in Model.Topic)
-                    {
-                        <li>@topics.TopicName</li>
-                    }
-                </div>
+                <span class="infobox--title">Staff / Supervisor Pairings</span>
+                <ul class="content">
+                    <li class="coordinatorContent">
+                        <div class="item-header">
+                            <span>Example Submission 2</span>
+                        </div>
+                        <div class="item-header">Example Content</div>
+                    </li>
+                    <li class="coordinatorContent">
+                        <div class="item-header">
+                            <span>Example Submission 2</span>
+                        </div>
+                        <div class="item-header">Example Content</div>
+                    </li>
+                    <li class="coordinatorContent">
+                        <div class="item-header">
+                            <span>Example Submission 2</span>
+                        </div>
+                        <div class="item-header">Example Content</div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
-}
-    @section Scripts {
-        <partial name="_ValidationScriptsPartial" />
-    }
+</body>

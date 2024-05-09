@@ -8,56 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Project_Management_System.Pages.AccountProfile
 {
-    public class CoordinatorProfileModel : PageModel
     {
-        private readonly UserManager<SPMS_User> _userManager;
-        private readonly SignInManager<SPMS_User> _signInManager;
-        private readonly SPMS_Context _db;
-        private readonly SPMS_Context _context;
-
-        public CoordinatorProfileModel(SPMS_Context context,
-            UserManager<SPMS_User> userManager,
-            SignInManager<SPMS_User> signInManager,
-            SPMS_Context db)
-        {
-            _context = context;
-            _db = db;
-            _userManager = userManager;
-            _signInManager = signInManager;
-        }
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        public string Username { get; set; }
-        public IList<Division> Divisions { get; set; } = default!;
-        public IList<Topic> Topic { get; set; } = default!;
-
-        public IList<StaffDivision> StaffDivisions = default!;
-        public IList<StaffInterest> StaffInterest { get; private set; }
-        public IList<StaffExpertise> StaffExpertise { get; private set; }
-
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        [TempData]
-        public string StatusMessage { get; set; }
-
-        private async Task LoadAsync(SPMS_User user)
-        {
-            var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
-            Username = userName;
-        }
-
-        public async Task<IActionResult> OnGetAsync()
-        {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
