@@ -11,11 +11,6 @@
     <span class="addTitle">Add a topic</span>
 
     <form method="post">
-        <div class="addGroup" style="display: none;">
-            <label for="topicName">TopicID</label>
-            <input id="topicName" name="TopicID" asp-for="Topic.TopicID" />
-        </div>
-
         <div class="addGroup">
             <label for="topicName">Topic Name</label>
             <input id="topicName" name="topicName" asp-for="Topic.TopicName" />
@@ -41,7 +36,7 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    <script>
+@*     <script>
         function addTopic() {
             var topicIDInput = document.getElementById('topicIDInput');
             // Check if the user has already inputted a value
@@ -59,5 +54,5 @@
             return randomNumber;
         }
 
-    </script>
+    </script> *@
 }
