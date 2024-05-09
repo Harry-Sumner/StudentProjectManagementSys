@@ -1,4 +1,6 @@
 ﻿@page
+@using Microsoft.AspNetCore.Identity
+@using Project_Management_System.Data
 @model Project_Management_System.Pages.crud.CreateModel
 
 <link href="~/css/addProposal.css" rel="stylesheet" />
@@ -6,6 +8,8 @@
 @{
     ViewData["Title"] = "Create";
 }
+
+@inject UserManager<SPMS_Staff> StaffManager
 
 <div class="body--addProposal--container">
     <span class="addTitle">Add a topic</span>

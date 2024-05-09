@@ -89,26 +89,34 @@ namespace Project_Management_System.Pages.crud
                 return NotFound();
             }
 
-            topicToUpdate.TopicName = Topic.TopicName;
-            topicToUpdate.TopicDescription = Topic.TopicDescription;
-            topicToUpdate.SupervisorID = Topic.SupervisorID;
-            topicToUpdate.MarkerID = Topic.MarkerID;
+                topicToUpdate.TopicName = Topic.TopicName;
+                topicToUpdate.TopicDescription = Topic.TopicDescription;
+                if(Topic.SupervisorID != null)
+                {
+                    topicToUpdate.SupervisorID = Topic.SupervisorID;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TopicExists(TopicID))
-                {
-                    return NotFound();
                 }
-                else
+                if (Topic.MarkerID != null)
                 {
-                    throw;
+                    topicToUpdate.MarkerID = Topic.MarkerID;
+
                 }
-            }
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!TopicExists(TopicID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
 
             return RedirectToPage("./Index");
 
