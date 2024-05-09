@@ -5,16 +5,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Project_Management_System.Data;
+using Project_Management_System.Migrations;
 
 namespace Project_Management_System.Pages.crud
 {
     public class EditModel : PageModel
     {
         private readonly Project_Management_System.Data.SPMS_Context _context;
+        private readonly SPMS_Context _db;
 
-        public EditModel(Project_Management_System.Data.SPMS_Context context)
+        public EditModel(Project_Management_System.Data.SPMS_Context context, SPMS_Context db)
         {
             _context = context;
+            _db = db;
         }
 
         [BindProperty]
@@ -22,6 +25,8 @@ namespace Project_Management_System.Pages.crud
 
         [BindProperty]
         public int TopicID { get; set; }
+
+        public IList<TopicBasket> TopicBasket { get; set; }
 
         public IList<Topic> Topics { get; set; } = new List<Topic>();
 
@@ -50,6 +55,21 @@ namespace Project_Management_System.Pages.crud
                 {
                     return NotFound();
                 }
+
+                TopicBasket = _db.TopicBasket //select data from database
+                .FromSqlRaw("SELECT * FROM TopicBasket WHERE TopicID = {0}", TopicID)
+                .ToList();
+
+                if(TopicBasket!= null)
+                {
+                    foreach (var topic in TopicBasket)
+                    {
+                        _db.TopicBasket.Remove(topic);
+                    }
+                    await _db.SaveChangesAsync();
+
+                }
+               
 
                 _context.Topic.Remove(topicToDelete);
                 await _context.SaveChangesAsync();
