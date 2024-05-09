@@ -1,6 +1,4 @@
-﻿// Inside your Edit.cshtml.cs file
-
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -89,30 +87,41 @@ namespace Project_Management_System.Pages.crud
                 return NotFound();
             }
 
-                topicToUpdate.TopicName = Topic.TopicName;
-                topicToUpdate.TopicDescription = Topic.TopicDescription;
+            topicToUpdate.TopicName = Topic.TopicName;
+            topicToUpdate.TopicDescription = Topic.TopicDescription;
+            if (Topic.SupervisorID != null)
+            {
                 topicToUpdate.SupervisorID = Topic.SupervisorID;
+
+            }
+            if (Topic.MarkerID != null)
+            {
                 topicToUpdate.MarkerID = Topic.MarkerID;
 
-                try
+            }
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TopicExists(TopicID))
                 {
-                    await _context.SaveChangesAsync();
+                    return NotFound();
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                    if (!TopicExists(TopicID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    throw;
                 }
+            }
 
             return RedirectToPage("./Index");
-
         }
+
+
+
+
         private bool TopicExists(int id)
         {
             return _context.Topic.Any(e => e.TopicID == id);

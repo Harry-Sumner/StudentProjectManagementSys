@@ -67,8 +67,16 @@
                                 <div class="addIcon"></div>
                             </button>
                         </form>
-
                     }
+
+                @if (User.IsInRole("Co-ordinator"))
+                {
+                    <form method="post">
+                        <button onclick="myFunction()" type="submit" class="addTopic" asp-page="crud/Edit" asp-route-id="@topic.TopicID">
+                            <div class="addIcon"></div>
+                        </button>
+                    </form>
+                }
                 </div>
             </div>
         }
