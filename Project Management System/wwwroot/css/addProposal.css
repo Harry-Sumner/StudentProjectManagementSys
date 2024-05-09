@@ -37,19 +37,19 @@
     gap: 10px;
 }
 
-    .addGroup input {
-        font-size: 18px;
-        padding: 8px;
-    }
+.addGroup input {
+    font-size: 18px;
+    padding: 8px;
+}
 
-    .addGroup textarea {
-        resize: none;
-        height: 200px;
-    }
+.addGroup textarea {
+    resize: none;
+    height: 200px;
+}
 
-    .addGroup label {
-        font-size: 20px;
-    }
+.addGroup label {
+    font-size: 20px;
+}
 
 .addBtn {
     position: relative;
