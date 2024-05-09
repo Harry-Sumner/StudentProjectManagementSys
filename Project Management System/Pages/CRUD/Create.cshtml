@@ -1,4 +1,6 @@
 ﻿@page
+@using Microsoft.AspNetCore.Identity
+@using Project_Management_System.Data
 @model Project_Management_System.Pages.crud.CreateModel
 
 <link href="~/css/addProposal.css" rel="stylesheet" />
@@ -7,23 +9,31 @@
     ViewData["Title"] = "Create";
 }
 
+@inject UserManager<SPMS_Staff> StaffManager
+
 <div class="body--addProposal--container">
     <span class="addTitle">Add a topic</span>
 
     <form method="post">
         <div class="addGroup">
             <label for="topicName">Topic Name</label>
-            <input id="topicName" name="topicName" asp-for="Topic.TopicName" />
+            <input id="topicName"asp-for="Topic.TopicName" />
         </div>
 
         <div class="addGroup">
             <label for="TopicSupervisor">Topic Supervisor</label>
-            <input id="TopicSupervisor" name="topicDescription" asp-for="Topic.SupervisorID" />
+            <select asp-for="Topic.SupervisorID">
+                <option value = null>Choose supervisor here</option>
+                @foreach (var staff in StaffManager.Users)
+                {
+                    <option value=@staff.Id>@Html.ValueFor(modelDivision => staff.Name)</option>
+                }
+            </select>
         </div>
 
         <div class="addGroup">
             <label for="topicDescription">Topic Description</label>
-            <textarea id="topicDescription" name="topicDescription" asp-for="Topic.TopicDescription"></textarea>
+            <textarea id="topicDescription" asp-for="Topic.TopicDescription"></textarea>
         </div>
 
         <div class="addGroup">
