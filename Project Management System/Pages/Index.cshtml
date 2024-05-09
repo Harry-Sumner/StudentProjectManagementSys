@@ -11,6 +11,8 @@
 
 <link rel="stylesheet" href="~/css/browseTopics.css">
 <script src="~/js/listBoxExpansion.js"></script>
+<script src="~/js/clearSearch.js"></script>
+
 
 <form method="get" class="body--search--container">
     
@@ -70,11 +72,6 @@
                 </div>
             </div>
         }
-    <script>
-        function clearSearch() {
-            document.querySelector('input[name="Search"]').value = ''; // Clear search input
-            window.location.href = '@Url.Page("Index")'; // Redirect to clear the search query
-        }
-    </script>
+    
 
     </div>

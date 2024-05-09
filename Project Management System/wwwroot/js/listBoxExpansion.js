@@ -13,4 +13,5 @@ $(document).ready(function () {
             $(this).attr('title', 'Expand this topic for more details');
         }
     });
+    
 });

@@ -78,3 +78,13 @@ $(document).ready(function () {
 
 });
 
+// Clears search filter and resets so all topics are viewable again
+function clearSearch() {
+    // Clear search input
+    document.querySelector('input[name="Search"]').value = '';
+
+    // Redirect to the index page to clear the search query
+    window.location.href = '/Index';
+}
+
+
