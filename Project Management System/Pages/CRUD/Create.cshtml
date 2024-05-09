@@ -16,7 +16,7 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <!-- Hidden input field for Topic ID -->
-                <input id="topicIDInput" name="Topic.TopicID" type="hidden" />
+                <input id="topicIDInput" name="Topic.TopicID" type="text" />
                 <span asp-validation-for="Topic.TopicID" class="text-danger"></span>
 
                 <!-- Other form fields -->
@@ -58,8 +58,12 @@
     }
     <script>
         function addTopic() {
-            // Generate a unique identifier for the Topic ID using JavaScript
-            document.getElementById('topicIDInput').value = generateTopicID();
+            var topicIDInput = document.getElementById('topicIDInput');
+            // Check if the user has already inputted a value
+            if (!topicIDInput.value.trim()) {
+                // Generate a unique identifier for the Topic ID using JavaScript
+                topicIDInput.value = generateTopicID();
+            }
             // Submit the form
             document.querySelector('form').submit();
         }
@@ -69,5 +73,6 @@
             var randomNumber = Math.floor(Math.random() * 10000); // Generate a random number between 0 and 9999
             return randomNumber;
         }
+
     </script>
 }

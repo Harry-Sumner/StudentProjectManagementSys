@@ -17,5 +17,6 @@ $(document).ready(function () {
         function myFunction() {
             alert("Topic Successfully added to Proposal!");
                             }
-   
+   s:', error));
+    });
 });

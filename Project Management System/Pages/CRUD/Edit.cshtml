@@ -5,51 +5,53 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<link rel="stylesheet" href="~/css/editProposal.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/js/editProposal.js"></script>
 
-<h4>Topic</h4>
-<hr />
-<div class="row">
-    <div class="editTable">
+<body>
+    <div class="body--edit--container">
         <form method="post">
-            <div class="form-groupedit">
-                <label asp-for="TopicID" class="control-labeledit"></label>
-                <select asp-for="TopicID" class="form-controledit" onchange="showForm(this)">
+            <span class="editTitle">Edit a Topic</span>
+
+            <div class="editGroup dropdown">
+                <label asp-for="TopicID"></label>
+                <select id="topicDropdown" asp-for="TopicID">
                     <option value="">-- Select Topic --</option>
                     @foreach (var topic in Model.Topics)
                     {
                         <option value="@topic.TopicID" data-name="@topic.TopicName" data-description="@topic.TopicDescription" data-supervisor="@topic.SupervisorID" data-marker="@topic.MarkerID">@topic.TopicName</option>
                     }
                 </select>
-                <span asp-validation-for="TopicID" class="text-danger"></span>
+                <span asp-validation-for="TopicID" class="ErrorMsg"></span>
             </div>
-            <div id="topicDetails" style="display:none">
-                <div class="form-group">
-                    <label class="control-label">Topic Name</label>
-                    <input id="topicName" asp-for="Topic.TopicName" class="form-control" />
+
+            <div class="editSection" style="display: none;">
+                <div class="editGroup">
+                    <label for="topicName">Topic Name</label>
+                    <input id="topicName" name="topicName" asp-for="Topic.TopicName" />
                 </div>
-                <div class="form-group">
-                    <label class="control-label">Description</label>
-                    <input id="topicDescription" asp-for="Topic.TopicDescription" class="form-control" />
+
+                <div class="editGroup">
+                    <label for="topicDescription">Topic Description</label>
+                    <textarea id="topicDescription" name="topicDescription" asp-for="Topic.TopicDescription"></textarea>
                 </div>
-                <div class="form-group">
-                    <label class="control-label">Supervisor ID</label>
-                    <input id="supervisorID" asp-for="Topic.SupervisorID" class="form-control" />
+
+                <div class="editGroup">
+                    <label for="topicSupervisor">Supervisor ID</label>
+                    <input id="topicSupervisor" name="topicSupervisor" asp-for="Topic.SupervisorID" />
                 </div>
-                <div class="form-group">
-                    <label class="control-label">Marker ID</label>
-                    <input id="markerID" asp-for="Topic.MarkerID" class="form-control" />
+
+                <div class="editGroup">
+                    <label for="topicMarker">Marker ID</label>
+                    <input id="topicMarker" name="topicMarker" asp-for="Topic.MarkerID" />
                 </div>
-                <div class="buttons">
-                    <input type="submit" value="Save" class="btnedit btn-primaryedit" />
-                    <input type="submit" value="Delete" name="command" class="btnedit btn-dangeredit" />
-                </div>
-                <div class="Back">
-                    <a asp-page="./Index">Back to List</a>
+
+                <div class="editButtonsGroup">
+                    <input type="submit" value="Save" class="saveBtn" />
+                    <input type="submit" value="Delete" name="command" class="DeleteBtn" />
                 </div>
             </div>
         </form>
     </div>
-</div>
-
-
+</body>
