@@ -24,9 +24,7 @@
 
         <div class="addGroup">
             <label for="TopicSupervisor">Topic Supervisor</label>
-<<<<<<< HEAD
             <input id="TopicSupervisor" name="topicSupervisor" asp-for="Topic.SupervisorID" />
-=======
             <select asp-for="Topic.SupervisorID">
                 <option value = null>Choose supervisor here</option>
                 @foreach (var staff in StaffManager.Users)
@@ -34,7 +32,7 @@
                     <option value=@staff.Id>@Html.ValueFor(modelDivision => staff.Name)</option>
                 }
             </select>
->>>>>>> parent of 6ee0783 (- Added list to edit topic)
+>
         </div>
 
         <div class="addGroup">
