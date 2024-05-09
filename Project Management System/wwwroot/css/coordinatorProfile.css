@@ -1,0 +1,60 @@
+﻿body {
+}
+
+.body--coordinator--title {
+    position: absolute;
+    top: 130px;
+    left: 5%;
+    font-size: 30px;
+    border-bottom: 2px solid red;
+    padding-bottom: 5px;
+}
+
+#studentSubmissions {
+    background-color: #c3e6cb;
+}
+
+#staffMembers {
+    background-color: #ffffcc;
+}
+
+#pairings {
+    background-color: #b9d2f3;
+}
+
+.content {
+    position: relative;
+    top: 50px !important;
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0;
+    max-height: 100px !important;
+    overflow-y: scroll;
+}
+
+.coordinatorContent {
+    margin-bottom: 10px !important;
+    padding: 5px !important;
+    background-color: #f9f9f9 !important;
+    border: 1px solid black !important;
+    border-radius: 4px !important;
+}
+
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.toggle-icon {
+    transition: all 0.3s ease;
+}
+
+    .toggle-icon.expand {
+        transform: rotate(45deg);
+    }
+
+.item-content {
+    display: none;
+    padding-left: 20px;
+}
