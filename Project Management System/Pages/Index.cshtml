@@ -13,12 +13,15 @@
 <script src="~/js/listBoxExpansion.js"></script>
 
 <form method="get" class="body--search--container">
+    
     <input type="text" name="Search" placeholder="Search for a topic">
     <button type="submit"></button>
 </form>
+<button type="button" onclick="clearSearch()">Clear</button>
 <div class="dropdown">
     <button onclick="filterFunction1()" class="dropbtn">Course</button>
     <div id="myDropdown" class="dropdown-content">
+        
         <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
         <!-- You can replace the example links with your dynamic data -->
         @foreach (var course in Model.Course)
@@ -67,4 +70,11 @@
                 </div>
             </div>
         }
+    <script>
+        function clearSearch() {
+            document.querySelector('input[name="Search"]').value = ''; // Clear search input
+            window.location.href = '@Url.Page("Index")'; // Redirect to clear the search query
+        }
+    </script>
+
     </div>
