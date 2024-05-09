@@ -1,9 +1,13 @@
 ﻿@page
+@using Microsoft.AspNetCore.Identity
+@using Project_Management_System.Data
 @model Project_Management_System.Pages.crud.EditModel
 
 @{
     ViewData["Title"] = "Edit";
 }
+@inject UserManager<SPMS_Staff> StaffManager
+
 
 <link rel="stylesheet" href="~/css/editProposal.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -29,22 +33,34 @@
             <div class="editSection" style="display: none;">
                 <div class="editGroup">
                     <label for="topicName">Topic Name</label>
-                    <input id="topicName" name="topicName" asp-for="Topic.TopicName" />
+                    <input id="topicName" asp-for="Topic.TopicName" />
                 </div>
 
                 <div class="editGroup">
                     <label for="topicDescription">Topic Description</label>
-                    <textarea id="topicDescription" name="topicDescription" asp-for="Topic.TopicDescription"></textarea>
+                    <textarea id="topicDescription" asp-for="Topic.TopicDescription"></textarea>
                 </div>
 
                 <div class="editGroup">
                     <label for="topicSupervisor">Supervisor ID</label>
-                    <input id="topicSupervisor" name="topicSupervisor" asp-for="Topic.SupervisorID" />
+                    <select asp-for="Topic.SupervisorID">
+                        <option value= null>Choose supervisor here</option>
+                        @foreach (var staff in StaffManager.Users)
+                        {
+                            <option value=@staff.Id>@staff.Name</option>
+                        }
+                    </select>
                 </div>
 
                 <div class="editGroup">
                     <label for="topicMarker">Marker ID</label>
-                    <input id="topicMarker" name="topicMarker" asp-for="Topic.MarkerID" />
+                    <select asp-for="Topic.MarkerID">
+                        <option value= null>Choose marker here</option>
+                        @foreach (var staff in StaffManager.Users)
+                        {
+                            <option value=@staff.Id>@staff.Name</option>
+                        }
+                    </select>
                 </div>
 
                 <div class="editButtonsGroup">
