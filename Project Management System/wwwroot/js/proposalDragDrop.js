@@ -1,31 +1,40 @@
 $(document).ready(function () {
     var draggedItem = null;
+    var isAnimating = false;
 
     initializePage();
 
     $('.body--submitLevel6--container .TopicsBtn, .body--submitLevel7--container .TopicsBtn').click(function (e) {
         e.preventDefault();
-        toggleSections($(this), false);
+        if (!isAnimating) {
+            toggleSections($(this), false);
+        }
     });
-
 
     $('.body--submitLevel6--container .FormUploadBtn, .body--submitLevel7--container .FormUploadBtn').click(function (e) {
         e.preventDefault();
-        toggleSections($(this), true);
+        if (!isAnimating) {
+            toggleSections($(this), true);
+        }
     });
-
 
     function toggleSections(button, isUpload) {
         var $container = button.closest('div[class^="body--submitLevel"]');
+        isAnimating = true; // Lock interactions
+
         if (isUpload) {
             $container.find('.topicProposalContainer, .proposalsPriority').slideUp(400, function () {
-                $container.find('.formUploadContainer').slideDown(400);
+                $container.find('.formUploadContainer').slideDown(400, function () {
+                    isAnimating = false; // Unlock interactions after animation
+                });
             });
             button.css('border-bottom', '2px solid red');
             $container.find('.TopicsBtn').css('border', 'none');
         } else {
             $container.find('.formUploadContainer').slideUp(400, function () {
-                $container.find('.topicProposalContainer, .proposalsPriority').slideDown(400);
+                $container.find('.topicProposalContainer, .proposalsPriority').slideDown(400, function () {
+                    isAnimating = false; // Unlock interactions after animation
+                });
             });
             button.css('border-bottom', '2px solid red');
             $container.find('.FormUploadBtn').css('border', 'none');

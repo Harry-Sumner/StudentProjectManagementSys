@@ -97,6 +97,7 @@ border: 1px solid black;
     text-decoration: underline;
     cursor: pointer;
     color: black;
+    word-break: normal;
 }
 
 .topicButtonContainer {
