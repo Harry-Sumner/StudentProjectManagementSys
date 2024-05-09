@@ -10,21 +10,25 @@
 <div class="body--addProposal--container">
     <span class="addTitle">Add a topic</span>
 
-    <form method="post">
+    <form method="post" name="create-topic-form" autocomplete="off">
         <div class="addGroup">
             <label for="topicName">Topic Name</label>
-            <input id="topicName" name="topicName" asp-for="Topic.TopicName" />
+            <input id="topicName" name="topicName" asp-for="Topic.TopicName" oninput="clearError('topicName-error')" />
+            <p class="ErrorMsg topicName-error"></p>
+
         </div>
 
         <div class="addGroup">
             <label for="TopicSupervisor">Topic Supervisor</label>
-            <input id="TopicSupervisor" name="topicDescription" asp-for="Topic.SupervisorID" />
+            <input id="TopicSupervisor" name="topicSupervisor" asp-for="Topic.SupervisorID" />
         </div>
 
         <div class="addGroup">
             <label for="topicDescription">Topic Description</label>
-            <textarea id="topicDescription" name="topicDescription" asp-for="Topic.TopicDescription"></textarea>
+            <textarea id="topicDescription" name="topicDescription" asp-for="Topic.TopicDescription" oninput="clearError('topicDescription-error')"></textarea>
+            <p class="ErrorMsg topicDescription-error"></p>
         </div>
+
 
         <div class="addGroup">
             <button type="submit" class="addBtn">Add Topic</button>
@@ -36,23 +40,4 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-@*     <script>
-        function addTopic() {
-            var topicIDInput = document.getElementById('topicIDInput');
-            // Check if the user has already inputted a value
-            if (!topicIDInput.value.trim()) {
-                // Generate a unique identifier for the Topic ID using JavaScript
-                topicIDInput.value = generateTopicID();
-            }
-            // Submit the form
-            document.querySelector('form').submit();
-        }
-
-        function generateTopicID() {
-            // Generate a random number and concatenate with a prefix
-            var randomNumber = Math.floor(Math.random() * 10000); // Generate a random number between 0 and 9999
-            return randomNumber;
-        }
-
-    </script> *@
 }

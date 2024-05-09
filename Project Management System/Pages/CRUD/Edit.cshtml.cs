@@ -60,7 +60,7 @@ namespace Project_Management_System.Pages.crud
                 .FromSqlRaw("SELECT * FROM TopicBasket WHERE TopicID = {0}", TopicID)
                 .ToList();
 
-                if(TopicBasket!= null)
+                if (TopicBasket != null)
                 {
                     foreach (var topic in TopicBasket)
                     {
@@ -69,7 +69,7 @@ namespace Project_Management_System.Pages.crud
                     await _db.SaveChangesAsync();
 
                 }
-               
+
 
                 _context.Topic.Remove(topicToDelete);
                 await _context.SaveChangesAsync();
@@ -82,40 +82,37 @@ namespace Project_Management_System.Pages.crud
                 return RedirectToPage("./Index");
 
             }
-                var topicToUpdate = await _context.Topic.FindAsync(TopicID);
+            var topicToUpdate = await _context.Topic.FindAsync(TopicID);
 
-                if (topicToUpdate == null)
+            if (topicToUpdate == null)
+            {
+                return NotFound();
+            }
+
+            topicToUpdate.TopicName = Topic.TopicName;
+            topicToUpdate.TopicDescription = Topic.TopicDescription;
+            topicToUpdate.SupervisorID = Topic.SupervisorID;
+            topicToUpdate.MarkerID = Topic.MarkerID;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TopicExists(TopicID))
                 {
                     return NotFound();
                 }
-
-                topicToUpdate.TopicName = Topic.TopicName;
-                topicToUpdate.TopicDescription = Topic.TopicDescription;
-                topicToUpdate.SupervisorID = Topic.SupervisorID;
-                topicToUpdate.MarkerID = Topic.MarkerID;
-
-                try
+                else
                 {
-                    await _context.SaveChangesAsync();
+                    throw;
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TopicExists(TopicID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-
-                return RedirectToPage("./Index");
             }
 
-        
-    
+            return RedirectToPage("./Index");
 
+        }
         private bool TopicExists(int id)
         {
             return _context.Topic.Any(e => e.TopicID == id);

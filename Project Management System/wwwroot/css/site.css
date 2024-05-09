@@ -536,4 +536,13 @@ display: block;
     border-radius: 4px;
     box-sizing: border-box;
 }
-
+/* This is the display error for not inputting the required fields on create topic page */
+.display-error {
+    display: block;
+    color: red;
+    font-size: 12px;
+    transform: translateY(-10px);
+    padding: 10px;
+    background-color: #fde8ec;
+    transition: transform 0.3s ease-out;
+}

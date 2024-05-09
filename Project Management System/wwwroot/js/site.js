@@ -87,4 +87,36 @@ function clearSearch() {
     window.location.href = '/Index';
 }
 
+function showError(errorElement, errorMessage) {
+    document.querySelector("." + errorElement).classList.add("display-error");
+    document.querySelector("." + errorElement).innerHTML = errorMessage;
+}
+
+function showError(errorElement, errorMessage) {
+    let error = document.querySelector("." + errorElement);
+    error.textContent = errorMessage;
+    error.classList.add("display-error"); // Show error message
+}
+
+function clearError(errorElement) {
+    let error = document.querySelector("." + errorElement);
+    error.textContent = ""; // Clear error message
+    error.classList.remove("display-error"); // Hide error message
+}
+
+let form = document.forms["create-topic-form"];
+form.onsubmit = function (event) {
+    if (form.topicName.value === "") {
+        showError("topicName-error", "Please enter topic name");
+        return false;
+    }
+
+    form.onsubmit = function (event) {
+        if (form.topicDescription.value === "") {
+            showError("topicDescription-error", "Please enter topic description!");
+            return false;
+        }
+    }
+    event.preventDefault();
+}
 
