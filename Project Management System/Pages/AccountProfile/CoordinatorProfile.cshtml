@@ -1,0 +1,136 @@
+﻿@page
+@model Project_Management_System.Pages.AccountProfile.IndexModel
+@{
+}
+
+<script src="../js/projectCoordinatorBoxes.js"></script>
+<link rel="stylesheet" href="../css/staffProfile.css">
+<link rel="stylesheet" href="../css/coordinatorProfile.css">
+
+<body>
+
+    <span class="body--coordinator--title">Project Co-ordinator</span>
+
+    <div class="body--profile--container">
+        <div class="body--profile--name">
+            <span>Example Name</span>
+        </div>
+
+        <div class="body--profile--profilePicture">
+            <!--Change the src to the proper byte system, keep the demoIMG for when there is no profile picture-->
+            <div class="demoIMG"></div>
+            <img src="#" alt="#">
+            <!--Have this hidden for anyone but there profile-->
+            <div class="body--profile--updatePicture">
+                <button class="updateIMG"></button>
+            </div>
+        </div>
+
+        <div class="body--profile--infoSection">
+            <div class="body--profile--infoGroup">
+                <label for="school ">School</label>
+                <div class="staffInfoBox">
+                    <span name="department" class="body--profile--department">Example School</span>
+                </div>
+            </div>
+
+            <div class="body--profile--infoGroup">
+                <label for="department">Departments</label>
+                <!--For each loop here to display all departments, just use one li element-->
+                <ul class="departmentList">
+                    <li>Department 1</li>
+                    <li>Department 2</li>
+                </ul>
+            </div>
+
+            <div class="body--profile--infoGroup">
+                <label for="email">Email</label>
+                <div class="staffInfoBox">
+                    <span name="email" class="body--profile--email">exampleEmail@example.com</span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="body--profile--infoBoxes">
+
+            <div class="infoBox" id="studentSubmissions">
+                <button class="editInfo"></button>
+                <div class="infobox--icon"></div>
+                <span class="infobox--title">Student Project Submissions</span>
+                <ul class="content">
+                    <li class="coordinatorContent">
+                        <div class="item-header">
+                            <span>Example Submission 2</span>
+                        </div>
+                        <div class="item-header">Example Content</div>
+                    </li>
+                    <li class="coordinatorContent">
+                        <div class="item-header">
+                            <span>Example Submission 2</span>
+                        </div>
+                        <div class="item-header">Example Content</div>
+                    </li>
+                    <li class="coordinatorContent">
+                        <div class="item-header">
+                            <span>Example Submission 2</span>
+                        </div>
+                        <div class="item-header">Example Content</div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="infoBox" id="staffMembers">
+                <button class="editInfo"></button>
+                <div class="infobox--icon"></div>
+                <span class="infobox--title">Staff Members</span>
+                <ul class="content">
+                    <li class="coordinatorContent">
+                        <div class="item-header">
+                            <span>Example Submission 2</span>
+                        </div>
+                        <div class="item-header">Example Content</div>
+                    </li>
+                    <li class="coordinatorContent">
+                        <div class="item-header">
+                            <span>Example Submission 2</span>
+                        </div>
+                        <div class="item-header">Example Content</div>
+                    </li>
+                    <li class="coordinatorContent">
+                        <div class="item-header">
+                            <span>Example Submission 2</span>
+                        </div>
+                        <div class="item-header">Example Content</div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="infoBox" id="pairings">
+                <button class="editInfo"></button>
+                <div class="infobox--icon"></div>
+                <span class="infobox--title">Staff / Supervisor Pairings</span>
+                <ul class="content">
+                    <li class="coordinatorContent">
+                        <div class="item-header">
+                            <span>Example Submission 2</span>
+                        </div>
+                        <div class="item-header">Example Content</div>
+                    </li>
+                    <li class="coordinatorContent">
+                        <div class="item-header">
+                            <span>Example Submission 2</span>
+                        </div>
+                        <div class="item-header">Example Content</div>
+                    </li>
+                    <li class="coordinatorContent">
+                        <div class="item-header">
+                            <span>Example Submission 2</span>
+                        </div>
+                        <div class="item-header">Example Content</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
