@@ -249,6 +249,7 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
                         Console.WriteLine(error.ErrorMessage);
                     }
                 }
+                await OnGetAsync();
                 return Page();
             }
 
