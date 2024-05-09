@@ -29,10 +29,6 @@
 </div>
 
 
-
-
-
-
     <div class="body--Topics--container">
         @foreach (var topic in Model.Topic)
         {
@@ -41,10 +37,13 @@
                 @if (topic.SupervisorID != null)
                 {
                     var staff = await StaffManager.FindByIdAsync(topic.SupervisorID);
-                    <div class="SupervisorGroup">
-                        <span class="topicSupervisor">@staff.Name</span>
-                        <div class="supervisorIcon"></div>
-                    </div>
+                    if (staff != null)
+                    {
+                        <div class="SupervisorGroup">
+                            <span class="topicSupervisor">@staff.Name</span>
+                            <div class="supervisorIcon"></div>
+                        </div>
+                    }
                 }
                
 

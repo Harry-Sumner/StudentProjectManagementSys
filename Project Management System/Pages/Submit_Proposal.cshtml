@@ -57,12 +57,29 @@
 
             <div class="topicProposalContainer">
                 <ul class="proposalsPriorityLevel7">
-                    <li class="proposalBox" id="propsal1">
-                        <span class="proposalID">1</span>
-                        <div class="proposalDivider"></div>
-                        <h1>Example Proposal</h1>
-                        <h1>Example Supervisor</h1>
-                    </li>
+                    @foreach (var proposal in Model.TopicBasket)
+                    {
+                        @foreach (var topic in Model.Topics.Where(i => i.TopicID == proposal.TopicID))
+                        {
+                            Model.Priority += 1;
+                            <li class="proposalBox" draggable="true" id="propsal1">
+                                <span class="proposalID">@Model.Priority</span>
+                                <div class="proposalDivider"></div>
+                                <h1>@topic.TopicName</h1>
+                                @if (topic.SupervisorID != null)
+                                {
+                                    var staff = await StaffManager.FindByIdAsync(topic.SupervisorID);
+                                    <h1>@staff.Name</h1>
+                                }
+
+                                <form method="post">
+                                    <button class="removeBox" type="submit" asp-page-handler="Delete" asp-route-topicID="@topic.TopicID">
+                                        <div class="removeIcon"></div>
+                                    </button>
+                                </form>
+                            </li>
+                        }
+                    }
                 </ul>
             </div>
 

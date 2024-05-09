@@ -22,6 +22,10 @@ namespace Project_Management_System.Pages
 
         public bool Postgraduate { get; set; }
 
+        public int Topic1 { get; set; }
+        public int Topic2 { get; set; }
+        public int Topic3 { get; set; }
+
         public Submit_ProposalModel(Project_Management_System.Data.SPMS_Context context, SPMS_Context db, UserManager<SPMS_Student> userManager, SignInManager<SPMS_User> signInManager)
         {
             _context = context;
@@ -60,10 +64,21 @@ namespace Project_Management_System.Pages
         }
         public async Task<IActionResult> OnPostSubmitAsync()
         {
-            var user = await _UserManager.GetUserAsync(User);
-            proposal.StudentID = user.Id;
-           
-         
+            if (TopicBasket.Count() == 3) {
+                var user = await _UserManager.GetUserAsync(User);
+
+
+            } 
+            else if(TopicBasket.Count() > 3) { 
+            
+            
+            
+            }
+            else
+            {
+
+
+            }
 
             await _db.SaveChangesAsync(); //save all changes to sql database
             return RedirectToPage("/Index"); //return to home page
@@ -72,9 +87,16 @@ namespace Project_Management_System.Pages
         public async Task<IActionResult> OnPostDeleteAsync(int topicID) //takes id passed from button
         {
             var user = await _UserManager.GetUserAsync(User);
-            var topic = await _db.TopicBasket.FindAsync(user.Id, topicID);
-            _db.TopicBasket.Remove(topic);
-            await _db.SaveChangesAsync(); //save changes
+            if(user != null)
+            {
+                var topic = await _db.TopicBasket.FindAsync(user.Id, topicID);
+                if (topic != null)
+                {
+                    _db.TopicBasket.Remove(topic);
+                    await _db.SaveChangesAsync();
+                }
+            }
+            //save changes
             return RedirectToPage(); //return to page
         }
     }

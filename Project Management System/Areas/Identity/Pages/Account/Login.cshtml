@@ -68,14 +68,11 @@
     </form>
 
     <form class="registerFormStaff" method="post" style="display: none;">
-        @{
-            ModelState.Clear();
-        }
         <input asp-for="StaffRegisterInput.FirstName" placeholder="Your first Name" required>
         <input asp-for="StaffRegisterInput.Surname" placeholder="Your last Name" required>
         <input asp-for="StaffRegisterInput.Email" placeholder="name@example.com" required>
         <select asp-for="StaffRegisterInput.DivisionID" required>
-            <option value="null"></option>
+            <option value=0></option>
             @foreach (var division in Model.Division)
             {
                 <option value="@division.DivisionID">@Html.ValueFor(modelDivision => division.DivisionName)</option>
