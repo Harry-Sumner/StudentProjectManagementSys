@@ -1,29 +1,25 @@
-﻿function showForm(select) {
-    var selectedIndex = select.selectedIndex;
-    var topicDetails = document.getElementById("topicDetails");
-    var topicNameInput, topicDescriptionInput, supervisorIDInput, markerIDInput;
+﻿// Changes fields to topic of users choosing
+$(document).ready(function () {
+    // Event listener for dropdown change
+    $('#topicDropdown').change(function () {
+        // Get the selected option
+        var selectedOption = $(this).children('option:selected');
 
-    try {
-        topicNameInput = document.getElementById("topicName");
-        topicDescriptionInput = document.getElementById("topicDescription");
-        supervisorIDInput = document.getElementById("supervisorID");
-        markerIDInput = document.getElementById("markerID");
-    } catch (error) {
-        console.error("An error occurred while getting elements by ID:", error);
-        return;
-    }
+        // Retrieve data attributes
+        var topicName = selectedOption.data('name');
+        var topicDescription = selectedOption.data('description');
+        var supervisorID = selectedOption.data('supervisor');
+        var markerID = selectedOption.data('marker');
 
-    if (selectedIndex > 0) {
-        var selectedOption = select.options[selectedIndex];
-        topicNameInput.value = selectedOption.getAttribute("data-name");
-        topicDescriptionInput.value = selectedOption.getAttribute("data-description");
-        supervisorIDInput.value = selectedOption.getAttribute("data-supervisor");
-        markerIDInput.value = selectedOption.getAttribute("data-marker");
-        topicDetails.style.display = "block";
-    } else {
-        topicDetails.style.display = "none";
-    }
-}
+        // Set values to input fields
+        $('#topicName').val(topicName);
+        $('#topicDescription').val(topicDescription);
+        $('#topicSupervisor').val(supervisorID);
+        $('#topicMarker').val(markerID);
+
+        // Show the edit section if it's hidden
+        $('.editSection').show();
+    });
 
 $(document).ready(function () {
     // Assuming '#toggle' is the ID of the button that will be clicked to open and close the sidebar
@@ -77,20 +73,8 @@ $(document).ready(function () {
     function filterFunction1() {
         document.getElementById("myDropdown").classList.toggle("show");
     }
-
-    function filterFunction() {
-        const input = document.getElementById("myInput");
-        const filter = input.value.toUpperCase();
-        const div = document.getElementById("myDropdown");
-        const a = div.getElementsByTagName("a");
-        for (let i = 0; i < a.length; i++) {
-            txtValue = a[i].textContent || a[i].innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                a[i].style.display = "";
-            } else {
-                a[i].style.display = "none";
-            }
-        }
-    }
+  
+    });
 
 });
+
