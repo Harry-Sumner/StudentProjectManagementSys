@@ -91,16 +91,8 @@ namespace Project_Management_System.Pages.crud
 
                 topicToUpdate.TopicName = Topic.TopicName;
                 topicToUpdate.TopicDescription = Topic.TopicDescription;
-                if(Topic.SupervisorID != null)
-                {
-                    topicToUpdate.SupervisorID = Topic.SupervisorID;
-
-                }
-                if (Topic.MarkerID != null)
-                {
-                    topicToUpdate.MarkerID = Topic.MarkerID;
-
-                }
+                topicToUpdate.SupervisorID = Topic.SupervisorID;
+                topicToUpdate.MarkerID = Topic.MarkerID;
 
                 try
                 {
