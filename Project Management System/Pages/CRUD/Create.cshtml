@@ -1,55 +1,40 @@
 ﻿@page
 @model Project_Management_System.Pages.crud.CreateModel
 
+<link href="~/css/addProposal.css" rel="stylesheet" />
+
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<div class="body--addProposal--container">
+    <span class="addTitle">Add a topic</span>
 
-<h4>Topic</h4>
-<hr />
-<div class="container2">
-    <div class="row">
-        <div class="col-md-4">
-            <form method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                <!-- Hidden input field for Topic ID -->
-                <input id="topicIDInput" name="Topic.TopicID" type="text" />
-                <span asp-validation-for="Topic.TopicID" class="text-danger"></span>
-
-                <!-- Other form fields -->
-                <label asp-for="Topic.TopicName" class="control-label2"></label>
-                <div class="form-group">
-                    <input asp-for="Topic.TopicName" class="form-control2" />
-                    <span asp-validation-for="Topic.TopicName" class="text-danger"></span>
-                </div>
-
-                <label asp-for="Topic.TopicDescription" class="control-label2"></label>
-                <div class="form-group">
-                    <input asp-for="Topic.TopicDescription" class="form-control2" />
-                    <span asp-validation-for="Topic.TopicDescription" class="text-danger"></span>
-                </div>
-
-                <label asp-for="Topic.SupervisorID" class="control-label2">Supervisor</label>
-                <div class="form-group">
-                    <input asp-for="Topic.SupervisorID" class="form-control2" size="10" />
-                    <span asp-validation-for="Topic.SupervisorID" class="text-danger"></span>
-                </div>
-
-                <!-- "Add Topic" button -->
-                <div class="form-group">
-                    <button type="submit" class="button" style="vertical-align:middle" onclick="addTopic()"><span>Add Topic</span></button>
-                </div>
-            </form>
+    <form method="post">
+        <div class="addGroup" style="display: none;">
+            <label for="topicName">TopicID</label>
+            <input id="topicName" name="TopicID" asp-for="Topic.TopicID" />
         </div>
-    </div>
-</div>
 
-<div>
-    <a class="button2" href="/crud/Index"><span>Back</span></a>
+        <div class="addGroup">
+            <label for="topicName">Topic Name</label>
+            <input id="topicName" name="topicName" asp-for="Topic.TopicName" />
+        </div>
 
+        <div class="addGroup">
+            <label for="TopicSupervisor">Topic Supervisor</label>
+            <input id="TopicSupervisor" name="topicDescription" asp-for="Topic.SupervisorID" />
+        </div>
+
+        <div class="addGroup">
+            <label for="topicDescription">Topic Description</label>
+            <textarea id="topicDescription" name="topicDescription" asp-for="Topic.TopicDescription"></textarea>
+        </div>
+
+        <div class="addGroup">
+            <button type="submit" class="addBtn">Add Topic</button>
+        </div>
+    </form>
 </div>
 
 @section Scripts {
