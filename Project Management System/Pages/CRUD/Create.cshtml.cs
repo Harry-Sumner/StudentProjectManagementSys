@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using NuGet.ContentModel;
 using Project_Management_System.Data;
 
 namespace Project_Management_System.Pages.crud
@@ -32,11 +34,23 @@ namespace Project_Management_System.Pages.crud
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
+            ModelState.Clear();
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-
+            var currentTopic = _context.Topic.FromSqlRaw("SELECT * FROM Topic")
+                .OrderByDescending(b => b.TopicID)
+                .FirstOrDefault();
+            if(currentTopic != null)
+            {
+                Topic.TopicID = currentTopic.TopicID + 1; //increment last id by 1
+            }
+            else
+            {
+                Topic.TopicID = 1;
+            }
+            
             _context.Topic.Add(Topic);
             await _context.SaveChangesAsync();
 
