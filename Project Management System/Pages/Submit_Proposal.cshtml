@@ -70,7 +70,6 @@
                                     var staff = await StaffManager.FindByIdAsync(topic.SupervisorID);
                                     <h1>@staff.Name</h1>
                                 }
-
                                 <form method="post">
                                     <button class="removeBox" type="submit" asp-page-handler="Delete" asp-route-topicID="@topic.TopicID">
                                         <div class="removeIcon"></div>
@@ -86,8 +85,10 @@
                 <span class="ProposalTitleFormUpload">Upload your completed proposal form: </span>
                 <input type="file" class="fileUpload" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword">
             </div>
-
-            <button type="submit" class="submitProposal">Submit</button>
+            @if (!Model.Submitted)
+            {
+                <button type="submit" class="submitProposal">Submit</button>
+            }
         </form>
     </div>
 }
@@ -168,10 +169,12 @@ else
                 <span class="ProposalTitleFormUpload">Upload your completed proposal form: </span>
                 <input type="file" class="fileUpload" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword">
             </div>
-             <form method="post">
+            @if (!Model.Submitted)
+            {
+            <form method="post">
                 <button type="submit" class="submitProposal" asp-page-handler="Submit">Submit</button>
             </form>
-        
+            }
     </div>
 }
 

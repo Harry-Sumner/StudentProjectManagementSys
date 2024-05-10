@@ -23,6 +23,7 @@ namespace Project_Management_System.Pages
         public IList<PostgraduateProposal> PostgraduateProposals { get; set; }
         public bool Postgraduate { get; set; }
 
+        public bool Submitted { get; set; }
         public int Topic1 { get; set; }
         public int Topic2 { get; set; }
         public int Topic3 { get; set; }
@@ -62,6 +63,24 @@ namespace Project_Management_System.Pages
             {
                 Topics = await _context.Topic.ToListAsync();
             }
+
+            UndergraduateProposals = _db.UndergraduateProposal //select data from database
+               .FromSqlRaw("SELECT * FROM UndergraduateProposal WHERE StudentID = {0}", user.Id)
+               .ToList();
+
+            if (UndergraduateProposals.Count() > 0)
+            {
+                Submitted = true;
+            }
+
+            PostgraduateProposals = _db.PostgraduateProposal //select data from database
+               .FromSqlRaw("SELECT * FROM PostgraduateProposal WHERE StudentID = {0}", user.Id)
+               .ToList();
+
+            if (PostgraduateProposals.Count() > 0)
+            {
+                Submitted = true;
+            }
         }
         public async Task<IActionResult> OnPostSubmitAsync()
         {
@@ -72,14 +91,7 @@ namespace Project_Management_System.Pages
                 .ToList();
 
             if (TopicBasket.Count() == 3 && Postgraduate == false) {
-                UndergraduateProposals = _db.UndergraduateProposal //select data from database
-               .FromSqlRaw("SELECT * FROM UndergraduateProposal WHERE StudentID = {0}", user.Id)
-               .ToList();
-
-                if (UndergraduateProposals.Count() > 0)
-                {
-                    return RedirectToPage();
-                }
+                
                 UndergraduateProposal newTopic = new UndergraduateProposal
                 {
                     StudentID = user.Id,
@@ -93,15 +105,6 @@ namespace Project_Management_System.Pages
             }
             else if(TopicBasket.Count() == 1 && Postgraduate == true)
             {
-                PostgraduateProposals = _db.PostgraduateProposal //select data from database
-               .FromSqlRaw("SELECT * FROM PostgraduateProposal WHERE StudentID = {0}", user.Id)
-               .ToList();
-
-                if (PostgraduateProposals.Count() > 0)
-                {
-                    return RedirectToPage();
-                }
-
                 PostgraduateProposal newPostTopic = new PostgraduateProposal
                 {
                     StudentID = user.Id,
