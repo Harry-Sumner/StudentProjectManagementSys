@@ -28,17 +28,31 @@ namespace Project_Management_System.Pages.crud
 
         public IList<Topic> Topics { get; set; } = new List<Topic>();
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
+            
 
-            var topic = await _context.Topic.FirstOrDefaultAsync();
-            if (topic == null)
+            if (id == null)
             {
-                return NotFound();
-            }
-            Topic = topic;
+                var topic = await _context.Topic.FirstOrDefaultAsync(m => m.TopicID == id);
+                if (topic == null)
+                {
+                    return NotFound();
+                }
+                Topic = topic;
 
-            Topics = await _context.Topic.ToListAsync();
+                Topics = await _context.Topic.ToListAsync();
+            }
+            else
+            {
+                var topic = await _context.Topic.FirstOrDefaultAsync();
+                if (topic == null){
+                    return NotFound();
+                }
+                Topic = topic;
+
+                Topics = await _context.Topic.ToListAsync();
+            }
 
             return Page();
         }
@@ -67,8 +81,6 @@ namespace Project_Management_System.Pages.crud
                     await _db.SaveChangesAsync();
 
                 }
-
-
                 _context.Topic.Remove(topicToDelete);
                 await _context.SaveChangesAsync();
 
