@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using NuGet.ContentModel;
 using Project_Management_System.Data;
 
-namespace Project_Management_System.Pages.crud
+namespace Project_Management_System.Pages
 {
     [Authorize]
 
@@ -54,7 +54,7 @@ namespace Project_Management_System.Pages.crud
             _context.Topic.Add(Topic);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("/CRUD/Index");
+            return RedirectToPage("/Index");
             
         }
     }

@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore;
 using Project_Management_System.Data;
 using Project_Management_System.Migrations;
 
-namespace Project_Management_System.Pages.crud
+namespace Project_Management_System.Pages
 {
     public class EditModel : PageModel
     {
-        private readonly Project_Management_System.Data.SPMS_Context _context;
+        private readonly SPMS_Context _context;
         private readonly SPMS_Context _db;
 
-        public EditModel(Project_Management_System.Data.SPMS_Context context, SPMS_Context db)
+        public EditModel(SPMS_Context context, SPMS_Context db)
         {
             _context = context;
             _db = db;
@@ -25,6 +25,9 @@ namespace Project_Management_System.Pages.crud
         public int TopicID { get; set; }
 
         public IList<TopicBasket> TopicBasket { get; set; }
+        public IList<PostgraduateProposal> PostgraduateProposal { get; set; }
+        public IList<UndergraduateProposal> UndergraduateProposal { get; set; }
+
 
         public IList<Topic> Topics { get; set; } = new List<Topic>();
 
@@ -83,6 +86,36 @@ namespace Project_Management_System.Pages.crud
                 .FromSqlRaw("SELECT * FROM TopicBasket WHERE TopicID = {0}", TopicID)
                 .ToList();
 
+                PostgraduateProposal = _db.PostgraduateProposal //select data from database
+                .FromSqlRaw("SELECT * FROM PostgraduateProposal WHERE TopicID = {0}", TopicID)
+                .ToList();
+
+
+                UndergraduateProposal = _db.UndergraduateProposal //select data from database
+                .FromSqlRaw("SELECT * FROM UndergraduateProposal WHERE TopicID1 = {0} OR TopicID2 = {0} OR TopicID3 = {0}", TopicID)
+                .ToList();
+
+
+                if (UndergraduateProposal != null)
+                {
+                    foreach (var proposal in UndergraduateProposal)
+                    {
+                        _db.UndergraduateProposal.Remove(proposal);
+                    }
+                    await _db.SaveChangesAsync();
+
+                }
+
+                if (PostgraduateProposal != null)
+                {
+                    foreach (var proposal in PostgraduateProposal)
+                    {
+                        _db.PostgraduateProposal.Remove(proposal);
+                    }
+                    await _db.SaveChangesAsync();
+
+                }
+
                 if (TopicBasket != null)
                 {
                     foreach (var topic in TopicBasket)
@@ -95,12 +128,12 @@ namespace Project_Management_System.Pages.crud
                 _context.Topic.Remove(topicToDelete);
                 await _context.SaveChangesAsync();
 
-                return RedirectToPage("./Index");
+                return RedirectToPage("/Index");
             }
             else if (command == "Save")
             {
                 await _context.SaveChangesAsync();
-                return RedirectToPage("./Index");
+                return RedirectToPage("/Index");
 
             }
             var topicToUpdate = await _context.Topic.FindAsync(TopicID);
@@ -139,7 +172,7 @@ namespace Project_Management_System.Pages.crud
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Index");
         }
 
 
