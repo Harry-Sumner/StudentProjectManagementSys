@@ -1,7 +1,4 @@
-﻿body {
-}
-
-.body--coordinator--title {
+﻿.body--coordinator--title {
     position: absolute;
     top: 130px;
     left: 5%;
@@ -24,20 +21,20 @@
 
 .content {
     position: relative;
-    top: 50px !important;
+    top: 50px;
     list-style-type: none;
     padding: 0;
     margin: 10px 0;
-    max-height: 100px !important;
+    max-height: 100px;
     overflow-y: scroll;
 }
 
 .coordinatorContent {
-    margin-bottom: 10px !important;
-    padding: 5px !important;
-    background-color: #f9f9f9 !important;
-    border: 1px solid black !important;
-    border-radius: 4px !important;
+    margin-bottom: 10px;
+    padding: 5px;
+    background-color: #f9f9f9;
+    border: 1px solid black;
+    border-radius: 4px;
 }
 
 .item-header {
@@ -45,6 +42,77 @@
     justify-content: space-between;
     cursor: pointer;
 }
+
+.infoBox {
+    position: relative;
+    height: 150px;
+    width: 35%;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+    .infoBox:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+.infobox--icon {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    background-size: contain;
+    background-position: center;
+    margin-bottom: 10px;
+}
+
+.infoBox.active .content {
+    display: block;
+    opacity: 1;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 90%;
+    max-height: 200px;
+    padding: 10px;
+    z-index: 10000;
+    font-size: 10px;
+}
+
+.infoBox.active .infobox--icon,
+.infoBox.active .editInfo {
+    opacity: 0;
+    display: none;
+}
+
+.editInfo {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-image: url(../images/editInfoBox.svg);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    border: none;
+    border-radius: 3px;
+    background-color: transparent;
+    transition: 0.3s all;
+}
+
+    .editInfo:hover {
+        background-color: #F69191;
+    }
 
 .toggle-icon {
     transition: all 0.3s ease;
