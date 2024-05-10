@@ -78,7 +78,7 @@ namespace Project_Management_System.Pages
             }
             else
             {
-                // Handle case where topic is already added
+                // This handles the  case where  the topic has already been added
                 TempData["ShowPopup"] = "Topic is already added to your proposal.";
             }
 
