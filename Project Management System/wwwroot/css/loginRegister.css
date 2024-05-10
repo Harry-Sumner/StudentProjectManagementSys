@@ -4,7 +4,7 @@
     left: 50%;
     width: 70%;
     min-width: 650px;
-    height: 650px;
+    height: 1000px;
     margin-bottom: 100px;
     transform: translateX(-50%);
     background-color: white;
@@ -225,3 +225,11 @@
     .body--register--staffToggler button:hover {
         border-bottom: 2px solid red;
     }
+
+.error-message {
+    display: block;
+    color: red;
+    font-size: 16px;
+    background-color: #fde8ec;
+    transition: transform 0.3s ease-out;
+}
