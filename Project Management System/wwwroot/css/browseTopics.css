@@ -1,4 +1,5 @@
-﻿.body--search--container {
+﻿/* CSS for the search navigation bar */
+.body--search--container {
     position: absolute;
     top: 160px;
     left: 60%;
@@ -9,7 +10,7 @@
     flex-direction: row;
     background-color: #ECECEC;
 }
-
+/* Represents CSS for input on the search navigation bar */
 .body--search--container input {
 position: absolute;
 top: 50%;
@@ -20,6 +21,7 @@ background-color: transparent;
 border: 1px solid black;
 }
 
+/* Style for the search button */
 .body--search--container button {
 position: absolute;
 top: 50%;
@@ -36,10 +38,12 @@ border-radius: 5px;
 transition: all 0.3s;
 }
 
+/* When hovered over, it creates a black 1px border */
 .body--search--container button:hover {
 border: 1px solid black;
 }
 
+/* Main container to display topics */
 .body--Topics--container {
     position: absolute;
     top: 250px;
@@ -54,7 +58,7 @@ border: 1px solid black;
     border-radius: 5px;
     padding: 10px 0;
 }
-
+/* Represents the css of each topic box*/
 .topicBox {
     position: relative;
     width: 90%;
@@ -66,9 +70,10 @@ border: 1px solid black;
     border: 2px solid #6E6E6E;
     box-shadow: 3px 3px 3px #888888;
     transition: min-height 0.3s ease-in-out;
-    overflow: hidden; /* Hide overflow content when not expanded */
+    overflow: hidden; /* This hides the topic description when the toggle expansion is not expanded */
 }
 
+/* Represents css for topic name and assigned user */
 .topicBox span {
     position: absolute;
     top: 50%;
@@ -76,11 +81,13 @@ border: 1px solid black;
     transition: all 0.3s;
 }
 
+/* CSS for topic title (name) */
 .topicTitle {
     position: absolute;
     left: 50px;
 }
 
+/* CSS for topic supervisor and supervisor icon */
 .SupervisorGroup {
     position: absolute;
     top: 50%;
@@ -93,13 +100,14 @@ border: 1px solid black;
     transition: all 0.3s;
 }
 
+/* CSS for supervisor text (displays name of assigned user) */
 .topicSupervisor {
     text-decoration: underline;
     cursor: pointer;
     color: black;
     word-break: normal;
 }
-
+/* CSS for the two buttons that can be clicked */
 .topicButtonContainer {
     position: absolute;
     right: 10px;
@@ -226,3 +234,15 @@ footer {
     }
 
 }
+
+/* This css is for the clear button on the index */
+.clearbtn {
+   position: absolute;
+   top: 18%;
+   width: 85px;
+   height: 35px;
+   left: 54%;
+   border: 1px solid;
+   cursor: pointer;
+   border-radius: 4px;
+   }
