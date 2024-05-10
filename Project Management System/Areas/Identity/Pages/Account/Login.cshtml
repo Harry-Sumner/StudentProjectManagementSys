@@ -23,7 +23,10 @@
             ModelState.Clear();
         }
         <input asp-for="LoginInput.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="Email" />
+        <span asp-validation-for="LoginInput.Email" class="error-message"></span> <!-- Display error message that email has either not been inputted or not in the correct format -->
+
         <input asp-for="LoginInput.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Password" />
+        <span asp-validation-for="LoginInput.Password" class="error-message"></span> <!-- Display message that password has not been inputted -->
 
         <div class="body--loginForm--checkboxContainer">
             <label asp-for="LoginInput.RememberMe" class="form-label">
@@ -33,8 +36,10 @@
         </div>
 
         <a asp-page="./ForgotPassword" id="forgot-password">Forgotten your username or password?</a>
+
         <button id="login-submit" type="submit" class="body--login--submitButton" asp-page-handler="Login">Login</button>
         <div asp-validation-summary="ModelOnly" class="body--register--errorMessage"></div>
+        <span asp-validation-summary="All" class="text-danger"></span> <!-- Displays error message -->
     </form>
 
     <div class="body--register--staffToggler" style="display: none;">
@@ -48,11 +53,17 @@
             ModelState.Clear();
         }
         <input asp-for="RegisterInput.FirstName" placeholder="Your first Name" required>
-        <input asp-for="RegisterInput.Surname" placeholder="Your last Name" required>
+        <span asp-validation-for="RegisterInput.FirstName" class="error-message"></span> <!-- Display error message for first name -->
 
+        <input asp-for="RegisterInput.Surname" placeholder="Your last Name" required>
+        <span asp-validation-for="RegisterInput.Surname" class="error-message"></span> <!-- Display error message for surname -->
         <!--Student Number has a max length of 7 for the input field, may need changing for requirements-->
         <input asp-for="RegisterInput.StudentNo" placeholder="Your Student Number" maxlength="7" required>
+        <span asp-validation-for="RegisterInput.StudentNo" class="error-message"></span> <!-- Display error message for student number -->
+
         <input asp-for="RegisterInput.Email" placeholder="name@example.com" required>
+        <span asp-validation-for="RegisterInput.Email" class="error-message"></span> <!-- Display error message for email -->
+
         <select asp-for="RegisterInput.CourseID" required>
             <option value="null"></option>
             @foreach (var course in Model.Course)
@@ -60,12 +71,18 @@
                 <option value="@course.CourseID">@Html.ValueFor(modelDivision => course.CourseName)</option>
             }
         </select>
+        <span asp-validation-for="RegisterInput.CourseID" class="error-message"></span> <!-- Display error message for course ID -->
+
         <input asp-for="RegisterInput.Password" placeholder=" New Password" required>
+        <span asp-validation-for="RegisterInput.Password" class="error-message"></span> <!-- Display error message for password -->
+
         <input asp-for="RegisterInput.ConfirmPassword" placeholder="Confirm Password" required>
+        <span asp-validation-for="RegisterInput.ConfirmPassword" class="error-message"></span> <!-- Display error message for confirm password -->
 
         <button id="StudentRegisterSubmit" type="submit" class="body--register--submitButton" asp-page-handler="StudentRegister">Register</button>
         <div asp-validation-summary="ModelOnly" class="body--register--errorMessage"></div>
     </form>
+
 
     <form class="registerFormStaff" method="post" style="display: none;">
         <input asp-for="StaffRegisterInput.FirstName" placeholder="Your first Name" required>

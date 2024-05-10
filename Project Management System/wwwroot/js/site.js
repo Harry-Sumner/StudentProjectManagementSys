@@ -108,15 +108,13 @@ let form = document.forms["create-topic-form"];
 form.onsubmit = function (event) {
     if (form.topicName.value === "") {
         showError("topicName-error", "Please enter topic name");
-        return false;
+        event.preventDefault();
     }
 
-    form.onsubmit = function (event) {
-        if (form.topicDescription.value === "") {
-            showError("topicDescription-error", "Please enter topic description!");
-            return false;
-        }
+    if (form.topicDescription.value === "") {
+        showError("topicDescription-error", "Please enter topic description!");
+        event.preventDefault();
     }
-    event.preventDefault();
-}
+};
+
 
