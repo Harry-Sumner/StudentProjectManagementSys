@@ -19,7 +19,8 @@ namespace Project_Management_System.Pages
         public IList<Course> Course { get; set; }
         public IList<Topic> Topics { get; private set; }
         public int Priority { get; set; }
-
+        public IList<UndergraduateProposal> UndergraduateProposals { get; set; }
+        public IList<PostgraduateProposal> PostgraduateProposals { get; set; }
         public bool Postgraduate { get; set; }
 
         public int Topic1 { get; set; }
@@ -71,6 +72,14 @@ namespace Project_Management_System.Pages
                 .ToList();
 
             if (TopicBasket.Count() == 3 && Postgraduate == false) {
+                UndergraduateProposals = _db.UndergraduateProposal //select data from database
+               .FromSqlRaw("SELECT * FROM UndergraduateProposal WHERE StudentID = {0}", user.Id)
+               .ToList();
+
+                if (UndergraduateProposals.Count() > 0)
+                {
+                    return RedirectToPage();
+                }
                 UndergraduateProposal newTopic = new UndergraduateProposal
                 {
                     StudentID = user.Id,
@@ -84,6 +93,15 @@ namespace Project_Management_System.Pages
             }
             else if(TopicBasket.Count() == 1 && Postgraduate == true)
             {
+                PostgraduateProposals = _db.PostgraduateProposal //select data from database
+               .FromSqlRaw("SELECT * FROM PostgraduateProposal WHERE StudentID = {0}", user.Id)
+               .ToList();
+
+                if (PostgraduateProposals.Count() > 0)
+                {
+                    return RedirectToPage();
+                }
+
                 PostgraduateProposal newPostTopic = new PostgraduateProposal
                 {
                     StudentID = user.Id,
