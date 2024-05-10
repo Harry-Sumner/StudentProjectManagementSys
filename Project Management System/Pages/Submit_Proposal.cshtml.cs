@@ -64,24 +64,37 @@ namespace Project_Management_System.Pages
         }
         public async Task<IActionResult> OnPostSubmitAsync()
         {
-            if (TopicBasket.Count() == 3) {
-                var user = await _UserManager.GetUserAsync(User);
 
+            var user = await _UserManager.GetUserAsync(User);
+            TopicBasket = _db.TopicBasket //select data from database
+                .FromSqlRaw("SELECT * FROM TopicBasket WHERE StudentID = {0}", user.Id)
+                .ToList();
 
-            } 
-            else if(TopicBasket.Count() > 3) { 
-            
-            
-            
+            if (TopicBasket.Count() == 3 && Postgraduate == false) {
+                UndergraduateProposal newTopic = new UndergraduateProposal
+                {
+                    StudentID = user.Id,
+                    TopicID1 = TopicBasket[0].TopicID,
+                    TopicID2 = TopicBasket[1].TopicID,
+                    TopicID3 = TopicBasket[2].TopicID,
+                };
+                _db.UndergraduateProposal.Add(newTopic);
+                await _db.SaveChangesAsync(); //save all changes to sql database
+                return RedirectToPage("/Index"); //return to home page
             }
-            else
+            else if(TopicBasket.Count() == 1 && Postgraduate == true)
             {
-
+                PostgraduateProposal newPostTopic = new PostgraduateProposal
+                {
+                    StudentID = user.Id,
+                    TopicID = TopicBasket[0].TopicID,
+                };
+                _db.PostgraduateProposal.Add(newPostTopic);
+                await _db.SaveChangesAsync(); //save all changes to sql database
+                return RedirectToPage("/Index"); //return to home page
 
             }
-
-            await _db.SaveChangesAsync(); //save all changes to sql database
-            return RedirectToPage("/Index"); //return to home page
+            return RedirectToPage();
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(int topicID) //takes id passed from button

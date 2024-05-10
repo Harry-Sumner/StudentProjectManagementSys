@@ -53,7 +53,7 @@
                 <div class="editGroup">
                     <label for="topicSupervisor">Supervisor ID</label>
                     <select asp-for="Topic.SupervisorID">
-                        <option value=null>Choose supervisor here</option>
+                        <option value= null>Choose supervisor here</option>
                         @foreach (var staff in StaffManager.Users)
                         {
                             <option value=@staff.Id>@staff.Name</option>
@@ -64,7 +64,7 @@
                 <div class="editGroup">
                     <label for="topicMarker">Marker ID</label>
                     <select asp-for="Topic.MarkerID">
-                        <option value=null>Choose marker here</option>
+                        <option value= null>Choose marker here</option>
                         @foreach (var staff in StaffManager.Users)
                         {
                             <option value=@staff.Id>@staff.Name</option>

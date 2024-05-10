@@ -106,8 +106,6 @@ else
                 <li>Degree Programme: @course.CourseName</li>
             }
         </ul>
-
-        <form method="post" action="">
             <div class="confirmDetailsContianer">
                 <input type="checkbox" class="detailsCorrect" name="confirmDetails">
                 <label for="confirmDetails">I confirm that these Details are correct,</label>
@@ -170,9 +168,10 @@ else
                 <span class="ProposalTitleFormUpload">Upload your completed proposal form: </span>
                 <input type="file" class="fileUpload" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword">
             </div>
-
-            <button type="submit" class="submitProposal">Submit</button>
-        </form>
+             <form method="post">
+                <button type="submit" class="submitProposal" asp-page-handler="Submit">Submit</button>
+            </form>
+        
     </div>
 }
 

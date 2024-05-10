@@ -30,9 +30,19 @@ namespace Project_Management_System.Pages.crud
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            
 
-            if (id == null)
+            var topic = await _context.Topic.FirstOrDefaultAsync();
+            if (topic == null)
+            {
+                return NotFound();
+            }
+            Topic = topic;
+
+            Topics = await _context.Topic.ToListAsync();
+
+            return Page();
+
+            /*if (id == null)
             {
                 var topic = await _context.Topic.FirstOrDefaultAsync(m => m.TopicID == id);
                 if (topic == null)
@@ -46,7 +56,8 @@ namespace Project_Management_System.Pages.crud
             else
             {
                 var topic = await _context.Topic.FirstOrDefaultAsync();
-                if (topic == null){
+                if (topic == null)
+                {
                     return NotFound();
                 }
                 Topic = topic;
@@ -54,7 +65,7 @@ namespace Project_Management_System.Pages.crud
                 Topics = await _context.Topic.ToListAsync();
             }
 
-            return Page();
+            return Page();*/
         }
 
         public async Task<IActionResult> OnPostAsync(string command)

@@ -31,7 +31,6 @@
                 @Html.DisplayNameFor(m => m.LoginInput.RememberMe)
             </label>
         </div>
-
         <a asp-page="./ForgotPassword" id="forgot-password">Forgotten your username or password?</a>
         <button id="login-submit" type="submit" class="body--login--submitButton" asp-page-handler="Login">Login</button>
         <div asp-validation-summary="ModelOnly" class="body--register--errorMessage"></div>
