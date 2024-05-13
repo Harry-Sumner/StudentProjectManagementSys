@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,6 +9,7 @@ using Project_Management_System.Migrations;
 
 namespace Project_Management_System.Pages.AccountProfile
 {
+    [Authorize(Roles = "Staff")]
     public class InterestEditModel : PageModel
     {
         private readonly UserManager<SPMS_Staff> _UserManager;

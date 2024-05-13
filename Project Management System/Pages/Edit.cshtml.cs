@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using Project_Management_System.Migrations;
 
 namespace Project_Management_System.Pages
 {
+    [Authorize(Roles = "Staff, Co-ordinator")]
     public class EditModel : PageModel
     {
         private readonly SPMS_Context _context;

@@ -12,7 +12,7 @@ using Project_Management_System.Data;
 
 namespace Project_Management_System.Pages
 {
-    [Authorize]
+    [Authorize(Roles = "Staff, Co-ordinator")]
 
     public class CreateModel : PageModel
     {

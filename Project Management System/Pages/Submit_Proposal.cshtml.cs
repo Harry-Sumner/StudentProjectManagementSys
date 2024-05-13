@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -7,6 +8,7 @@ using Project_Management_System.Migrations;
 
 namespace Project_Management_System.Pages
 {
+    [Authorize (Roles = "Student")]
     public class Submit_ProposalModel : PageModel
     {
         public UndergraduateProposal proposal = new(); //Create new instance of Proposal

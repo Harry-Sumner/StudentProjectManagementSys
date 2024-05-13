@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Project_Management_System.Pages.AccountProfile
 {
+    [Authorize(Roles = "Staff")]
     public class StaffProfileModel : PageModel
     {
         private readonly UserManager<SPMS_User> _userManager;

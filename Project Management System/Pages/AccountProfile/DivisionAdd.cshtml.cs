@@ -14,7 +14,7 @@ using Project_Management_System.Migrations;
 
 namespace Project_Management_System.Pages.AccountProfile
 {
-    [Authorize]
+    [Authorize(Roles = "Staff, Co-ordinator")]
 
     public class DivisionAddModel : PageModel
     {

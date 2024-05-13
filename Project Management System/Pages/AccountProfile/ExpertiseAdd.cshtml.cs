@@ -13,7 +13,7 @@ using Project_Management_System.Data;
 
 namespace Project_Management_System.Pages.AccountProfile
 {
-    [Authorize]
+    [Authorize(Roles = "Staff")]
 
     public class ExpertiseAddModel : PageModel
     {
