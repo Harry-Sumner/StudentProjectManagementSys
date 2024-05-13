@@ -87,6 +87,7 @@
         <input asp-for="StaffRegisterInput.FirstName" placeholder="Your first Name" required>
         <input asp-for="StaffRegisterInput.Surname" placeholder="Your last Name" required>
         <input asp-for="StaffRegisterInput.Email" placeholder="name@example.com" required>
+        <p>If you belong to multiple divisions, please add one for now then head to the staff profile page to add more.</p>
         <select asp-for="StaffRegisterInput.DivisionID" required>
             <option value=0></option>
             @foreach (var division in Model.Division)
