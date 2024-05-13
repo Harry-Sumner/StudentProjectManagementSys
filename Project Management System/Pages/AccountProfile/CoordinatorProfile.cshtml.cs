@@ -87,7 +87,6 @@ namespace Project_Management_System.Pages.AccountProfile
                     }
                 }
             }
-
             return RedirectToPage();
         }
 

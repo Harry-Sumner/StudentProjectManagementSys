@@ -1,6 +1,14 @@
 ﻿@page
 @model Project_Management_System.Pages.AccountProfile.CoordinatorProfileModel
+
+@inject SignInManager<SPMS_User> SignInManager
+@inject UserManager<SPMS_User> UserManager
+
+@using Microsoft.AspNetCore.Identity
+@using Project_Management_System.Data
+
 @{
+    var user = await UserManager.GetUserAsync(User);
 }
 
 <script src="../js/projectCoordinatorBoxes.js"></script>
@@ -9,10 +17,9 @@
 
 <body>
     <span class="body--coordinator--title">Project Co-ordinator</span>
-
     <div class="body--profile--container">
         <div class="body--profile--name">
-            <span>Example Name</span>
+            <span>@user.Name</span>
         </div>
 
         <div class="body--profile--profilePicture">
@@ -34,28 +41,34 @@
             </div>
 
             <div class="body--profile--infoGroup">
-                <label for="department">Departments</label>
+                <label for="department">Divisions</label>
                 <!--For each loop here to display all departments, just use one li element-->
                 <ul class="departmentList">
-                    <li>
-                        <span>Department 1</span>
-                        <button class="removeDepartment">
-                            <div class="removeIcon"></div>
-                        </button>
-                    </li>
-                    <li>
-                        <span>Department 1</span>
-                        <button class="removeDepartment">
-                            <div class="removeIcon"></div>
-                        </button>
-                    </li>
+                    @foreach (var divisionlink in Model.StaffDivisions.Where(i => i.StaffID == user.Id))
+                    {
+                        @foreach (var division in Model.Divisions.Where(i => i.DivisionID == divisionlink.DivisionID))
+                        {
+                            <li>
+                                <span>@Html.ValueFor(modelDivisions => division.DivisionName)</span>
+                                <a asp-page-handler="">
+                                    <button class="removeDepartment">
+                                        <div class="removeIcon"></div>
+                                    </button>
+                                </a>
+                            </li>
+                            <a asp-page="./DivisionAdd">
+                                <button class="editInfo"></button>
+                            </a>
+
+                        }
+                    }
                 </ul>
             </div>
 
             <div class="body--profile--infoGroup">
                 <label for="email">Email</label>
                 <div class="staffInfoBox">
-                    <span name="email" class="body--profile--email">exampleEmail@example.com</span>
+                    <span name="email" class="body--profile--email">@user.Email</span>
                 </div>
             </div>
         </div>
