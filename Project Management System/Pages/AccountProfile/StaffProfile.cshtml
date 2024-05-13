@@ -64,10 +64,15 @@
                         {
                             @foreach (var division in Model.Divisions.Where(i => i.DivisionID == divisionlink.DivisionID))
                             {
-                                <li>@Html.ValueFor(modelDivisions => division.DivisionName)</li>
-                                <a asp-page="./DivisionAdd">
+                                <li>
+                                    <span>@Html.ValueFor(modelDivisions => division.DivisionName)</span>
+                                    <a asp-page="./InterestEdit">
+                                        <button class="removeDepartment">
+                                            <div class="removeIcon"></div>
+                                        </button>
+                                    </a>
+                                </li>
                                     <button class="editInfo"></button>
-                                </a>
                             }
                         }
                     </ul>
