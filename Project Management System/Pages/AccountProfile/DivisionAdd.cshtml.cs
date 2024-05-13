@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NuGet.ContentModel;
 using Project_Management_System.Data;
+using Project_Management_System.Migrations;
 
 namespace Project_Management_System.Pages.AccountProfile
 {
@@ -32,9 +33,12 @@ namespace Project_Management_System.Pages.AccountProfile
             {
                 Division = await _context.Division.ToListAsync();
             }
+         
         }
 
         public IList<Division> Division { get; set; } = default!;
+
+        public IList<StaffDivision> StaffDivisions { get; set; } = default!;
 
         [BindProperty]
         public StaffDivision StaffDivision { get; set; } = default!;
@@ -45,17 +49,34 @@ namespace Project_Management_System.Pages.AccountProfile
             ModelState.Clear();
             if (!ModelState.IsValid)
             {
+                await OnGetAsync();
                 return Page();
             }
-            
+
             var user = await _UserManager.GetUserAsync(User);
+
+            StaffDivisions = await _context.StaffDivision.FromSqlRaw("SELECT * FROM StaffDivision WHERE StaffID = {0}", user.Id).ToListAsync();
+
+            if(StaffDivisions != null)
+            {
+                foreach(var Division in StaffDivisions)
+                {
+                    if(Division.DivisionID == StaffDivision.DivisionID)
+                    {
+                        await OnGetAsync();
+                        return Page();
+                        
+                    }
+                }
+
+            }
+
             StaffDivision.StaffID = user.Id;
 
             _context.StaffDivision.Add(StaffDivision);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/AccountProfile/StaffProfile");
-            
         }
     }
 }

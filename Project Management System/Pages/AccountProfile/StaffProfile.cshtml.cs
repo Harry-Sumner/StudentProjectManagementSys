@@ -26,10 +26,6 @@ namespace Project_Management_System.Pages.AccountProfile
             _signInManager = signInManager;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public string Username { get; set; }
         public IList<Division> Divisions { get; set; } = default!;
         public IList<Topic> Topic { get; set; } = default!;
@@ -38,11 +34,6 @@ namespace Project_Management_System.Pages.AccountProfile
         public IList<StaffInterest> StaffInterest { get; private set; }
         public IList<StaffExpertise> StaffExpertise { get; private set; }
 
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [TempData]
         public string StatusMessage { get; set; }
 
