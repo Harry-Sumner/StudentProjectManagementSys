@@ -27,6 +27,7 @@ $(document).ready(function () {
     const toggle = $('#toggle'); // Single button for toggling the sidebar
     const divider = $('.header--divider--desktop');
     const uocLogo = $('.header--uocLogo--standard');
+    const userAccount = $('.header--userAccount--standard');
 
     toggle.click(function () {
         // Check if sidebar is open by checking its left style property
@@ -36,12 +37,18 @@ $(document).ready(function () {
             toggle.css('left', '10px');
             divider.css('left', '90px');
             uocLogo.css('left', '110px');
+            uocLogo.show();
+            userAccount.css('opacity', '1');
+            userAccount.toggleClass('expanded');
         } else {
             // If it's closed, open it
             sidebar.css('left', '0');
             toggle.css('left', '316px');
             divider.css('left', '406px');
             uocLogo.css('left', '426px');
+            uocLogo.hide();
+            userAccount.css('opacity', '0.5');
+            userAccount.toggleClass('expanded');
         }
         // Toggle the button's appearance as well
         toggle.toggleClass('button-open button-close');
