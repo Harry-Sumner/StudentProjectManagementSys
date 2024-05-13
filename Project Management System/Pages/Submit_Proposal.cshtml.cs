@@ -82,7 +82,7 @@ namespace Project_Management_System.Pages
                 Submitted = true;
             }
         }
-        public async Task<IActionResult> OnPostSubmitAsync()
+        public async Task<IActionResult> OnPostPostgradSubmitAsync()
         {
 
             var user = await _UserManager.GetUserAsync(User);
@@ -90,20 +90,7 @@ namespace Project_Management_System.Pages
                 .FromSqlRaw("SELECT * FROM TopicBasket WHERE StudentID = {0}", user.Id)
                 .ToList();
 
-            if (TopicBasket.Count() == 3 && Postgraduate == false) {
-                
-                UndergraduateProposal newTopic = new UndergraduateProposal
-                {
-                    StudentID = user.Id,
-                    TopicID1 = TopicBasket[0].TopicID,
-                    TopicID2 = TopicBasket[1].TopicID,
-                    TopicID3 = TopicBasket[2].TopicID,
-                };
-                _db.UndergraduateProposal.Add(newTopic);
-                await _db.SaveChangesAsync(); //save all changes to sql database
-                return RedirectToPage("/Index"); //return to home page
-            }
-            else if(TopicBasket.Count() == 1 && Postgraduate == true)
+            if(TopicBasket.Count() == 1)
             {
                 PostgraduateProposal newPostTopic = new PostgraduateProposal
                 {
@@ -114,6 +101,30 @@ namespace Project_Management_System.Pages
                 await _db.SaveChangesAsync(); //save all changes to sql database
                 return RedirectToPage("/Index"); //return to home page
 
+            }
+            return RedirectToPage();
+        }
+
+        public async Task<IActionResult> OnPostUndergradSubmitAsync()
+        {
+
+            var user = await _UserManager.GetUserAsync(User);
+            TopicBasket = _db.TopicBasket //select data from database
+                .FromSqlRaw("SELECT * FROM TopicBasket WHERE StudentID = {0}", user.Id)
+                .ToList();
+
+            if (TopicBasket.Count() == 3)
+            {
+                UndergraduateProposal newTopic = new UndergraduateProposal
+                {
+                    StudentID = user.Id,
+                    TopicID1 = TopicBasket[0].TopicID,
+                    TopicID2 = TopicBasket[1].TopicID,
+                    TopicID3 = TopicBasket[2].TopicID,
+                };
+                _db.UndergraduateProposal.Add(newTopic);
+                await _db.SaveChangesAsync(); //save all changes to sql database
+                return RedirectToPage("/Index"); //return to home page
             }
             return RedirectToPage();
         }

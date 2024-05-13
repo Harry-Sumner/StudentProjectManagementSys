@@ -24,7 +24,7 @@
 @if(Model.Postgraduate){
     <div class="body--submitLevel7--container">
         <div class="body--submitLevel7--title">
-            <span>Dissertation Project Preferences</span>
+            <span>Level 7 Dissertation Project Preferences</span>
         </div>
 
         <ul class="body--submitLevel6--studentDetails">
@@ -87,7 +87,9 @@
             </div>
             @if (!Model.Submitted)
             {
-                <button type="submit" class="submitProposal">Submit</button>
+                <form method="post">
+                    <button type="submit" class="submitProposal" asp-page-handler="PostgradSubmit">Submit</button>
+                </form>
             }
         </form>
     </div>
@@ -172,7 +174,7 @@ else
             @if (!Model.Submitted)
             {
             <form method="post">
-                <button type="submit" class="submitProposal" asp-page-handler="Submit">Submit</button>
+                <button type="submit" class="submitProposal" asp-page-handler="UndergradSubmit">Submit</button>
             </form>
             }
     </div>

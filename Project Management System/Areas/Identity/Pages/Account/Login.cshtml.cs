@@ -98,11 +98,6 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
                 Course = await _context.Course.ToListAsync();
             }
 
-            if (!string.IsNullOrEmpty(ErrorMessage))
-            {
-                ModelState.AddModelError(string.Empty, ErrorMessage);
-            }
-
             returnUrl ??= Url.Content("~/");
 
             // Clear the existing external cookie to ensure a clean login process
@@ -197,10 +192,6 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
                         return LocalRedirect(returnUrl);
                     }
                 }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
             }
 
             // If we got this far, something failed, redisplay form
@@ -213,45 +204,6 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
             ModelState.Clear();
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
-            if (string.IsNullOrWhiteSpace(StaffRegisterInput.Email))
-            {
-                ModelState.AddModelError(nameof(StaffRegisterInput.Email), "Email is required.");
-            }
-            if (string.IsNullOrWhiteSpace(StaffRegisterInput.FirstName))
-            {
-                ModelState.AddModelError(nameof(StaffRegisterInput.FirstName), "First name is required.");
-            }
-            if (string.IsNullOrWhiteSpace(StaffRegisterInput.Surname))
-            {
-                ModelState.AddModelError(nameof(StaffRegisterInput.Surname), "Surname is required.");
-            }
-            if (StaffRegisterInput.DivisionID == 0)
-            {
-                ModelState.AddModelError(nameof(StaffRegisterInput.DivisionID), "Division is required.");
-            }
-            if (string.IsNullOrWhiteSpace(StaffRegisterInput.Password))
-            {
-                ModelState.AddModelError(nameof(StaffRegisterInput.Password), "Password is required.");
-            }
-            if (StaffRegisterInput.Password != StaffRegisterInput.ConfirmPassword)
-            {
-                ModelState.AddModelError(nameof(StaffRegisterInput.ConfirmPassword), "Passwords do not match.");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                Console.WriteLine("Model state is invalid!, you are in the Register Method");
-                foreach (var modelStateValue in ModelState.Values)
-                {
-                    foreach (var error in modelStateValue.Errors)
-                    {
-                        Console.WriteLine(error.ErrorMessage);
-                    }
-                }
-                await OnGetAsync();
-                return Page();
-            }
 
             if (ModelState.IsValid)
             {
@@ -301,10 +253,6 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
 
                         return LocalRedirect(returnUrl);
                     }
-                }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
 
