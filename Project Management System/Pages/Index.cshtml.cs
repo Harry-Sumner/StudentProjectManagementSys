@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Project_Management_System.Data;
+using Project_Management_System.Migrations;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,18 +33,34 @@ namespace Project_Management_System.Pages
 
         // Properties to hold topics, courses, and search query
         public IList<Topic> Topic { get; set; } = new List<Topic>();
+
+        public IList<Topic> Topics { get; set; }
         public IList<Course> Course { get; set; } = new List<Course>();
+
+        public IList<CourseTopic> CourseTopic { get; set; }
         public string Search { get; set; }
 
-        // Handler for HTTP GET requests
-        public async Task OnGetAsync(string search, string course)
+        public async Task OnGetAsync(string search, int? courseID)
         {
-            // If course is provided, filter courses by course name
-            if (!string.IsNullOrEmpty(course))
+            if (_context.CourseTopic != null)
             {
-                Course = await _context.Course
-                    .Where(t => t.CourseName == course)
-                    .ToListAsync();
+                CourseTopic = await _context.CourseTopic.ToListAsync();
+            }
+
+            if (_context.Topic != null)
+            {
+                Topics = await _context.Topic.ToListAsync();
+            }
+            // If course is provided, filter courses by course name
+            if (courseID != null)
+            {
+                foreach (var course in CourseTopic.Where(i => i.CourseID == courseID))
+                {
+                    foreach (var topic in Topics.Where(i => i.TopicID == course.TopicID))
+                    {
+                        Topic.Add(topic);
+                    }
+                }
             }
             // If search query is provided, filter topics by topic name
             else if (!string.IsNullOrEmpty(search))
@@ -61,6 +78,9 @@ namespace Project_Management_System.Pages
             // Retrieve all courses
             Course = await _context.Course.ToListAsync();
         }
+
+        // Handler for HTTP GET requests
+
 
         // Handler for adding a topic to the user's basket
         public async Task<IActionResult> OnPostAddAsync(int topicID)

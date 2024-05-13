@@ -27,7 +27,9 @@
         <input type="text" placeholder="Search.." id="myInput" onkeyup="filterCourses()">
         @foreach (var course in Model.Course)
         {
-            <a href="#" onclick="selectCourse('@course.CourseName')">@course.CourseName</a>
+            <form method="get">
+                <a asp-page-handler="get" asp-route-courseID="@course.CourseID">@course.CourseName</a>
+            </form>
         }
     </div>
 </div>
