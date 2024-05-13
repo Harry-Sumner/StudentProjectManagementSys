@@ -560,3 +560,10 @@ display: block;
         right: -300px;
     }
 }
+
+/* Button to upload file (image) */
+.uploadedImage {
+    padding: 2px;
+    margin: 5px;
+    margin-top: 270px;
+}
