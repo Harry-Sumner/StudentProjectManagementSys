@@ -20,18 +20,18 @@
     <button type="submit"></button>
 </form>
 <button type="button" onclick="clearSearch()" class="clearbtn">Clear</button>
+
 <div class="dropdown">
-    <button onclick="filterFunction1()" class="dropbtn">Course</button>
+    <button onclick="toggleDropdown()" class="dropbtn">Course</button>
     <div id="myDropdown" class="dropdown-content">
-        
-        <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-        <!-- You can replace the example links with your dynamic data -->
+        <input type="text" placeholder="Search.." id="myInput" onkeyup="filterCourses()">
         @foreach (var course in Model.Course)
         {
-            <a href="#">@course.CourseName</a>
+            <a href="#" onclick="selectCourse('@course.CourseName')">@course.CourseName</a>
         }
     </div>
 </div>
+
 
 
     <div class="body--Topics--container">

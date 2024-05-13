@@ -236,7 +236,7 @@ body {
 .dropdown-menu {
     display: none;
     position: absolute;
-    top: 40px;
+    top: 60px;
     left: 0;
     width: 100%;
     background-color: white;
