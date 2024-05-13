@@ -35,17 +35,20 @@ body {
 }
 
 .header--sidebar--userAccount {
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%; /* Vertically center */
+    left: 50%; /* Start at the center horizontally */
+    transform: translate(-50%, -50%); /* Adjust the starting point to be the center of the element */
     background-color: #393939;
     border: none;
     color: white;
-    padding: 6px;
+    padding: 6px 10px; /* Add horizontal padding */
     border-bottom: 2px solid red;
-    font-size: 1.3em;
+    font-size: 1.6vh;
+    text-align: center; /* Ensure text within the button is centered */
+    white-space: nowrap; /* Prevent the text from wrapping */
 }
+
 
 #sidebar ul {
     position: relative;
@@ -181,10 +184,12 @@ body {
     position: absolute;
     top: 50%;
     right: 60px;
+    min-height: 80px;
     display: flex;
     align-items: center;
     background-color: white;
     transform: translateY(-50%);
+    z-index: 1;
 }
 
 .header--accountBtn {
