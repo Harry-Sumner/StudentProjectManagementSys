@@ -195,7 +195,6 @@ body {
 }
 
 .header--accountBtn {
-    width: 120px;
     height: 40px;
     border: none;
     outline: none;
@@ -518,6 +517,11 @@ display: block;
 @media (max-width: 600px) {
     .header--userAccount--standard.expanded {
         right: -300px;
+    }
+
+    .header--userAccount--standard {
+        font-size: 0.8em;
+        right: 10px;
     }
 }
 

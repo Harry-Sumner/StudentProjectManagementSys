@@ -1,4 +1,13 @@
-﻿.body--profile--container {
+﻿.body--staffProfile--title {
+    position: absolute;
+    top: 120px;
+    left: 25px;
+    font-size: 24px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid red;
+}
+
+.body--profile--container {
     position: absolute;
     top: 200px;
     left: 50%;
@@ -45,11 +54,21 @@
 
 .body--profile--updatePicture {
     position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 0%;
+    bottom: -40px;
+    right: 220px;
+    width: 10%;
     height: 100%;
-    background-color: #F0F0F0;
+}
+
+.uploadedImage {
+    border: none;
+    background-color: #888888;
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 10px;
+    border-radius: 5px;
+    transition: 0.3s all;
 }
 
 .updateIMG {
@@ -84,7 +103,6 @@
 .body--profile--infoGroup {
     position: relative;
     width: 100%;
-    height: 80px;
     display: flex;
     flex-direction: column;
     margin-bottom: 25px;
@@ -108,6 +126,7 @@
 
 .departmentList {
     display: flex;
+    max-width: 500px;
     flex-direction: row;
     margin-bottom: 10px;
 }
@@ -116,10 +135,9 @@
 .departmentList li {
     position: relative;
     height: 40px;
-    min-width: 150px;
     background-color: white;
     border-radius: 2px;
-    padding: 0 10px; 
+    padding: 10px; 
     font-size: 20px;
     font-weight: 500;
     box-shadow: 3px 3px 3px #888888;
@@ -136,20 +154,25 @@
 }
 
 .removeDepartment {
-    width: 30px;
-    height: 30px;
-    margin-left: 10px; 
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
     display: flex;
     justify-content: center;
     align-items: center; 
     background-color: red;
     border: none;
     cursor: pointer;
+    transition: all 0.3s;
+}
+
+.removeDepartment:hover {
+    background-color: #F69191;
 }
 
 .removeIcon {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     background-image: url(../images/removeIcon.svg);
     background-repeat: no-repeat;
     background-size: contain;
@@ -322,11 +345,12 @@
     position: absolute;
     top: 80px;
     left: 0;
-    width: 90%;
-    max-height: 200px;
+    width: 89%;
+    max-height: 90px;
     padding: 10px;
     z-index: 10000;
     font-size: 10px;
+    overflow-y: auto;
 }
 
     .infoBox.active .content li {
@@ -337,17 +361,32 @@ footer {
     top: 900px;
 }
 
+@media(max-width: 950px) {
+    .body--profile--container {
+        height: 1200px;
+
+    }
+}
+
 @media(max-width: 930px) {
     .body--profile--infoBoxes {
-        position: absolute;
-        top: 60px;
-        right: 5%;
+        position: relative;
+        top: 450px;
+        left: 50%;
         height: 400px;
+        width: 80%;
         display: flex;
+        transform: translateX(-50%);
         justify-content: space-between;
         flex-wrap: wrap;
-        justify-content: flex-end;
         gap: 20px;
+    }
+    footer {
+        top: 2000px !important;
+    }
+
+    .body--profile--infoSection {
+        top: 900px;
     }
 }
 

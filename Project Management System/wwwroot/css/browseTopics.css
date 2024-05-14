@@ -104,11 +104,11 @@
 
 .clearbtn {
     position: absolute;
-    padding: 10px;
     top: 65px;
+    right: 65%;
     width: 85px;
     height: 35px;
-    left: 52%;
+    padding: 10px;
     border: 2px solid;
     cursor: pointer;
     border-radius: 8px;
@@ -220,6 +220,7 @@
     background-size: contain;
     width: 40px;
     height: 40px;
+    transition: all 0.3s;
 }
 
 .topicDescription {
@@ -310,6 +311,12 @@ footer {
         transform: translateX(-50%);
     }
 
+    .clearbtn {
+        position: absolute;
+        top: -50px;
+        right: 10%;
+    }
+
     .dropdown {
         position: absolute;
         top: 190px;
@@ -335,6 +342,12 @@ footer {
         top: 55px;
     }
 
+}
+
+@media (max-width: 400px) {
+    .supervisorIcon {
+        right: 25px !important;
+    }
 }
 
 /* This css is for the clear button on the index */
