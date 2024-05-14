@@ -67,18 +67,17 @@
                             {
                                 <li>
                                     <span>@Html.ValueFor(modelDivisions => division.DivisionName)</span>
-                                    <a asp-page-handler="">
-                                        <button class="removeDepartment">
+                                    <form method="post">
+                                        <button type="submit" class="removeDepartment" asp-route-DivisionID = "@division.DivisionID" asp-page-handler="Delete">
                                             <div class="removeIcon"></div>
                                         </button>
-                                    </a>
-                                </li>
-                                <a asp-page="./DivisionAdd">
-                                    <button class="editInfo"></button>
-                                </a>
-                                    
+                                    </form>
+                                </li>    
                             }
                         }
+                        <a asp-page="./DivisionAdd">
+                            <button class="editInfo"></button>
+                        </a>
                     </ul>
                 </div>
 

@@ -89,6 +89,22 @@ namespace Project_Management_System.Pages.AccountProfile
             return Page();
         }
 
+        public async Task<IActionResult> OnPostDeleteAsync(int DivisionID) //takes id passed from button
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                var division = await _db.StaffDivision.FindAsync(user.Id, DivisionID);
+                if (division != null)
+                {
+                    _db.StaffDivision.Remove(division);
+                    await _db.SaveChangesAsync();
+                }
+            }
+            //save changes
+            return RedirectToPage(); //return to page
+        }
+
         public async Task<IActionResult> OnPostAsync(IFormFile uploadedImage)
         {
             if (uploadedImage != null && uploadedImage.Length > 0)

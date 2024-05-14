@@ -33,13 +33,13 @@ namespace Project_Management_System.Pages
 
         public IList<Topic> Topics { get; set; } = new List<Topic>();
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync()
         {
 
             var topic = await _context.Topic.FirstOrDefaultAsync();
             if (topic == null)
             {
-                return NotFound();
+                return Page();
             }
             Topic = topic;
 

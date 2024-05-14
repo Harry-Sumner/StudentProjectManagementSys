@@ -75,8 +75,15 @@ namespace Project_Management_System.Pages.AccountProfile
 
             _context.StaffDivision.Add(StaffDivision);
             await _context.SaveChangesAsync();
-
-            return RedirectToPage("/AccountProfile/StaffProfile");
+            if (User.IsInRole("Staff"))
+            {
+                return RedirectToPage("/AccountProfile/StaffProfile");
+            }
+            if (User.IsInRole("Co-ordinator"))
+            {
+                return RedirectToPage("/AccountProfile/CoordinatorProfile");
+            }
+            return RedirectToPage("/Index");
         }
     }
 }

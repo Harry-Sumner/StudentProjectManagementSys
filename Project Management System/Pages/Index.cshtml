@@ -76,24 +76,14 @@
                         </form>
                     }
 
-                    @if (User.IsInRole("Co-ordinator"))
+                    @if (User.IsInRole("Staff") || User.IsInRole("Co-ordinator"))
                     {
-                        <form method="post">
-                            <button onclick="myFunction()" type="submit" class="addTopic" asp-page="crud/Edit" asp-route-id="@topic.TopicID">
-                                <div class="addIcon"></div>
+                        <form method="submit">
+                            <button onclick="myFunction()" type="submit" class="addTopic" asp-page="/Edit">
+                                <div class="editIcon"></div>
                             </button>
                         </form>
                     }
-
-                    @if (User.IsInRole("Staff"))
-                    {
-                        <form method="post">
-                            <button id="editTopic" onclick="myFunction()" type="submit" asp-page="#" asp-route-id="#">
-                                <div class="editIcon"></div>
-                            </button>
-                        </form>   
-                    }
-
                 </div>
             </div>
         }
