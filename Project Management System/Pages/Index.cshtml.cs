@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Project_Management_System.Data;
 using Project_Management_System.Migrations;
 using System.Collections.Generic;
@@ -49,7 +50,7 @@ namespace Project_Management_System.Pages
 
             if (_context.Topic != null)
             {
-                Topics = await _context.Topic.ToListAsync();
+                Topics = await _context.Topic.Where(i => string.IsNullOrEmpty(i.StudentID)).ToListAsync();
             }
             // If course is provided, filter courses by course name
             if (courseID != null)
@@ -65,14 +66,12 @@ namespace Project_Management_System.Pages
             // If search query is provided, filter topics by topic name
             else if (!string.IsNullOrEmpty(search))
             {
-                Topic = await _context.Topic
-                    .Where(t => EF.Functions.Like(t.TopicName, $"%{search}%"))
-                    .ToListAsync();
+                Topic = Topics.Where(t => t.TopicName.Contains(search)).ToList();
             }
             // If neither course nor search query is provided, retrieve all topics
             else
             {
-                Topic = await _context.Topic.ToListAsync();
+                Topic = Topics;
             }
 
             // Retrieve all courses

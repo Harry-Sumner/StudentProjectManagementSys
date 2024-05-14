@@ -1,0 +1,42 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity
+@using Project_Management_System.Data
+@model Project_Management_System.Pages.StudentAddTopicModel
+
+<link href="~/css/addProposal.css" rel="stylesheet" />
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+@inject UserManager<SPMS_Staff> StaffManager
+
+<div class="body--addProposal--container">
+    <span class="addTitle">Add your own topic</span>
+
+    <form method="post">
+        <div class="addGroup">
+            <label for="topicName">Topic Name</label>
+            <input id="topicName"asp-for="Topic.TopicName" />
+        </div>
+
+        <div class="addGroup">
+            <label for="TopicSupervisor">Topic Supervisor</label>
+            <select asp-for="Topic.SupervisorID">
+                <option value = null>Choose your desired supervisor here</option>
+                @foreach (var staff in StaffManager.Users)
+                {
+                    <option value=@staff.Id>@staff.Name</option>
+                }
+            </select>
+        </div>
+        <div class="addGroup">
+            <label for="topicDescription">Topic Description</label>
+            <textarea id="topicDescription" asp-for="Topic.TopicDescription"></textarea>
+        </div>
+
+        <div class="addGroup">
+            <button type="submit" class="addBtn">Add Topic</button>
+        </div>
+    </form>
+</div>
