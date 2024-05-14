@@ -24,7 +24,7 @@ namespace Project_Management_System.Pages.AccountProfile
         }
 
         [BindProperty]
-        public StaffExpertise StaffExpertise { get; set; }
+        public StaffExpertise StaffExpertise { get; set; } = default!;
 
         [BindProperty]
         public int ExpertiseID { get; set; }
@@ -97,9 +97,6 @@ namespace Project_Management_System.Pages.AccountProfile
 
             return RedirectToPage("/AccountProfile/StaffProfile");
         }
-
-
-
 
         private bool ExpertiseExists(int id)
         {

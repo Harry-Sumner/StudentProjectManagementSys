@@ -43,6 +43,17 @@
         </div>
 
         <div class="addGroup">
+            <label for="TopicCourse">Topic Course</label>
+            <select asp-for="CourseTopic.CourseID">
+                <option value= "">Choose course here</option>
+                @foreach (var course in Model.Course)
+                {
+                    <option value=@course.CourseID>@course.CourseName</option>
+                }
+            </select>
+        </div>
+
+        <div class="addGroup">
             <label for="topicDescription">Topic Description</label>
             <textarea id="topicDescription" asp-for="Topic.TopicDescription"></textarea>
         </div>

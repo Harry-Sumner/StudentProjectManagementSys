@@ -75,10 +75,10 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
         public void NewDivision(string StaffID, int DivisionID)
         {
             StaffDivisions.StaffID = StaffID;
-            StaffDivisions.DivisionID = DivisionID; // links user account to basket
+            StaffDivisions.DivisionID = DivisionID; // links user account to staff account
             _db.StaffDivision.Add(StaffDivisions);
             _db.SaveChanges();
-            // function that assigns basket to user and saves to database
+            // function that assigns divsion to staff user and saves to database
         }
 
         public async Task OnGetAsync(string returnUrl = null)
