@@ -16,22 +16,32 @@ namespace Project_Management_System.Pages
 
     public class CreateModel : PageModel
     {
+        private readonly SPMS_Context _db;
         private readonly Project_Management_System.Data.SPMS_Context _context;
 
-        public CreateModel(Project_Management_System.Data.SPMS_Context context)
+        public CreateModel(Project_Management_System.Data.SPMS_Context context, SPMS_Context db)
         {
             _context = context;
+            _db = db;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
+            if (_context.Course != null)
+            {
+                Course = await _context.Course.ToListAsync();
+            }
             return Page();
         }
 
         [BindProperty]
         public Topic Topic { get; set; } = default!;
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+        [BindProperty]
+        public CourseTopic CourseTopic { get; set; }
+
+        public IList<Course> Course { get; set; } = default!;
+
         public async Task<IActionResult> OnPostAsync()
         {
             ModelState.Clear();
@@ -50,12 +60,15 @@ namespace Project_Management_System.Pages
             {
                 Topic.TopicID = 1;
             }
-            
+
             _context.Topic.Add(Topic);
             await _context.SaveChangesAsync();
+            CourseTopic.TopicID = Topic.TopicID;
+            _db.CourseTopic.Add(CourseTopic);
+            _db.SaveChanges();
+            // adds course to topic
 
             return RedirectToPage("/Index");
-            
         }
     }
 }
