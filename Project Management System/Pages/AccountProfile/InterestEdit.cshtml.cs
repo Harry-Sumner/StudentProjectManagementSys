@@ -38,7 +38,7 @@ namespace Project_Management_System.Pages.AccountProfile
             var interest = await _context.StaffInterest.FirstOrDefaultAsync();
             if (interest == null)
             {
-                return NotFound();
+                return Page();
             }
             StaffInterest = interest;
 
@@ -55,7 +55,7 @@ namespace Project_Management_System.Pages.AccountProfile
 
                 if (interestToDelete == null)
                 {
-                    return NotFound();
+                    return Page();
                 }
 
                 _context.StaffInterest.Remove(interestToDelete);
@@ -87,7 +87,7 @@ namespace Project_Management_System.Pages.AccountProfile
             {
                 if (!InterestExists(InterestID))
                 {
-                    return NotFound();
+                    return Page();
                 }
                 else
                 {

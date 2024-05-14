@@ -24,7 +24,7 @@ namespace Project_Management_System.Pages.AccountProfile
         }
 
         [BindProperty]
-        public StaffExpertise StaffExpertise { get; set; } = default!;
+        public StaffExpertise StaffExpertise { get; set; }
 
         [BindProperty]
         public int ExpertiseID { get; set; }
@@ -38,7 +38,7 @@ namespace Project_Management_System.Pages.AccountProfile
             var expertise = await _context.StaffExpertise.FirstOrDefaultAsync();
             if (expertise == null)
             {
-                return NotFound();
+                return Page();
             }
             StaffExpertise = expertise;
 
@@ -55,7 +55,7 @@ namespace Project_Management_System.Pages.AccountProfile
 
                 if (expertiseToDelete == null)
                 {
-                    return NotFound();
+                    return Page();
                 }
 
                 _context.StaffExpertise.Remove(expertiseToDelete);
@@ -73,11 +73,10 @@ namespace Project_Management_System.Pages.AccountProfile
 
             if (expertiseToUpdate == null)
             {
-                return NotFound();
+                return Page();
             }
 
             expertiseToUpdate.Expertise = expertiseToUpdate.Expertise;
-        
 
             try
             {
@@ -87,7 +86,7 @@ namespace Project_Management_System.Pages.AccountProfile
             {
                 if (!ExpertiseExists(ExpertiseID))
                 {
-                    return NotFound();
+                    return Page();
                 }
                 else
                 {
