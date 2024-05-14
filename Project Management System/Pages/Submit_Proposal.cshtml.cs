@@ -17,6 +17,11 @@ namespace Project_Management_System.Pages
         private readonly SignInManager<SPMS_User> _signInManager;
         private readonly Project_Management_System.Data.SPMS_Context _context;
 
+        [BindProperty]
+        public Topic Topic { get; set; } = default!;
+
+        [BindProperty]
+        public CourseTopic CourseTopic { get; set; }
         public IList<TopicBasket> TopicBasket { get; set; }
         public IList<Course> Course { get; set; }
         public IList<Topic> Topics { get; private set; }
@@ -105,6 +110,47 @@ namespace Project_Management_System.Pages
 
             }
             return RedirectToPage();
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if(Topic.TopicDescription == null || Topic.TopicName == null)
+            {
+                await OnGetAsync();
+                return Page();
+            }
+            var currentTopic = _context.Topic.FromSqlRaw("SELECT * FROM Topic")
+                .OrderByDescending(b => b.TopicID)
+                .FirstOrDefault();
+            if (currentTopic != null)
+            {
+                Topic.TopicID = currentTopic.TopicID + 1; //increment last id by 1
+            }
+            else
+            {
+                Topic.TopicID = 1;
+            }
+            var user = await _UserManager.GetUserAsync(User);
+
+
+            Topic.StudentID = user.Id;
+
+            _context.Topic.Add(Topic);
+            await _context.SaveChangesAsync();
+            CourseTopic.CourseID = user.CourseID;
+            CourseTopic.TopicID = Topic.TopicID;
+            _db.CourseTopic.Add(CourseTopic);
+            _db.SaveChanges();
+            // adds course to topic
+            TopicBasket newTopic = new TopicBasket
+            {
+                StudentID = user.Id,
+                TopicID = Topic.TopicID
+            };
+            _db.TopicBasket.Add(newTopic);
+            await _db.SaveChangesAsync();
+
+            return RedirectToPage("/Submit_Proposal");
         }
 
         public async Task<IActionResult> OnPostUndergradSubmitAsync()
