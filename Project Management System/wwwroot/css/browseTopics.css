@@ -1,46 +1,117 @@
-﻿/* CSS for the search navigation bar */
+﻿.body--browseTopics--title {
+    position: absolute;
+    top: 170px;
+    left: 50px;
+    font-size: 24px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid red;
+}
+
+/* CSS for the search navigation bar */
 .body--search--container {
     position: absolute;
-    top: 160px;
+    top: 145px;
     left: 60%;
-    width: 30%;
+    width: 35%;
     max-width: 400px;
-    height: 50px;
+    height: 60px;
     display: flex;
     flex-direction: row;
     background-color: #ECECEC;
 }
 /* Represents CSS for input on the search navigation bar */
 .body--search--container input {
-position: absolute;
-top: 50%;
-width: 85%;
-height: 35px;
-transform: translateY(-50%);
-background-color: transparent;
-border: 1px solid black;
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    width: 80%;
+    height: 35px;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: 1px solid black;
 }
 
 /* Style for the search button */
-.body--search--container button {
-position: absolute;
-top: 50%;
-right: 5px;
-transform: translateY(-50%);
-background-image: url(../images/SearchIcon.svg);
-background-position: center;
-background-size: contain;
-background-repeat: no-repeat;
-height: 80%;
-width: 12%;
-border: none;
-border-radius: 5px;
-transition: all 0.3s;
+.body--search--container button[type=submit] {
+    position: absolute;
+    top: 50%;
+    right: 0px;
+    transform: translateY(-50%);
+    height: 80%;
+    width: 12%;
+    border: none;
+    border-radius: 5px;
+    transition: all 0.3s;
 }
+
+.submitIcon {
+    position: relative;
+    background-image: url(../images/SearchIcon.svg);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 75%;
+    height: 75%;
+}
+
 
 /* When hovered over, it creates a black 1px border */
 .body--search--container button:hover {
-border: 1px solid black;
+    border: 1px solid black;
+}
+
+/* Style the dropdown container */
+.dropdown {
+    position: relative;
+    right: 0;
+    top: 100px;
+    display: inline-block;
+}
+
+/* Style the dropdown content */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+    /* Style the links inside the dropdown */
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+        /* Change color of dropdown links on hover */
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Style the dropdown trigger */
+.drop-trigger {
+    cursor: pointer;
+    color: blue;
+}
+
+.clearbtn {
+    position: absolute;
+    top: 65px;
+    right: 65%;
+    width: 85px;
+    height: 35px;
+    padding: 10px;
+    border: 2px solid;
+    cursor: pointer;
+    border-radius: 8px;
 }
 
 /* Main container to display topics */
@@ -149,6 +220,7 @@ border: 1px solid black;
     background-size: contain;
     width: 40px;
     height: 40px;
+    transition: all 0.3s;
 }
 
 .topicDescription {
@@ -175,6 +247,23 @@ border: 1px solid black;
     left: 50%;
     transform: translate(-50%, -50%);
     background-image: url(../images/AddTopicListBox.svg);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+}
+
+#editTopic {
+    background-color: #ffe832;
+}
+
+.editIcon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url(../images/editInfoBox.svg);
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
@@ -209,15 +298,34 @@ footer {
 
 @media(max-width: 768px) {
 
+    .body--browseTopics--title {
+        left: 15px;
+        top: 120px;
+    }
+
     .body--search--container {
-        right: 40%;
-        top: 130px;
+        position: absolute;
+        left: 65%;
+        top: 180px;
         width: 60%;
         transform: translateX(-50%);
     }
 
+    .clearbtn {
+        position: absolute;
+        top: -50px;
+        right: 10%;
+    }
+
+    .dropdown {
+        position: absolute;
+        top: 190px;
+        left: 5%;
+        width: 20%;
+    }
+
     .body--Topics--container {
-        top: 180px;
+        top: 240px;
     }
 
     .topicTitle {
@@ -236,15 +344,11 @@ footer {
 
 }
 
+@media (max-width: 400px) {
+    .supervisorIcon {
+        right: 25px !important;
+    }
+}
+
 /* This css is for the clear button on the index */
-.clearbtn {
-   position: absolute;
-   padding: 10px;
-   top: 23%;
-   width: 85px;
-   height: 35px;
-   left: 52%;
-   border: 2px solid;
-   cursor: pointer;
-   border-radius: 8px;
-   }
+

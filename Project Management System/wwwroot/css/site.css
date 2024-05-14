@@ -195,7 +195,6 @@ body {
 }
 
 .header--accountBtn {
-    width: 120px;
     height: 40px;
     border: none;
     outline: none;
@@ -332,46 +331,6 @@ footer {
     color: black;
     border-bottom: 1px solid black;
     transition: all 0.2s;
-}
-
-/* Style the dropdown container */
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-/* Style the dropdown content */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-/* Style the links inside the dropdown */
-.dropdown-content a {
-color: black;
-padding: 12px 16px;
-text-decoration: none;
-display: block;
-}
-
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
-}
-
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-/* Style the dropdown trigger */
-.drop-trigger {
-    cursor: pointer;
-    color: blue;
 }
 
 .container2 {
@@ -558,6 +517,11 @@ display: block;
 @media (max-width: 600px) {
     .header--userAccount--standard.expanded {
         right: -300px;
+    }
+
+    .header--userAccount--standard {
+        font-size: 0.8em;
+        right: 10px;
     }
 }
 

@@ -13,26 +13,32 @@
 <script src="~/js/listBoxExpansion.js"></script>
 <script src="~/js/clearSearch.js"></script>
 
+<body>
+    <span class="body--browseTopics--title">Browse Topics</span>
 
-<form method="get" class="body--search--container">
-    
-    <input type="text" name="Search" placeholder="Search for a topic">
-    <button type="submit"></button>
-</form>
-<button type="button" onclick="clearSearch()" class="clearbtn">Clear</button>
-
-<div class="dropdown">
-    <button onclick="toggleDropdown()" class="dropbtn">Course</button>
-    <div id="myDropdown" class="dropdown-content">
-        <input type="text" placeholder="Search.." id="myInput" onkeyup="filterCourses()">
-        @foreach (var course in Model.Course)
-        {
-            <form method="get">
-                <a asp-page-handler="get" asp-route-courseID="@course.CourseID">@course.CourseName</a>
-            </form>
-        }
+    <div class="body--search--container">
+        <form method="get">
+            <input type="text" name="Search" placeholder="Search for a topic">
+            <button type="submit">
+                <div class="submitIcon"></div>
+            </button>
+        </form>
+        <button class="clearbtn" type="button" onclick="clearSearch()">Clear</button>
     </div>
-</div>
+
+
+    <div class="dropdown">
+        <button onclick="toggleDropdown()" class="dropbtn">Course</button>
+        <div id="myDropdown" class="dropdown-content">
+            <input type="text" placeholder="Search.." id="myInput" onkeyup="filterCourses()">
+            @foreach (var course in Model.Course)
+            {
+                <form method="get">
+                    <a asp-page-handler="get" asp-route-courseID="@course.CourseID">@course.CourseName</a>
+                </form>
+            }
+        </div>
+    </div>
 
 
 
@@ -52,7 +58,6 @@
                         </div>
                     }
                 }
-               
 
                 <div class="topicDescription">@topic.TopicDescription</div>
 
@@ -71,17 +76,26 @@
                         </form>
                     }
 
-                @if (User.IsInRole("Co-ordinator"))
-                {
-                    <form method="post">
-                        <button onclick="myFunction()" type="submit" class="addTopic" asp-page="crud/Edit" asp-route-id="@topic.TopicID">
-                            <div class="addIcon"></div>
-                        </button>
-                    </form>
-                }
+                    @if (User.IsInRole("Co-ordinator"))
+                    {
+                        <form method="post">
+                            <button onclick="myFunction()" type="submit" class="addTopic" asp-page="crud/Edit" asp-route-id="@topic.TopicID">
+                                <div class="addIcon"></div>
+                            </button>
+                        </form>
+                    }
+
+                    @if (User.IsInRole("Staff"))
+                    {
+                        <form method="post">
+                            <button id="editTopic" onclick="myFunction()" type="submit" asp-page="#" asp-route-id="#">
+                                <div class="editIcon"></div>
+                            </button>
+                        </form>   
+                    }
+
                 </div>
             </div>
         }
-    
-
     </div>
+</body>
