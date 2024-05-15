@@ -76,7 +76,7 @@ namespace Project_Management_System.Pages.AccountProfile
                 return Page();
             }
 
-            expertiseToUpdate.Expertise = expertiseToUpdate.Expertise;
+            expertiseToUpdate.Expertise = StaffExpertise.Expertise;
 
             try
             {

@@ -3,6 +3,7 @@
 
 @inject SignInManager<SPMS_User> SignInManager
 @inject UserManager<SPMS_User> UserManager
+@inject UserManager<SPMS_Student> Students
 
 @using Microsoft.AspNetCore.Identity
 @using Project_Management_System.Data
@@ -78,7 +79,7 @@
         <div class="body--coordinator--infoBoxes">
             
             <div class="infoBoxCoordinator">
-                <span class="boxTitle">Student Project Submissions</span>
+                <span class="boxTitle">Student Project Proposals</span>
                 <button class="expandBtn">
                     <div class="expandIcon"></div>
                 </button>
@@ -88,7 +89,7 @@
                         <div class="contentContainer">
                             <span class="contentTitle">@topic.TopicName</span>
                             <span class="contentDescription">@topic.TopicDescription</span>
-                            <a asp-page="./Edit" asp-route-id="@topic.TopicID">Edit</a>
+                            <a asp-page="./AllocateStaff" asp-route-id="@topic.TopicID">Allocate Supervisor / Marker</a>
                         </div>
                     }
                 </div>
@@ -97,45 +98,56 @@
             <div class="divider"></div>
 
             <div class="infoBoxCoordinator">
-                <span class="boxTitle">Staff Members</span>
+                <span class="boxTitle">Postgraduate Submissions</span>
                 <button class="expandBtn">
                     <div class="expandIcon"></div>
                 </button>
                 <div class="coordinatorContent">
-                    <div class="contentContainer">
-                        <span class="contentTitle">Topic Title</span>
-                        <span class="contentDescription">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit aperiam quibusdam aut laudantium minus quod, odit autem? Porro dignissimos quasi dolor ipsum sit voluptatibus eaque, ratione optio sint maiores nesciunt.</span>
-                    </div>
-                    <div class="contentContainer">
-                        <span class="contentTitle">Topic Title</span>
-                        <span class="contentDescription">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aspernatur modi ipsa autem saepe asperiores sed corrupti ex laboriosam rem veniam reiciendis adipisci sequi, tempore natus fuga itaque repudiandae placeat rerum?</span>
-                    </div>
-                    <div class="contentContainer">
-                        <span class="contentTitle">Topic Title</span>
-                        <span class="contentDescription">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate eligendi in quibusdam sed fugiat expedita veritatis nulla enim harum aliquid officiis fuga, laborum autem doloribus illo quos, ipsam neque reiciendis.</span>
-                    </div>
+                    @foreach (var proposal in Model.PostgraduateProposals)
+                    {
+                        @foreach (var topic in Model.Topics.Where(i => i.TopicID == proposal.TopicID))
+                        {
+                        <div class="contentContainer">
+                            <span class="contentTitle">
+
+                                @{
+                                    var student = await Students.FindByIdAsync(proposal.StudentID);
+                                 }
+                                 @student.StudentNo
+                            </span>
+                            <span class="contentTitle">@topic.TopicName</span>
+                            <span class="contentDescription">@topic.TopicDescription</span>
+                            </div>
+                    }
+                }
                 </div>
             </div>
 
             <div class="divider"></div>
 
             <div class="infoBoxCoordinator">
-                <span class="boxTitle">Staff / Supervisor Pairings</span>
+                <span class="boxTitle">Undergraduate Submissions</span>
                 <button class="expandBtn">
                     <div class="expandIcon"></div>
                 </button>
                 <div class="coordinatorContent">
                     <div class="contentContainer">
-                        <span class="contentTitle">Topic Title</span>
-                        <span class="contentDescription">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit aperiam quibusdam aut laudantium minus quod, odit autem? Porro dignissimos quasi dolor ipsum sit voluptatibus eaque, ratione optio sint maiores nesciunt.</span>
-                    </div>
-                    <div class="contentContainer">
-                        <span class="contentTitle">Topic Title</span>
-                        <span class="contentDescription">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aspernatur modi ipsa autem saepe asperiores sed corrupti ex laboriosam rem veniam reiciendis adipisci sequi, tempore natus fuga itaque repudiandae placeat rerum?</span>
-                    </div>
-                    <div class="contentContainer">
-                        <span class="contentTitle">Topic Title</span>
-                        <span class="contentDescription">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate eligendi in quibusdam sed fugiat expedita veritatis nulla enim harum aliquid officiis fuga, laborum autem doloribus illo quos, ipsam neque reiciendis.</span>
+                        @foreach (var proposal in Model.UndergraduateProposals)
+                        {
+                                <div class="contentContainer">
+                                    <span class="contentTitle">
+
+                                        @{
+                                            var student = await Students.FindByIdAsync(proposal.StudentID);
+                                        }
+                                        @student.StudentNo
+                                    </span>
+                                    <span class="contentDescription">@Model.Topics.Where(i => i.TopicID == proposal.TopicID1).First().TopicName</span>
+                                    <span class="contentDescription">@Model.Topics.Where(i => i.TopicID == proposal.TopicID2).First().TopicName</span>
+                                    <span class="contentDescription">@Model.Topics.Where(i => i.TopicID == proposal.TopicID3).First().TopicName</span>
+                                </div>
+
+                        }
                     </div>
                 </div>
             </div>

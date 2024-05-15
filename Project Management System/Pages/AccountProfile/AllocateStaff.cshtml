@@ -1,24 +1,18 @@
 ﻿@page
 @using Microsoft.AspNetCore.Identity
 @using Project_Management_System.Data
-@model Project_Management_System.Pages.AccountProfile.EditModel
+@model Project_Management_System.Pages.AccountProfile.AllocateStaffModel
 
 @{
     ViewData["Title"] = "Edit";
 }
 @inject UserManager<SPMS_Staff> StaffManager
 
-<link rel="stylesheet" href="~/css/editProposal.css">
+<link rel="stylesheet" href="~/css/allocateStaff.css">
 
 <div class="body--edit--container">
-    <span class="editTitle">Edit a Topic</span>
+    <span class="editTitle">@Html.DisplayFor(model => model.Topic.TopicName)</span>
     <form method="post">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <input type="hidden" asp-for="Topic.TopicID" />
-        <div class="editGroup">
-            <label asp-for="Topic.TopicName" class="control-label"></label>
-            @Html.DisplayFor(model => model.Topic.TopicName)
-        </div>
         <div class="editGroup">
             <label asp-for="Topic.TopicDescription" class="control-label"></label>
             @Html.DisplayFor(model => model.Topic.TopicDescription)
@@ -26,7 +20,7 @@
         <div class="editGroup">
             <label for="topicSupervisor">Supervisor ID</label>
             <select asp-for="Topic.SupervisorID">
-                <option value=null>Choose supervisor here</option>
+                <option value= null>Allocate supervisor here</option>
                 @foreach (var staff in StaffManager.Users)
                 {
                     <option value=@staff.Id>@staff.Name</option>
@@ -37,19 +31,19 @@
         <div class="editGroup">
             <label for="topicMarker">Marker ID</label>
             <select asp-for="Topic.MarkerID">
-                <option value=null>Choose marker here</option>
+                <option value= null>Allocate marker here</option>
                 @foreach (var staff in StaffManager.Users)
                 {
                     <option value=@staff.Id>@staff.Name</option>
                 }
             </select>
         </div>
-        <div class="form-group">
-            <input type="submit" value="Save" class="btn btn-primary" />
+        <div class="editButtonsGroup">
+            <input type="submit" value="Save" class="saveBtn" />
         </div>
     </form>
-    <a asp-page="./CoordinatorProfile">Back to Profile</a>
+    
 </div>
-
+<a asp-page="./CoordinatorProfile">Back to Profile</a>
 
     

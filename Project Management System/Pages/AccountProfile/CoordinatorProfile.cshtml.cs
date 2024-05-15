@@ -34,7 +34,11 @@ namespace Project_Management_System.Pages.AccountProfile
         public IList<StaffDivision> StaffDivisions = default!;
 
         public IList<Topic> StudentProposals {  get; set; }
-     
+        public IList<Topic> Topics { get; set; }
+
+        public IList<UndergraduateProposal> UndergraduateProposals { get; set; }
+        public IList<PostgraduateProposal> PostgraduateProposals { get; set; }
+
         [TempData]
         public string StatusMessage { get; set; }
 
@@ -49,6 +53,18 @@ namespace Project_Management_System.Pages.AccountProfile
             if (_context.Topic != null)
             {
                 StudentProposals = await _context.Topic.Where(i => !string.IsNullOrEmpty(i.StudentID) && string.IsNullOrEmpty(i.MarkerID)).ToListAsync();
+            }
+            if (_context.Topic != null)
+            {
+                Topics = await _context.Topic.ToListAsync();
+            }
+            if (_context.UndergraduateProposal != null)
+            {
+                UndergraduateProposals = await _context.UndergraduateProposal.ToListAsync();
+            }
+            if (_context.PostgraduateProposal != null)
+            {
+                PostgraduateProposals = await _context.PostgraduateProposal.ToListAsync();
             }
 
             if (_context.StaffDivision != null)

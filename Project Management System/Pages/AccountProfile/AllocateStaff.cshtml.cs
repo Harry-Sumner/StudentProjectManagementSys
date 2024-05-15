@@ -10,11 +10,11 @@ using Project_Management_System.Data;
 
 namespace Project_Management_System.Pages.AccountProfile
 {
-    public class EditModel : PageModel
+    public class AllocateStaffModel : PageModel
     {
         private readonly Project_Management_System.Data.SPMS_Context _context;
 
-        public EditModel(Project_Management_System.Data.SPMS_Context context)
+        public AllocateStaffModel(Project_Management_System.Data.SPMS_Context context)
         {
             _context = context;
         }
@@ -42,12 +42,21 @@ namespace Project_Management_System.Pages.AccountProfile
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            var topicToUpdate = await _context.Topic.FindAsync(Topic.TopicID);
+
+            if (topicToUpdate == null)
             {
                 return Page();
             }
 
-            _context.Attach(Topic).State = EntityState.Modified;
+            if (Topic.SupervisorID != null)
+            {
+                topicToUpdate.SupervisorID = Topic.SupervisorID;
+            }
+            if (Topic.MarkerID != null)
+            {
+                topicToUpdate.MarkerID = Topic.MarkerID;
+            }
 
             try
             {
@@ -57,7 +66,7 @@ namespace Project_Management_System.Pages.AccountProfile
             {
                 if (!TopicExists(Topic.TopicID))
                 {
-                    return NotFound();
+                    return Page();
                 }
                 else
                 {
@@ -65,7 +74,7 @@ namespace Project_Management_System.Pages.AccountProfile
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/AccountProfile/CoordinatorProfile");
         }
 
         private bool TopicExists(int id)
