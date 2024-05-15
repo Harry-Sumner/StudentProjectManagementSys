@@ -5,9 +5,14 @@
 }
 
 @inject UserManager<SPMS_Staff> StaffManager
+@inject UserManager<SPMS_Student> Students
 
 @using Microsoft.AspNetCore.Identity
 @using Project_Management_System.Data
+
+@{
+    var staff = await StaffManager.GetUserAsync(User);
+}
 
 <link rel="stylesheet" href="~/css/browseTopics.css">
 <script src="~/js/listBoxExpansion.js"></script>
@@ -44,7 +49,7 @@
     </div>
 
     <div class="body--Topics--container">
-        @if (User.IsInRole("Staff") || User.IsInRole("Co-ordinator"))
+        @if (User.IsInRole("Staff") | User.IsInRole("Co-ordinator"))
         {
             <div class="body--Topics--addTopicContainer">
                 <a asp-page="/Create">
@@ -60,11 +65,11 @@
                 <span class="topicTitle">@topic.TopicName</span>
                 @if (topic.SupervisorID != null)
                 {
-                    var staff = await StaffManager.FindByIdAsync(topic.SupervisorID);
-                    if (staff != null)
+                    var supervisor = await StaffManager.FindByIdAsync(topic.SupervisorID);
+                    if (supervisor != null)
                     {
                         <div class="SupervisorGroup">
-                            <span class="topicSupervisor">@staff.Name</span>
+                            <span class="topicSupervisor">@supervisor.Name</span>
                             <div class="supervisorIcon"></div>
                         </div>
                     }
@@ -87,10 +92,19 @@
                         </form>
                     }
 
-                    @if (User.IsInRole("Staff") || User.IsInRole("Co-ordinator"))
+                    @if (User.IsInRole("Co-ordinator"))
                     {
                         <form method="submit">
-                            <button onclick="myFunction()" type="submit" class="addTopic" asp-page="/Edit">
+                            <button type="submit" class="addTopic" asp-page="/Edit">
+                                <div class="editIcon"></div>
+                            </button>
+                        </form>
+                    }
+
+                    @if (User.IsInRole("Staff") && staff.Id == topic.SupervisorID)
+                    {
+                        <form method="submit">
+                            <button type="submit" class="addTopic" asp-page="/Edit">
                                 <div class="editIcon"></div>
                             </button>
                         </form>

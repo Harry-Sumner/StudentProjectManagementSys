@@ -22,6 +22,7 @@
                 <label asp-for="TopicID"></label>
                 <select id="topicDropdown" asp-for="TopicID">
                     <option value="">-- Select Topic --</option>
+                   @*  <option value="Model.Topic.TopicID" data-name="@Model.Topic.TopicName" data-description="@Model.Topic.TopicDescription" data-supervisor="@Model.Topic.SupervisorID" data-marker="@Model.Topic.MarkerID">@Model.Topic.TopicName</option> *@
                     @foreach (var topic in Model.Topics)
                     {
                         <option value="@topic.TopicID" data-name="@topic.TopicName" data-description="@topic.TopicDescription" data-supervisor="@topic.SupervisorID" data-marker="@topic.MarkerID">@topic.TopicName</option>

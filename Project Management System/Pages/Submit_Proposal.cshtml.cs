@@ -21,13 +21,13 @@ namespace Project_Management_System.Pages
         public Topic Topic { get; set; } = default!;
 
         [BindProperty]
-        public CourseTopic CourseTopic { get; set; }
-        public IList<TopicBasket> TopicBasket { get; set; }
-        public IList<Course> Course { get; set; }
-        public IList<Topic> Topics { get; private set; }
+        public CourseTopic CourseTopic { get; set; } = default!;
+        public IList<TopicBasket> TopicBasket { get; set; } = default!;
+        public IList<Course> Course { get; set; } = default!;
+        public IList<Topic> Topics { get; private set; } = default!;
         public int Priority { get; set; }
-        public IList<UndergraduateProposal> UndergraduateProposals { get; set; }
-        public IList<PostgraduateProposal> PostgraduateProposals { get; set; }
+        public IList<UndergraduateProposal> UndergraduateProposals { get; set; } = default!;
+        public IList<PostgraduateProposal> PostgraduateProposals { get; set; } = default!;
         public bool Postgraduate { get; set; }
 
         public bool Submitted { get; set; }

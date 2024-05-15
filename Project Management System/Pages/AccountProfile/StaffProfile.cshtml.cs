@@ -28,24 +28,12 @@ namespace Project_Management_System.Pages.AccountProfile
             _signInManager = signInManager;
         }
 
-        public string Username { get; set; }
         public IList<Division> Divisions { get; set; } = default!;
         public IList<Topic> Topic { get; set; } = default!;
 
         public IList<StaffDivision> StaffDivisions = default!;
-        public IList<StaffInterest> StaffInterest { get; private set; }
-        public IList<StaffExpertise> StaffExpertise { get; private set; }
-
-        [TempData]
-        public string StatusMessage { get; set; }
-
-        private async Task LoadAsync(SPMS_User user)
-        {
-            var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
-            Username = userName;
-        }
+        public IList<StaffInterest> StaffInterest { get; private set; } = default!;
+        public IList<StaffExpertise> StaffExpertise { get; private set; } = default!;
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -54,8 +42,6 @@ namespace Project_Management_System.Pages.AccountProfile
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-
-            await LoadAsync(user);
 
             if (_context.StaffDivision != null)
             {
@@ -66,11 +52,6 @@ namespace Project_Management_System.Pages.AccountProfile
             {
                 Divisions = await _context.Division.ToListAsync();
             }
-
-            /*if (_context.StaffInterest!= null)
-            {
-                StaffInterest = await _context.StaffInterest.ToListAsync();
-            }*/
 
             Topic = _db.Topic //select data from database
                 .FromSqlRaw("SELECT * FROM Topic WHERE SupervisorID = {0}", user.Id)
@@ -83,8 +64,6 @@ namespace Project_Management_System.Pages.AccountProfile
             StaffExpertise = _db.StaffExpertise //select data from database
                 .FromSqlRaw("SELECT * FROM StaffExpertise WHERE StaffID = {0}", user.Id)
                 .ToList();
-
-
 
             return Page();
         }

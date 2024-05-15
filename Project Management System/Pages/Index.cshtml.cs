@@ -35,11 +35,11 @@ namespace Project_Management_System.Pages
         // Properties to hold topics, courses, and search query
         public IList<Topic> Topic { get; set; } = new List<Topic>();
 
-        public IList<Topic> Topics { get; set; }
+        public IList<Topic> Topics { get; set; } = default!;
         public IList<Course> Course { get; set; } = new List<Course>();
 
-        public IList<CourseTopic> CourseTopic { get; set; }
-        public string Search { get; set; }
+        public IList<CourseTopic> CourseTopic { get; set; } = default!;
+        public string Search { get; set; } = default!;
 
         public async Task OnGetAsync(string search, int? courseID)
         {
@@ -85,31 +85,32 @@ namespace Project_Management_System.Pages
         public async Task<IActionResult> OnPostAddAsync(int topicID)
         {
             var user = await _userManager.GetUserAsync(User);
-
-            // Check if the topic is already added to the user's basket
-            var topics = await _db.TopicBasket
-                .FromSqlRaw("SELECT * FROM TopicBasket WHERE TopicID = {0} AND StudentID = {1}", topicID, user.Id)
-                .ToListAsync();
-
-            if (topics.Count == 0)
+            if (user != null)
             {
-                // If the topic is not already added, add it to the basket
-                TopicBasket newTopic = new TopicBasket
+                // Check if the topic is already added to the user's basket
+                var topics = await _db.TopicBasket
+                    .FromSqlRaw("SELECT * FROM TopicBasket WHERE TopicID = {0} AND StudentID = {1}", topicID, user.Id)
+                    .ToListAsync();
+
+                if (topics.Count == 0)
                 {
-                    StudentID = user.Id,
-                    TopicID = topicID
-                };
-                _db.TopicBasket.Add(newTopic);
-                await _db.SaveChangesAsync();
+                    // If the topic is not already added, add it to the basket
+                    TopicBasket newTopic = new TopicBasket
+                    {
+                        StudentID = user.Id,
+                        TopicID = topicID
+                    };
+                    _db.TopicBasket.Add(newTopic);
+                    await _db.SaveChangesAsync();
 
-                TempData["ShowPopup"] = true;
+                    TempData["ShowPopup"] = true;
+                }
+                else
+                {
+                    // If the topic is already added, show a message
+                    TempData["ShowPopup"] = "Topic is already added to your proposal.";
+                }
             }
-            else
-            {
-                // If the topic is already added, show a message
-                TempData["ShowPopup"] = "Topic is already added to your proposal.";
-            }
-
             return RedirectToPage();
         }
 
@@ -122,7 +123,7 @@ namespace Project_Management_System.Pages
         }
 
         // Private method to handle HTTP GET requests with additional parameters
-        private async Task OnGetAsync(string search, IList<Course> course)
+        private Task OnGetAsync(string search, IList<Course> course)
         {
             throw new NotImplementedException();
         }

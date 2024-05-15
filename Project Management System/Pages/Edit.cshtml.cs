@@ -25,25 +25,35 @@ namespace Project_Management_System.Pages
         }
 
         [BindProperty]
-        public Topic Topic { get; set; }
+        public Topic Topic { get; set; } = default!;
 
         [BindProperty]
         public int TopicID { get; set; }
-
-        public IList<TopicBasket> TopicBasket { get; set; }
-        public IList<PostgraduateProposal> PostgraduateProposal { get; set; }
-        public IList<UndergraduateProposal> UndergraduateProposal { get; set; }
-        public IList<CourseTopic> CourseTopic { get; set; }
+        public IList<TopicBasket> TopicBasket { get; set; } = default!;
+        public IList<PostgraduateProposal> PostgraduateProposal { get; set; } = default!;
+        public IList<UndergraduateProposal> UndergraduateProposal { get; set; } = default!;
+        public IList<CourseTopic> CourseTopic { get; set; } = default!;
 
         public IList<Topic> Topics { get; set; } = new List<Topic>();
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (_context.Topic != null)
+            if (_context.Topic != null && User.IsInRole("Staff"))
             {
                 var user = await _UserManager.GetUserAsync(User);
                 Topics = await _context.Topic.Where(i => string.IsNullOrEmpty(i.StudentID) && i.SupervisorID == user.Id).ToListAsync();
             }
+            if (_context.Topic != null && User.IsInRole("Co-ordinator"))
+            {
+                var user = await _UserManager.GetUserAsync(User);
+                Topics = await _context.Topic.Where(i => string.IsNullOrEmpty(i.StudentID)).ToListAsync();
+            }
+/*
+            if(id != null)
+            {
+                Topic = Topics.First(i => i.TopicID == id);
+            }*/
+            
             return Page();
         }
 

@@ -33,14 +33,11 @@ namespace Project_Management_System.Pages.AccountProfile
 
         public IList<StaffDivision> StaffDivisions = default!;
 
-        public IList<Topic> StudentProposals {  get; set; }
-        public IList<Topic> Topics { get; set; }
+        public IList<Topic> StudentProposals { get; set; } = default!;
+        public IList<Topic> Topics { get; set; } = default!;
 
-        public IList<UndergraduateProposal> UndergraduateProposals { get; set; }
-        public IList<PostgraduateProposal> PostgraduateProposals { get; set; }
-
-        [TempData]
-        public string StatusMessage { get; set; }
+        public IList<UndergraduateProposal> UndergraduateProposals { get; set; } = default!;
+        public IList<PostgraduateProposal> PostgraduateProposals { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync()
         {

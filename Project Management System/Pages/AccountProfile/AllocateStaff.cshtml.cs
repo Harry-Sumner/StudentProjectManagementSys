@@ -37,9 +37,6 @@ namespace Project_Management_System.Pages.AccountProfile
             Topic = topic;
             return Page();
         }
-
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             var topicToUpdate = await _context.Topic.FindAsync(Topic.TopicID);

@@ -24,7 +24,7 @@ namespace Project_Management_System.Pages.AccountProfile
         }
 
         [BindProperty]
-        public StaffInterest StaffInterest { get; set; }
+        public StaffInterest StaffInterest { get; set; } = default!;
 
         [BindProperty]
         public int InterestID { get; set; }

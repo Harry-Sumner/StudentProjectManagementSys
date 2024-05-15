@@ -28,32 +28,7 @@ namespace Project_Management_System.Pages.AccountProfile
             _signInManager = signInManager;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        public string Username { get; set; }
-
         public IList<Course> Course { get; set; } = default!;
-
-
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        [TempData]
-        public string StatusMessage { get; set; }
-
-        private async Task LoadAsync(SPMS_Student user)
-        {
-            var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            Username = userName;
-        }
-
-
-       
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -62,10 +37,6 @@ namespace Project_Management_System.Pages.AccountProfile
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-
-            await LoadAsync(user);
-
-       
 
             if (_context.Course != null)
             {
@@ -76,7 +47,7 @@ namespace Project_Management_System.Pages.AccountProfile
         }
 
         [BindProperty]
-        public IFormFile UploadedImage { get; set; }
+        public IFormFile UploadedImage { get; set; } = default!;
 
         public async Task<IActionResult> OnPostAsync(IFormFile uploadedImage)
         {

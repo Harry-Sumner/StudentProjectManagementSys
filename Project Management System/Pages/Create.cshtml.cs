@@ -41,7 +41,7 @@ namespace Project_Management_System.Pages
         public Topic Topic { get; set; } = default!;
 
         [BindProperty]
-        public CourseTopic CourseTopic { get; set; }
+        public CourseTopic CourseTopic { get; set; } = default!;
 
         public IList<Course> Course { get; set; } = default!;
 

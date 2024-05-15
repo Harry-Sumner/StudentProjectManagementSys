@@ -20,7 +20,9 @@
     <span class="body--coordinator--title">Project Co-ordinator</span>
     <div class="body--profile--container">
         <div class="body--profile--name">
-            <span>@user.Name</span>
+            @if(user != null){
+                <span>@user.Name</span>
+            }
         </div>
         <div class="body--profile--profilePicture">
             @{
