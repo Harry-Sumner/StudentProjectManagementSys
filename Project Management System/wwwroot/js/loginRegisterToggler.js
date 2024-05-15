@@ -78,3 +78,9 @@ $(document).ready(function () {
         }
     });
 });
+
+
+function displayAlert(message) {
+    alert(message);
+    window.location.href = '/Account/Login';
+}
