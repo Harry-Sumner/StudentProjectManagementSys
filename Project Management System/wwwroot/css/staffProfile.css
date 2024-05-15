@@ -290,6 +290,28 @@
     background-image: url(../images/CPPicon.svg);
 }
 
+.AddInfo {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-image: url(../images/plusIcon.svg);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: black;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    border: none;
+    border-radius: 3px;
+    background-color: transparent;
+    transition: 0.3s all;
+}
+
+.AddInfo:hover {
+    background-color: #4E9FFE;
+}
+
 .editInfo {
     position: absolute;
     top: 10px;
@@ -329,6 +351,11 @@
 }
 
 .infoBox.active .editInfo {
+    opacity: 0;
+    display: none;
+}
+
+.infoBox.active .AddInfo {
     opacity: 0;
     display: none;
 }
