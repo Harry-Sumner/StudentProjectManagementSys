@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\CRUD\**" />
+    <Content Remove="Pages\CRUD\**" />
+    <EmbeddedResource Remove="Pages\CRUD\**" />
+    <None Remove="Pages\CRUD\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\js\loginRegisterToggler.js" />
     <Content Remove="wwwroot\js\proposalDragDrop.js" />
   </ItemGroup>
