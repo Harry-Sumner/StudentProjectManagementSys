@@ -29,7 +29,7 @@ namespace Project_Management_System.Pages
         public IList<TopicBasket> TopicBasket { get; set; }
         public IList<PostgraduateProposal> PostgraduateProposal { get; set; }
         public IList<UndergraduateProposal> UndergraduateProposal { get; set; }
-
+        public IList<CourseTopic> CourseTopic { get; set; }
 
         public IList<Topic> Topics { get; set; } = new List<Topic>();
 
@@ -97,6 +97,10 @@ namespace Project_Management_System.Pages
                 .FromSqlRaw("SELECT * FROM UndergraduateProposal WHERE TopicID1 = {0} OR TopicID2 = {0} OR TopicID3 = {0}", TopicID)
                 .ToList();
 
+                CourseTopic = _db.CourseTopic //select data from database
+                .FromSqlRaw("SELECT * FROM CourseTopic WHERE TopicID = {0}", TopicID)
+                .ToList();
+
 
                 if (UndergraduateProposal != null)
                 {
@@ -127,6 +131,17 @@ namespace Project_Management_System.Pages
                     await _db.SaveChangesAsync();
 
                 }
+
+                if (CourseTopic != null)
+                {
+                    foreach (var topic in CourseTopic)
+                    {
+                        _db.CourseTopic.Remove(topic);
+                    }
+                    await _db.SaveChangesAsync();
+
+                }
+
                 _context.Topic.Remove(topicToDelete);
                 await _context.SaveChangesAsync();
 

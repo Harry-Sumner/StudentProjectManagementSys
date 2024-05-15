@@ -138,14 +138,24 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     await OnGetAsync();
-                    return Page();
+
+                    // Set up the alert message
+                    string alertMessage = "Invalid login attempt. Please check your email and password.";
+
+                    // Render the alert message on the page
+                    TempData["ErrorMessage"] = alertMessage;
+
+                    // Redirect the user to the login page
+                    return RedirectToPage("/Account/Login");
                 }
+
             }
 
             await OnGetAsync();
             // If we got this far, something failed, redisplay form
             return Page();
         }
+
 
         public async Task<IActionResult> OnPostStudentRegisterAsync(string returnUrl = null)
         {
@@ -229,6 +239,8 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
                     {
                         await _userManager.AddToRoleAsync(user, "Staff");
                     }
+                    
+
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     NewDivision(userId, StaffRegisterInput.DivisionID);
