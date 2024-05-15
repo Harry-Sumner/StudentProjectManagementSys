@@ -4,6 +4,15 @@
 @{
     ViewData["Title"] = "Log in";
 }
+@{
+    var errorMessage = TempData["ErrorMessage"] as string;
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <script>alert('@errorMessage');</script>
+}
+
 
 <head>
     <meta charset="UTF-8">
