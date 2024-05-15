@@ -110,9 +110,8 @@
                         <textarea id="topicDescription" asp-for="Topic.TopicDescription"></textarea>
                     </div>
 
-                    <div class="addGroup">
-                        <button type="submit" class="submitProposal">Add Topic</button>
-                    </div>
+                    <button type="submit" class="submitProposal">Add Topic</button>
+
                 </form>
             </div>
         </form>
@@ -198,33 +197,30 @@ else
                 </ul>
             }
             <div class="formUploadContainer">
-            <form method="post">
-                <div class="addGroup">
-                    <label for="topicName">Topic Name</label>
-                    <input id="topicName" asp-for="Topic.TopicName" />
-                </div>
+                <form method="post">
+                    <div class="addGroup">
+                        <label for="topicName">Topic Name</label>
+                        <input id="topicName" asp-for="Topic.TopicName" />
+                    </div>
 
-                <div class="addGroup">
-                    <label for="TopicSupervisor">Topic Supervisor</label>
-                    <select asp-for="Topic.SupervisorID">
-                        <option value=null>Choose your prefered supervisor here</option>
-                        @foreach (var staff in StaffManager.Users)
-                        {
-                            <option value=@staff.Id>@staff.Name</option>
-                        }
-                    </select>
-                </div>
-                <div class="addGroup">
-                    <label for="topicDescription">Topic Description</label>
-                    <textarea id="topicDescription" asp-for="Topic.TopicDescription"></textarea>
-                </div>
+                    <div class="addGroup">
+                        <label for="TopicSupervisor">Topic Supervisor</label>
+                        <select asp-for="Topic.SupervisorID">
+                            <option value=null>Choose your prefered supervisor here</option>
+                            @foreach (var staff in StaffManager.Users)
+                            {
+                                <option value=@staff.Id>@staff.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="addGroup">
+                        <label for="topicDescription">Topic Description</label>
+                        <textarea id="topicDescription" asp-for="Topic.TopicDescription"></textarea>
+                    </div>
 
-                <div class="addGroup">
                     <button type="submit" class="submitProposal">Add Topic</button>
-                </div>
-            </form>
+                </form>
             </div>
-            
     </div>
 }
 

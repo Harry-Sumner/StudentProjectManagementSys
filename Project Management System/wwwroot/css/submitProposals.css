@@ -194,17 +194,17 @@
 .informationIcon {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%); /* Offset by half its size for perfect centering */
+    transform: translateY(-50%);
     width: 40px;
     height: 40px;
     border-radius: 50%;
     background-color: #4E9FFE;
     color: white;
-    display: flex; /* Use flexbox to center the content inside */
-    justify-content: center; /* Center content horizontally */
-    align-items: center; /* Center content vertically */
-    font-size: 20px; /* Adjust font size as needed */
-    text-align: center; /* Ensure text is centered if it wraps */
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    font-size: 20px; 
+    text-align: center; 
 }
 
 .informationIconContainer span {
@@ -297,20 +297,67 @@
 
 .formUploadContainer {
     display: none;
-    position: relative;
-    top: 240px;
-    left: 10px;
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    max-height: 300px;
+    max-width: 80%;
+    top: 450px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    overflow-y: auto;
 }
 
-    .formUploadContainer span {
-        font-size: 26px;
-        text-align: center;
-        margin-bottom: 15px;
-    }
+.formUploadContainer form {
+    width: 80%;
+    height: 100%;
+}
+
+.formUploadContainer span {
+    font-size: 26px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.addGroup {
+    position: relative;
+    width: 80%;
+    min-height: 20px;
+    min-width: 120px;
+    max-width: 900px;
+    padding: 8px;
+    background-color: white;
+    box-shadow: 3px 3px 3px #888888;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+}
+
+.addGroup label {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.addGroup textarea {
+    min-width: 250px;
+    min-height: 100px;
+    max-width: 400px;
+    max-height: 300px;
+}
+
+.addGroup textarea, .addGroup input, .addGroup select {
+    width: 90%; 
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc; 
+    box-sizing: border-box;
+}
 
 footer {
     top: 1800px !important;
