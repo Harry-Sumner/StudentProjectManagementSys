@@ -54,6 +54,7 @@
 .infoBoxCoordinator.expanded {
     border-color: black;
     min-height: 300px;
+    max-height: 300px;
 }
 
 .infoBoxCoordinator.expanded .boxTitle {
@@ -63,7 +64,7 @@
 .expandBtn {
     position: absolute;
     top: 50%;
-    right: 0;
+    right: -20px;
     width: 50px;
     height: 50px;
     transform: translate(-50%, -50%);
