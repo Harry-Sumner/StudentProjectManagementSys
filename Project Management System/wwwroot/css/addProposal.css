@@ -1,6 +1,8 @@
-﻿body {
-}
+﻿/* Created by George, Commented by Scott */
 
+body {
+}
+/* Container for add topic form */
 .body--addProposal--container {
     position: absolute;
     top: 180px;
@@ -12,7 +14,7 @@
     display: flex;
     flex-direction: column;
 }
-
+/* Title */
 .addTitle {
     position: absolute;
     top: 20px;
@@ -20,7 +22,7 @@
     font-size: 24px;
     border-bottom: 2px solid red;
 }
-
+/* Css for each group of the form */
 .addGroup {
     position: relative;
     top: 80px;
@@ -35,21 +37,21 @@
     flex-direction: column;
     gap: 10px;
 }
-
+/* CSS for input text for each group of form */
 .addGroup input {
     font-size: 18px;
     padding: 8px;
 }
-
+/* CSS for textarea of topic description */
 .addGroup textarea {
     resize: none;
     height: 200px;
 }
-
+/* Styled Label */
 .addGroup label {
     font-size: 20px;
 }
-
+/* Css For buttons */
 .addBtn {
     position: relative;
     left: 50%;
@@ -63,7 +65,7 @@
     transition: all 0.3s;
     cursor: pointer;
 }
-
+/* Changes background color when hovered over by user */
 .addBtn:hover {
     background-color: #2B80E4;
 }
