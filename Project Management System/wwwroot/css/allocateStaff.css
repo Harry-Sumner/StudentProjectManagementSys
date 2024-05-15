@@ -42,10 +42,10 @@
     gap: 10px;
 }
 
-    .editGroup select {
-        padding: 8px;
-        font-size: 15px;
-    }
+.editGroup select {
+    padding: 8px;
+    font-size: 15px;
+}
 
 .ErrorMsg {
     position: relative;
@@ -90,6 +90,7 @@
     height: 40px;
     min-width: 100px;
     transition: all 0.2s;
+    cursor: pointer;
 }
 
 .editButtonsGroup input:hover {

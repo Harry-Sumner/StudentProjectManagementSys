@@ -8,6 +8,7 @@ body {
     top: 180px;
     left: 50%;
     width: 90%;
+    min-height: 300px;
     transform: translateX(-50%);
     border: 1px solid #ccc;
     background-color: #F0F0F0;
@@ -70,3 +71,6 @@ body {
     background-color: #2B80E4;
 }
 
+footer {
+    top: 900px !important;
+}

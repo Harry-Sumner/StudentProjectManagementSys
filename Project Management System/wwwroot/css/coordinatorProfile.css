@@ -111,11 +111,22 @@
     flex-direction: column;
 }
 
-.contentTitle {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 10px;
+.contentContainer a {
+    text-decoration: none;
+    color: blue;
+    transition: all 0.3s;
+    padding: 1px;
 }
+
+.contentContainer a:hover {
+    color: #708fb4;
+}
+
+    .contentTitle {
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
 
 .contentDescription {
     font-size: 14px;

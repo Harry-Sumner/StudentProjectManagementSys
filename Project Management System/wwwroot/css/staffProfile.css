@@ -124,6 +124,10 @@
     box-shadow: 3px 3px 3px #888888;
 }
 
+.staffInfoBox span {
+    transition: all 0.1s;
+}
+
 .departmentList {
     display: flex;
     max-width: 500px;
@@ -465,5 +469,11 @@ footer {
 
     footer {
         top: 1800px !important;
+    }
+}
+
+@media(max-width: 600px) {
+    .body--profile--email {
+        font-size: calc(1vh + 1vw);
     }
 }
