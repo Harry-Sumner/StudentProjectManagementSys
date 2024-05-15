@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -13,11 +14,14 @@ namespace Project_Management_System.Pages
     {
         private readonly SPMS_Context _context;
         private readonly SPMS_Context _db;
+        private readonly UserManager<SPMS_Staff> _UserManager;
 
-        public EditModel(SPMS_Context context, SPMS_Context db)
+
+        public EditModel(SPMS_Context context, SPMS_Context db, UserManager<SPMS_Staff> userManager)
         {
             _context = context;
             _db = db;
+            _UserManager = userManager;
         }
 
         [BindProperty]
@@ -35,53 +39,28 @@ namespace Project_Management_System.Pages
 
         public async Task<IActionResult> OnGetAsync()
         {
-
-            var topic = await _context.Topic.FirstOrDefaultAsync();
-            if (topic == null)
+            if (_context.Topic != null)
             {
-                return Page();
+                var user = await _UserManager.GetUserAsync(User);
+                Topics = await _context.Topic.Where(i => string.IsNullOrEmpty(i.StudentID) && i.SupervisorID == user.Id).ToListAsync();
             }
-            Topic = topic;
-
-            Topics = await _context.Topic.ToListAsync();
-
             return Page();
-
-            /*if (id == null)
-            {
-                var topic = await _context.Topic.FirstOrDefaultAsync(m => m.TopicID == id);
-                if (topic == null)
-                {
-                    return NotFound();
-                }
-                Topic = topic;
-
-                Topics = await _context.Topic.ToListAsync();
-            }
-            else
-            {
-                var topic = await _context.Topic.FirstOrDefaultAsync();
-                if (topic == null)
-                {
-                    return NotFound();
-                }
-                Topic = topic;
-
-                Topics = await _context.Topic.ToListAsync();
-            }
-
-            return Page();*/
         }
 
         public async Task<IActionResult> OnPostAsync(string command)
         {
+            var user = await _UserManager.GetUserAsync(User);
             if (command == "Delete")
             {
                 var topicToDelete = await _context.Topic.FindAsync(TopicID);
 
                 if (topicToDelete == null)
                 {
-                    return NotFound();
+                    return Page();
+                }
+                if(topicToDelete.SupervisorID != user.Id)
+                {
+                    return Page();
                 }
 
                 TopicBasket = _db.TopicBasket //select data from database
@@ -100,7 +79,6 @@ namespace Project_Management_System.Pages
                 CourseTopic = _db.CourseTopic //select data from database
                 .FromSqlRaw("SELECT * FROM CourseTopic WHERE TopicID = {0}", TopicID)
                 .ToList();
-
 
                 if (UndergraduateProposal != null)
                 {
@@ -141,7 +119,6 @@ namespace Project_Management_System.Pages
                     await _db.SaveChangesAsync();
 
                 }
-
                 _context.Topic.Remove(topicToDelete);
                 await _context.SaveChangesAsync();
 
@@ -165,12 +142,10 @@ namespace Project_Management_System.Pages
             if (Topic.SupervisorID != null)
             {
                 topicToUpdate.SupervisorID = Topic.SupervisorID;
-
             }
             if (Topic.MarkerID != null)
             {
                 topicToUpdate.MarkerID = Topic.MarkerID;
-
             }
 
             try
@@ -191,9 +166,6 @@ namespace Project_Management_System.Pages
 
             return RedirectToPage("/Index");
         }
-
-
-
 
         private bool TopicExists(int id)
         {
