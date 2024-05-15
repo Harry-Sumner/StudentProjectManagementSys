@@ -21,9 +21,7 @@
         <div class="body--profile--name">
             <span>@user.Name</span>
         </div>
-
         <div class="body--profile--profilePicture">
-
             @{
                 try
                 {
@@ -78,24 +76,21 @@
 
         <!--Just modify the spans inside the "contentContainer" to suit your needs-->
         <div class="body--coordinator--infoBoxes">
+            
             <div class="infoBoxCoordinator">
                 <span class="boxTitle">Student Project Submissions</span>
                 <button class="expandBtn">
                     <div class="expandIcon"></div>
                 </button>
                 <div class="coordinatorContent">
-                    <div class="contentContainer">
-                        <span class="contentTitle">Topic Title</span>
-                        <span class="contentDescription">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit aperiam quibusdam aut laudantium minus quod, odit autem? Porro dignissimos quasi dolor ipsum sit voluptatibus eaque, ratione optio sint maiores nesciunt.</span>
-                    </div>
-                    <div class="contentContainer">
-                        <span class="contentTitle">Topic Title</span>
-                        <span class="contentDescription">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aspernatur modi ipsa autem saepe asperiores sed corrupti ex laboriosam rem veniam reiciendis adipisci sequi, tempore natus fuga itaque repudiandae placeat rerum?</span>
-                    </div>
-                    <div class="contentContainer">
-                        <span class="contentTitle">Topic Title</span>
-                        <span class="contentDescription">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate eligendi in quibusdam sed fugiat expedita veritatis nulla enim harum aliquid officiis fuga, laborum autem doloribus illo quos, ipsam neque reiciendis.</span>
-                    </div>
+                    @foreach(var topic in Model.StudentProposals)
+                    {
+                        <div class="contentContainer">
+                            <span class="contentTitle">@topic.TopicName</span>
+                            <span class="contentDescription">@topic.TopicDescription</span>
+                            <a asp-page="./Edit" asp-route-id="@topic.TopicID">Edit</a>
+                        </div>
+                    }
                 </div>
             </div>
 

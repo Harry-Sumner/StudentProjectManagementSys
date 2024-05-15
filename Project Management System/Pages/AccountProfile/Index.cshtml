@@ -1,0 +1,60 @@
+﻿@page
+@model Project_Management_System.Pages.AccountProfile.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Topic[0].TopicName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Topic[0].TopicDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Topic[0].SupervisorID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Topic[0].MarkerID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Topic[0].StudentID)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Topic) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TopicName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TopicDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupervisorID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MarkerID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentID)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.TopicID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.TopicID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.TopicID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

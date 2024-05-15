@@ -29,21 +29,14 @@ namespace Project_Management_System.Pages.AccountProfile
             _signInManager = signInManager;
         }
 
-        public string Username { get; set; }
         public IList<Division> Divisions { get; set; } = default!;
 
         public IList<StaffDivision> StaffDivisions = default!;
+
+        public IList<Topic> StudentProposals {  get; set; }
      
         [TempData]
         public string StatusMessage { get; set; }
-
-        private async Task LoadAsync(SPMS_User user)
-        {
-            var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
-            Username = userName;
-        }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -53,7 +46,10 @@ namespace Project_Management_System.Pages.AccountProfile
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            await LoadAsync(user);
+            if (_context.Topic != null)
+            {
+                StudentProposals = await _context.Topic.Where(i => !string.IsNullOrEmpty(i.StudentID) && string.IsNullOrEmpty(i.MarkerID)).ToListAsync();
+            }
 
             if (_context.StaffDivision != null)
             {
