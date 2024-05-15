@@ -1,16 +1,23 @@
 $(document).ready(function () {
 
+    // Hides the element with ID "newDepartment"
     $('#newDepartment').hide();
 
     var lastForm = '@Html.Raw(Json.Serialize(ViewBag.LastForm))';
+
+    // Checks if value of lastForm is "Register"
     if (lastForm === "Register") {
+        // Hides element 'hide' and shows the 'register' form
         $('.loginForm').hide();
         $('.registerForm').show();
+        // CSS
         $('.staffBtn').css('border-bottom', '2px solid red');
         $('.body--register--staffToggler').show();
     } else {
+        // else, hide 'register' form and show 'login' form
         $('.registerForm').hide();
         $('.loginForm').show();
+
         $('.studentBtn').css('border-bottom', '2px solid red');
         $('.body--register--staffToggler').hide();
     }
