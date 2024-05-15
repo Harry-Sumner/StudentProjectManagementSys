@@ -23,7 +23,10 @@
                 <div class="submitIcon"></div>
             </button>
         </form>
-        <button class="clearbtn" type="button" onclick="clearSearch()">Clear</button>
+
+        <a asp-page = "/Index">
+            <button class="clearbtn" type="button">Clear</button>
+        </a>
     </div>
 
 
@@ -39,8 +42,6 @@
             }
         </div>
     </div>
-
-
 
     <div class="body--Topics--container">
         @if (User.IsInRole("Staff") || User.IsInRole("Co-ordinator"))

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -18,11 +19,13 @@ namespace Project_Management_System.Pages
     {
         private readonly SPMS_Context _db;
         private readonly Project_Management_System.Data.SPMS_Context _context;
+        private readonly UserManager<SPMS_Staff> _UserManager;
 
-        public CreateModel(Project_Management_System.Data.SPMS_Context context, SPMS_Context db)
+        public CreateModel(Project_Management_System.Data.SPMS_Context context, SPMS_Context db, UserManager<SPMS_Staff> userManager)
         {
             _context = context;
             _db = db;
+            _UserManager = userManager;
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -59,6 +62,13 @@ namespace Project_Management_System.Pages
             else
             {
                 Topic.TopicID = 1;
+            }
+
+            var user = await _UserManager.GetUserAsync(User);
+
+            if (User.IsInRole("Staff"))
+            {
+                Topic.SupervisorID = user.Id;
             }
 
             _context.Topic.Add(Topic);

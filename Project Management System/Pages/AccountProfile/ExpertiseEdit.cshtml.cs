@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Project_Management_System.Data;
-using Project_Management_System.Migrations;
+
 
 namespace Project_Management_System.Pages.AccountProfile
 {
