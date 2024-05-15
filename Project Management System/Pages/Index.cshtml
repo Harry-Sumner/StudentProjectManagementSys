@@ -43,13 +43,16 @@
 
 
     <div class="body--Topics--container">
-        <div class="body--Topics--addTopicContainer">
-            <a href="#">
-                <button>
-                    <div class="addIcon"></div>
-                </button>
-            </a>
-        </div>
+        @if (User.IsInRole("Staff") || User.IsInRole("Co-ordinator"))
+        {
+            <div class="body--Topics--addTopicContainer">
+                <a asp-page="/Create">
+                    <button>
+                        <div class="addIcon"></div>
+                    </button>
+                </a>
+            </div>
+        }
         @foreach (var topic in Model.Topic)
         {
             <div class="topicBox">
