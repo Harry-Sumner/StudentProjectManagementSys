@@ -1,8 +1,21 @@
 $(document).ready(function () {
-    $('.studentBtn').css('border-bottom', '2px solid red');
+
+    $('#newDepartment').hide();
+
+    var lastForm = '@Html.Raw(Json.Serialize(ViewBag.LastForm))';
+    if (lastForm === "Register") {
+        $('.loginForm').hide();
+        $('.registerForm').show();
+        $('.staffBtn').css('border-bottom', '2px solid red');
+        $('.body--register--staffToggler').show();
+    } else {
+        $('.registerForm').hide();
+        $('.loginForm').show();
+        $('.studentBtn').css('border-bottom', '2px solid red');
+        $('.body--register--staffToggler').hide();
+    }
 
     $('.body--register--inputToggle').click(function () {
-        // Toggle between login and register forms based on current visibility
         if ($('.loginForm').is(':visible')) {
             toggleToRegister();
         } else {
@@ -46,7 +59,7 @@ $(document).ready(function () {
     function updateToggleText(isRegistering) {
         if (isRegistering) {
             $('.body--login--newUser').text('Already have an account? Click here to login:');
-            $('.body--login--container').css('min-height', '900px');
+            $('.body--login--container').css('min-height', '950px');
             $('.body--register--inputToggle').text('Login');
         } else {
             $('.body--login--newUser').text('New here? Register below:');
@@ -55,14 +68,13 @@ $(document).ready(function () {
         }
     }
 
-    // Select dependency logic
+
     $('#newSchool').change(function () {
         var schoolValue = $(this).val();
         if (schoolValue !== 'null') {
-            $('#newDepartment').prop('disabled', false);
+            $('#newDepartment').prop('disabled', false).slideDown(400);  // Slide down animation to show the department select
         } else {
-            $('#newDepartment').prop('disabled', true);
-            $('#newDepartment').val('null');
+            $('#newDepartment').prop('disabled', true).val('null').slideUp(400);  // Slide up animation to hide the department select
         }
     });
 });

@@ -6,10 +6,9 @@
     top: 180px;
     left: 50%;
     width: 90%;
-    height: 750px;
     transform: translateX(-50%);
     border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #888888;
+    background-color: #F0F0F0;
     display: flex;
     flex-direction: column;
 }
@@ -65,7 +64,7 @@
     cursor: pointer;
 }
 
-    .addBtn:hover {
-        background-color: #2B80E4;
-    }
+.addBtn:hover {
+    background-color: #2B80E4;
+}
 

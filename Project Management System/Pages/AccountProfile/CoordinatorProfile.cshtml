@@ -1,0 +1,149 @@
+﻿@page
+@model Project_Management_System.Pages.AccountProfile.CoordinatorProfileModel
+
+@inject SignInManager<SPMS_User> SignInManager
+@inject UserManager<SPMS_User> UserManager
+
+@using Microsoft.AspNetCore.Identity
+@using Project_Management_System.Data
+
+@{
+    var user = await UserManager.GetUserAsync(User);
+}
+
+<script src="../js/projectCoordinatorBoxes.js"></script>
+<link rel="stylesheet" href="../css/staffProfile.css">
+<link rel="stylesheet" href="../css/coordinatorProfile.css">
+
+<body>
+    <span class="body--coordinator--title">Project Co-ordinator</span>
+    <div class="body--profile--container">
+        <div class="body--profile--name">
+            <span>@user.Name</span>
+        </div>
+
+        <div class="body--profile--profilePicture">
+
+            @{
+                try
+                {
+                    <img src="@string.Format("data:image/jpg;base64, {0}", Convert.ToBase64String(@user.ProfilePicture))" alt="Profile Image" class="staffimg" />
+                }
+                catch
+                {
+                    <!-- Handle if there's no profile picture -->
+                }
+            }
+            <!--Have this hidden for anyone but their profile-->
+            <div class="body--profile--updatePicture">
+                <form method="post" enctype="multipart/form-data">
+                    <input type="file" class="updateIMG" name="uploadedImage" onchange="this.form.submit();" />
+                </form>
+            </div>
+        </div>
+
+        <div class="body--profile--infoSection">
+            
+            <div class="body--profile--infoGroup">
+                <label for="department">Divisions</label>
+                <!--For each loop here to display all departments, just use one li element-->
+                <ul class="departmentList">
+                    @foreach (var divisionlink in Model.StaffDivisions.Where(i => i.StaffID == user.Id))
+                    {
+                        @foreach (var division in Model.Divisions.Where(i => i.DivisionID == divisionlink.DivisionID))
+                        {
+                            <li>
+                                <span>@Html.ValueFor(modelDivisions => division.DivisionName)</span>
+                                <form method="post">
+                                    <button type="submit" class="removeDepartment" asp-route-DivisionID="@division.DivisionID" asp-page-handler="Delete">
+                                        <div class="removeIcon"></div>
+                                    </button>
+                                </form>
+                            </li>
+                        }
+                    }
+                    <a asp-page="./DivisionAdd">
+                        <button class="editInfo"></button>
+                    </a>
+                </ul>
+            </div>
+
+            <div class="body--profile--infoGroup">
+                <label for="email">Email</label>
+                <div class="staffInfoBox">
+                    <span name="email" class="body--profile--email">@user.Email</span>
+                </div>
+            </div>
+        </div>
+
+        <!--Just modify the spans inside the "contentContainer" to suit your needs-->
+        <div class="body--coordinator--infoBoxes">
+            <div class="infoBoxCoordinator">
+                <span class="boxTitle">Student Project Submissions</span>
+                <button class="expandBtn">
+                    <div class="expandIcon"></div>
+                </button>
+                <div class="coordinatorContent">
+                    <div class="contentContainer">
+                        <span class="contentTitle">Topic Title</span>
+                        <span class="contentDescription">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit aperiam quibusdam aut laudantium minus quod, odit autem? Porro dignissimos quasi dolor ipsum sit voluptatibus eaque, ratione optio sint maiores nesciunt.</span>
+                    </div>
+                    <div class="contentContainer">
+                        <span class="contentTitle">Topic Title</span>
+                        <span class="contentDescription">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aspernatur modi ipsa autem saepe asperiores sed corrupti ex laboriosam rem veniam reiciendis adipisci sequi, tempore natus fuga itaque repudiandae placeat rerum?</span>
+                    </div>
+                    <div class="contentContainer">
+                        <span class="contentTitle">Topic Title</span>
+                        <span class="contentDescription">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate eligendi in quibusdam sed fugiat expedita veritatis nulla enim harum aliquid officiis fuga, laborum autem doloribus illo quos, ipsam neque reiciendis.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="infoBoxCoordinator">
+                <span class="boxTitle">Staff Members</span>
+                <button class="expandBtn">
+                    <div class="expandIcon"></div>
+                </button>
+                <div class="coordinatorContent">
+                    <div class="contentContainer">
+                        <span class="contentTitle">Topic Title</span>
+                        <span class="contentDescription">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit aperiam quibusdam aut laudantium minus quod, odit autem? Porro dignissimos quasi dolor ipsum sit voluptatibus eaque, ratione optio sint maiores nesciunt.</span>
+                    </div>
+                    <div class="contentContainer">
+                        <span class="contentTitle">Topic Title</span>
+                        <span class="contentDescription">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aspernatur modi ipsa autem saepe asperiores sed corrupti ex laboriosam rem veniam reiciendis adipisci sequi, tempore natus fuga itaque repudiandae placeat rerum?</span>
+                    </div>
+                    <div class="contentContainer">
+                        <span class="contentTitle">Topic Title</span>
+                        <span class="contentDescription">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate eligendi in quibusdam sed fugiat expedita veritatis nulla enim harum aliquid officiis fuga, laborum autem doloribus illo quos, ipsam neque reiciendis.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="infoBoxCoordinator">
+                <span class="boxTitle">Staff / Supervisor Pairings</span>
+                <button class="expandBtn">
+                    <div class="expandIcon"></div>
+                </button>
+                <div class="coordinatorContent">
+                    <div class="contentContainer">
+                        <span class="contentTitle">Topic Title</span>
+                        <span class="contentDescription">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit aperiam quibusdam aut laudantium minus quod, odit autem? Porro dignissimos quasi dolor ipsum sit voluptatibus eaque, ratione optio sint maiores nesciunt.</span>
+                    </div>
+                    <div class="contentContainer">
+                        <span class="contentTitle">Topic Title</span>
+                        <span class="contentDescription">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aspernatur modi ipsa autem saepe asperiores sed corrupti ex laboriosam rem veniam reiciendis adipisci sequi, tempore natus fuga itaque repudiandae placeat rerum?</span>
+                    </div>
+                    <div class="contentContainer">
+                        <span class="contentTitle">Topic Title</span>
+                        <span class="contentDescription">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate eligendi in quibusdam sed fugiat expedita veritatis nulla enim harum aliquid officiis fuga, laborum autem doloribus illo quos, ipsam neque reiciendis.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

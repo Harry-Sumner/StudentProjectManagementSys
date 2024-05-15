@@ -25,7 +25,7 @@ namespace Project_Management_System.Data
             modelBuilder.Entity<PostgraduateProposal>().HasKey(t => new { t.StudentID});
             modelBuilder.Entity<UndergraduateProposal>().HasKey(t => new { t.StudentID });
             modelBuilder.Entity<StaffInterest>().HasKey(t => new { t.InterestID });
-
+            modelBuilder.Entity<StaffExpertise>().HasKey(t => new { t.ExpertiseID });
         }
 
         public DbSet<SPMS_User> SPMS_Account { get; set; }
@@ -37,6 +37,7 @@ namespace Project_Management_System.Data
         public DbSet<Topic> Topic { get; set; }
         public DbSet<Course> Course { get; set; }
         public DbSet<StaffInterest> StaffInterest { get; set; }
+        public DbSet<StaffExpertise> StaffExpertise { get; set; }
         public DbSet<CourseTopic> CourseTopic { get; set; } = default!;
         public DbSet<UndergraduateProposal> UndergraduateProposal { get; set; }
         public DbSet<PostgraduateProposal> PostgraduateProposal { get; set; }

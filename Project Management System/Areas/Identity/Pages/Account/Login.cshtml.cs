@@ -75,10 +75,10 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
         public void NewDivision(string StaffID, int DivisionID)
         {
             StaffDivisions.StaffID = StaffID;
-            StaffDivisions.DivisionID = DivisionID; // links user account to basket
+            StaffDivisions.DivisionID = DivisionID; // links user account to staff account
             _db.StaffDivision.Add(StaffDivisions);
             _db.SaveChanges();
-            // function that assigns basket to user and saves to database
+            // function that assigns divsion to staff user and saves to database
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -96,11 +96,6 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
             if (_context.Course != null)
             {
                 Course = await _context.Course.ToListAsync();
-            }
-
-            if (!string.IsNullOrEmpty(ErrorMessage))
-            {
-                ModelState.AddModelError(string.Empty, ErrorMessage);
             }
 
             returnUrl ??= Url.Content("~/");
@@ -197,10 +192,6 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
                         return LocalRedirect(returnUrl);
                     }
                 }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
             }
 
             // If we got this far, something failed, redisplay form
@@ -213,6 +204,7 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
             ModelState.Clear();
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
             if (ModelState.IsValid)
             {
                 var user = CreateStaff();
@@ -261,10 +253,6 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
 
                         return LocalRedirect(returnUrl);
                     }
-                }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
 

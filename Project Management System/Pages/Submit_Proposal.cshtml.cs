@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -7,6 +8,7 @@ using Project_Management_System.Migrations;
 
 namespace Project_Management_System.Pages
 {
+    [Authorize (Roles = "Student")]
     public class Submit_ProposalModel : PageModel
     {
         public UndergraduateProposal proposal = new(); //Create new instance of Proposal
@@ -15,12 +17,23 @@ namespace Project_Management_System.Pages
         private readonly SignInManager<SPMS_User> _signInManager;
         private readonly Project_Management_System.Data.SPMS_Context _context;
 
+        [BindProperty]
+        public Topic Topic { get; set; } = default!;
+
+        [BindProperty]
+        public CourseTopic CourseTopic { get; set; }
         public IList<TopicBasket> TopicBasket { get; set; }
         public IList<Course> Course { get; set; }
         public IList<Topic> Topics { get; private set; }
         public int Priority { get; set; }
-
+        public IList<UndergraduateProposal> UndergraduateProposals { get; set; }
+        public IList<PostgraduateProposal> PostgraduateProposals { get; set; }
         public bool Postgraduate { get; set; }
+
+        public bool Submitted { get; set; }
+        public int Topic1 { get; set; }
+        public int Topic2 { get; set; }
+        public int Topic3 { get; set; }
 
         public Submit_ProposalModel(Project_Management_System.Data.SPMS_Context context, SPMS_Context db, UserManager<SPMS_Student> userManager, SignInManager<SPMS_User> signInManager)
         {
@@ -57,24 +70,126 @@ namespace Project_Management_System.Pages
             {
                 Topics = await _context.Topic.ToListAsync();
             }
-        }
-        public async Task<IActionResult> OnPostSubmitAsync()
-        {
-            var user = await _UserManager.GetUserAsync(User);
-            proposal.StudentID = user.Id;
-           
-         
 
-            await _db.SaveChangesAsync(); //save all changes to sql database
-            return RedirectToPage("/Index"); //return to home page
+            UndergraduateProposals = _db.UndergraduateProposal //select data from database
+               .FromSqlRaw("SELECT * FROM UndergraduateProposal WHERE StudentID = {0}", user.Id)
+               .ToList();
+
+            if (UndergraduateProposals.Count() > 0)
+            {
+                Submitted = true;
+            }
+
+            PostgraduateProposals = _db.PostgraduateProposal //select data from database
+               .FromSqlRaw("SELECT * FROM PostgraduateProposal WHERE StudentID = {0}", user.Id)
+               .ToList();
+
+            if (PostgraduateProposals.Count() > 0)
+            {
+                Submitted = true;
+            }
+        }
+        public async Task<IActionResult> OnPostPostgradSubmitAsync()
+        {
+
+            var user = await _UserManager.GetUserAsync(User);
+            TopicBasket = _db.TopicBasket //select data from database
+                .FromSqlRaw("SELECT * FROM TopicBasket WHERE StudentID = {0}", user.Id)
+                .ToList();
+
+            if(TopicBasket.Count() == 1)
+            {
+                PostgraduateProposal newPostTopic = new PostgraduateProposal
+                {
+                    StudentID = user.Id,
+                    TopicID = TopicBasket[0].TopicID,
+                };
+                _db.PostgraduateProposal.Add(newPostTopic);
+                await _db.SaveChangesAsync(); //save all changes to sql database
+                return RedirectToPage("/Index"); //return to home page
+
+            }
+            return RedirectToPage();
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if(Topic.TopicDescription == null || Topic.TopicName == null)
+            {
+                await OnGetAsync();
+                return Page();
+            }
+            var currentTopic = _context.Topic.FromSqlRaw("SELECT * FROM Topic")
+                .OrderByDescending(b => b.TopicID)
+                .FirstOrDefault();
+            if (currentTopic != null)
+            {
+                Topic.TopicID = currentTopic.TopicID + 1; //increment last id by 1
+            }
+            else
+            {
+                Topic.TopicID = 1;
+            }
+            var user = await _UserManager.GetUserAsync(User);
+
+
+            Topic.StudentID = user.Id;
+
+            _context.Topic.Add(Topic);
+            await _context.SaveChangesAsync();
+            CourseTopic.CourseID = user.CourseID;
+            CourseTopic.TopicID = Topic.TopicID;
+            _db.CourseTopic.Add(CourseTopic);
+            _db.SaveChanges();
+            // adds course to topic
+            TopicBasket newTopic = new TopicBasket
+            {
+                StudentID = user.Id,
+                TopicID = Topic.TopicID
+            };
+            _db.TopicBasket.Add(newTopic);
+            await _db.SaveChangesAsync();
+
+            return RedirectToPage("/Submit_Proposal");
+        }
+
+        public async Task<IActionResult> OnPostUndergradSubmitAsync()
+        {
+
+            var user = await _UserManager.GetUserAsync(User);
+            TopicBasket = _db.TopicBasket //select data from database
+                .FromSqlRaw("SELECT * FROM TopicBasket WHERE StudentID = {0}", user.Id)
+                .ToList();
+
+            if (TopicBasket.Count() == 3)
+            {
+                UndergraduateProposal newTopic = new UndergraduateProposal
+                {
+                    StudentID = user.Id,
+                    TopicID1 = TopicBasket[0].TopicID,
+                    TopicID2 = TopicBasket[1].TopicID,
+                    TopicID3 = TopicBasket[2].TopicID,
+                };
+                _db.UndergraduateProposal.Add(newTopic);
+                await _db.SaveChangesAsync(); //save all changes to sql database
+                return RedirectToPage("/Index"); //return to home page
+            }
+            return RedirectToPage();
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(int topicID) //takes id passed from button
         {
             var user = await _UserManager.GetUserAsync(User);
-            var topic = await _db.TopicBasket.FindAsync(user.Id, topicID);
-            _db.TopicBasket.Remove(topic);
-            await _db.SaveChangesAsync(); //save changes
+            if(user != null)
+            {
+                var topic = await _db.TopicBasket.FindAsync(user.Id, topicID);
+                if (topic != null)
+                {
+                    _db.TopicBasket.Remove(topic);
+                    await _db.SaveChangesAsync();
+                }
+            }
+            //save changes
             return RedirectToPage(); //return to page
         }
     }

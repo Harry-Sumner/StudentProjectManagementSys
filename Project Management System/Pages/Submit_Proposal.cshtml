@@ -15,17 +15,17 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
+
 <script src="~/js/proposalDragDrop.js"></script>
 
 @{
     var student = await StudentManager.GetUserAsync(User);
-    
 }
 
 @if(Model.Postgraduate){
     <div class="body--submitLevel7--container">
         <div class="body--submitLevel7--title">
-            <span>Dissertation Project Preferences</span>
+            <span>Level 7 Dissertation Project Preferences</span>
         </div>
 
         <ul class="body--submitLevel6--studentDetails">
@@ -52,26 +52,69 @@
             <div class="body--proposal--Toggler">
                 <button class="TopicsBtn">Topics</button>
                 <span> / </span>
-                <button class="FormUploadBtn">Form Upload</button>
+                <button class="FormUploadBtn">Add your own</button>
             </div>
 
             <div class="topicProposalContainer">
                 <ul class="proposalsPriorityLevel7">
-                    <li class="proposalBox" id="propsal1">
-                        <span class="proposalID">1</span>
-                        <div class="proposalDivider"></div>
-                        <h1>Example Proposal</h1>
-                        <h1>Example Supervisor</h1>
-                    </li>
+                    @foreach (var proposal in Model.TopicBasket)
+                    {
+                        @foreach (var topic in Model.Topics.Where(i => i.TopicID == proposal.TopicID))
+                        {
+                            Model.Priority += 1;
+                            <li class="proposalBox" draggable="true" id="propsal1">
+                                <span class="proposalID">@Model.Priority</span>
+                                <div class="proposalDivider"></div>
+                                <h1>@topic.TopicName</h1>
+                                @if (topic.SupervisorID != null)
+                                {
+                                    var staff = await StaffManager.FindByIdAsync(topic.SupervisorID);
+                                    <h1>@staff.Name</h1>
+                                }
+                                <form method="post">
+                                    <button class="removeBox" type="submit" asp-page-handler="Delete" asp-route-topicID="@topic.TopicID">
+                                        <div class="removeIcon"></div>
+                                    </button>
+                                </form>
+                            </li>
+                        }
+                    }
                 </ul>
+                @if (!Model.Submitted)
+                {
+                    <form method="post">
+                        <button type="submit" class="submitProposal" asp-page-handler="PostgradSubmit">Submit</button>
+                    </form>
+                }
             </div>
 
             <div class="formUploadContainer">
-                <span class="ProposalTitleFormUpload">Upload your completed proposal form: </span>
-                <input type="file" class="fileUpload" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword">
-            </div>
+                <form method="post">
+                    <div class="addGroup">
+                        <label for="topicName">Topic Name</label>
+                        <input id="topicName" asp-for="Topic.TopicName" />
+                    </div>
 
-            <button type="submit" class="submitProposal">Submit</button>
+                    <div class="addGroup">
+                        <label for="TopicSupervisor">Topic Supervisor</label>
+                        <select asp-for="Topic.SupervisorID">
+                            <option value=null>Choose your prefered supervisor here</option>
+                            @foreach (var staff in StaffManager.Users)
+                            {
+                                <option value=@staff.Id>@staff.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="addGroup">
+                        <label for="topicDescription">Topic Description/Summary</label>
+                        <textarea id="topicDescription" asp-for="Topic.TopicDescription"></textarea>
+                    </div>
+
+                    <div class="addGroup">
+                        <button type="submit" class="submitProposal">Add Topic</button>
+                    </div>
+                </form>
+            </div>
         </form>
     </div>
 }
@@ -90,8 +133,6 @@ else
                 <li>Degree Programme: @course.CourseName</li>
             }
         </ul>
-
-        <form method="post" action="">
             <div class="confirmDetailsContianer">
                 <input type="checkbox" class="detailsCorrect" name="confirmDetails">
                 <label for="confirmDetails">I confirm that these Details are correct,</label>
@@ -106,7 +147,7 @@ else
             <div class="body--proposal--Toggler">
                 <button class="TopicsBtn">Topics</button>
                 <span> / </span>
-                <button class="FormUploadBtn">Form Upload</button>
+                <button class="FormUploadBtn">Add your own</button>
             </div>
 
             @if (Model.TopicBasket.Count() > 0)
@@ -142,6 +183,12 @@ else
                     <div class="informationIcon">!</div>
                     <span>Drag and Drop the proposals to order them</span>
                 </div>
+            @if (!Model.Submitted)
+            {
+                <form method="post">
+                    <button type="submit" class="submitProposal" asp-page-handler="UndergradSubmit">Submit</button>
+                </form>
+            }
 
             }
             else
@@ -151,12 +198,33 @@ else
                 </ul>
             }
             <div class="formUploadContainer">
-                <span class="ProposalTitleFormUpload">Upload your completed proposal form: </span>
-                <input type="file" class="fileUpload" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword">
-            </div>
+            <form method="post">
+                <div class="addGroup">
+                    <label for="topicName">Topic Name</label>
+                    <input id="topicName" asp-for="Topic.TopicName" />
+                </div>
 
-            <button type="submit" class="submitProposal">Submit</button>
-        </form>
+                <div class="addGroup">
+                    <label for="TopicSupervisor">Topic Supervisor</label>
+                    <select asp-for="Topic.SupervisorID">
+                        <option value=null>Choose your prefered supervisor here</option>
+                        @foreach (var staff in StaffManager.Users)
+                        {
+                            <option value=@staff.Id>@staff.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="addGroup">
+                    <label for="topicDescription">Topic Description</label>
+                    <textarea id="topicDescription" asp-for="Topic.TopicDescription"></textarea>
+                </div>
+
+                <div class="addGroup">
+                    <button type="submit" class="submitProposal">Add Topic</button>
+                </div>
+            </form>
+            </div>
+            
     </div>
 }
 

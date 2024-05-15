@@ -1,29 +1,25 @@
-﻿function showForm(select) {
-    var selectedIndex = select.selectedIndex;
-    var topicDetails = document.getElementById("topicDetails");
-    var topicNameInput, topicDescriptionInput, supervisorIDInput, markerIDInput;
+﻿// Changes fields to topic of users choosing
+$(document).ready(function () {
+    // Event listener for dropdown change
+    $('#topicDropdown').change(function () {
+        // Get the selected option
+        var selectedOption = $(this).children('option:selected');
 
-    try {
-        topicNameInput = document.getElementById("topicName");
-        topicDescriptionInput = document.getElementById("topicDescription");
-        supervisorIDInput = document.getElementById("supervisorID");
-        markerIDInput = document.getElementById("markerID");
-    } catch (error) {
-        console.error("An error occurred while getting elements by ID:", error);
-        return;
-    }
+        // Retrieve data attributes
+        var topicName = selectedOption.data('name');
+        var topicDescription = selectedOption.data('description');
+        var supervisorID = selectedOption.data('supervisor');
+        var markerID = selectedOption.data('marker');
 
-    if (selectedIndex > 0) {
-        var selectedOption = select.options[selectedIndex];
-        topicNameInput.value = selectedOption.getAttribute("data-name");
-        topicDescriptionInput.value = selectedOption.getAttribute("data-description");
-        supervisorIDInput.value = selectedOption.getAttribute("data-supervisor");
-        markerIDInput.value = selectedOption.getAttribute("data-marker");
-        topicDetails.style.display = "block";
-    } else {
-        topicDetails.style.display = "none";
-    }
-}
+        // Set values to input fields
+        $('#topicName').val(topicName);
+        $('#topicDescription').val(topicDescription);
+        $('#topicSupervisor').val(supervisorID);
+        $('#topicMarker').val(markerID);
+
+        // Show the edit section if it's hidden
+        $('.editSection').show();
+    });
 
 $(document).ready(function () {
     // Assuming '#toggle' is the ID of the button that will be clicked to open and close the sidebar
@@ -31,6 +27,7 @@ $(document).ready(function () {
     const toggle = $('#toggle'); // Single button for toggling the sidebar
     const divider = $('.header--divider--desktop');
     const uocLogo = $('.header--uocLogo--standard');
+    const userAccount = $('.header--userAccount--standard');
 
     toggle.click(function () {
         // Check if sidebar is open by checking its left style property
@@ -40,12 +37,18 @@ $(document).ready(function () {
             toggle.css('left', '10px');
             divider.css('left', '90px');
             uocLogo.css('left', '110px');
+            uocLogo.show();
+            userAccount.css('opacity', '1');
+            userAccount.toggleClass('expanded');
         } else {
             // If it's closed, open it
             sidebar.css('left', '0');
             toggle.css('left', '316px');
             divider.css('left', '406px');
             uocLogo.css('left', '426px');
+            uocLogo.hide();
+            userAccount.css('opacity', '0.5');
+            userAccount.toggleClass('expanded');
         }
         // Toggle the button's appearance as well
         toggle.toggleClass('button-open button-close');
@@ -77,20 +80,48 @@ $(document).ready(function () {
     function filterFunction1() {
         document.getElementById("myDropdown").classList.toggle("show");
     }
-
-    function filterFunction() {
-        const input = document.getElementById("myInput");
-        const filter = input.value.toUpperCase();
-        const div = document.getElementById("myDropdown");
-        const a = div.getElementsByTagName("a");
-        for (let i = 0; i < a.length; i++) {
-            txtValue = a[i].textContent || a[i].innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                a[i].style.display = "";
-            } else {
-                a[i].style.display = "none";
-            }
-        }
-    }
+  
+    });
 
 });
+
+// Clears search filter and resets so all topics are viewable again
+function clearSearch() {
+    // Clear search input
+    document.querySelector('input[name="Search"]').value = '';
+
+    // Redirect to the index page to clear the search query
+    window.location.href = '/Index';
+}
+
+function showError(errorElement, errorMessage) {
+    document.querySelector("." + errorElement).classList.add("display-error");
+    document.querySelector("." + errorElement).innerHTML = errorMessage;
+}
+
+function showError(errorElement, errorMessage) {
+    let error = document.querySelector("." + errorElement);
+    error.textContent = errorMessage;
+    error.classList.add("display-error"); // Show error message
+}
+
+function clearError(errorElement) {
+    let error = document.querySelector("." + errorElement);
+    error.textContent = ""; // Clear error message
+    error.classList.remove("display-error"); // Hide error message
+}
+
+let form = document.forms["create-topic-form"];
+form.onsubmit = function (event) {
+    if (form.topicName.value === "") {
+        showError("topicName-error", "Please enter topic name");
+        event.preventDefault();
+    }
+
+    if (form.topicDescription.value === "") {
+        showError("topicDescription-error", "Please enter topic description!");
+        event.preventDefault();
+    }
+};
+
+

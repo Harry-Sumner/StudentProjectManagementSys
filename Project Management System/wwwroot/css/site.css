@@ -22,7 +22,7 @@ body {
     transition: 0.5s;
     background-color: #D9D9D9;
     border-right: 3px solid black;
-    z-index: 100;
+    z-index: 998;
 }
 
 .header--sidebar--header {
@@ -35,17 +35,20 @@ body {
 }
 
 .header--sidebar--userAccount {
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%; /* Vertically center */
+    left: 50%; /* Start at the center horizontally */
+    transform: translate(-50%, -50%); /* Adjust the starting point to be the center of the element */
     background-color: #393939;
     border: none;
     color: white;
-    padding: 6px;
+    padding: 6px 10px; /* Add horizontal padding */
     border-bottom: 2px solid red;
-    font-size: 1.3em;
+    font-size: 1.6vh;
+    text-align: center; /* Ensure text within the button is centered */
+    white-space: nowrap; /* Prevent the text from wrapping */
 }
+
 
 #sidebar ul {
     position: relative;
@@ -108,6 +111,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    z-index: 999;
 }
 
     .hamburgerButton:hover {
@@ -181,14 +185,16 @@ body {
     position: absolute;
     top: 50%;
     right: 60px;
+    min-height: 80px;
     display: flex;
     align-items: center;
     background-color: white;
     transform: translateY(-50%);
+    z-index: 1;
+    transition: all 0.3s ease-in-out;
 }
 
 .header--accountBtn {
-    width: 120px;
     height: 40px;
     border: none;
     outline: none;
@@ -218,18 +224,18 @@ body {
     font-size: 50px;
 }
 
-    .topicBtn:hover {
-        background-color: #D9D9D9;
-    }
+.topicBtn:hover {
+    background-color: #D9D9D9;
+}
 
-    .header--accountBtn:hover {
-        background-color: #D9D9D9;
-    }
+.header--accountBtn:hover {
+    background-color: #D9D9D9;
+}
 
 .dropdown-menu {
     display: none;
     position: absolute;
-    top: 40px;
+    top: 60px;
     left: 0;
     width: 100%;
     background-color: white;
@@ -241,17 +247,17 @@ body {
     flex-direction: column;
 }
 
-    .dropdown-menu a {
-        padding: 10px;
-        text-decoration: none;
-        color: black;
-        border-bottom: 1px solid black;
-        transition: all 0.2s;
-    }
+.dropdown-menu a {
+padding: 10px;
+text-decoration: none;
+color: black;
+border-bottom: 1px solid black;
+transition: all 0.2s;
+}
 
-        .dropdown-menu a:hover {
-            background-color: #D9D9D9;
-        }
+.dropdown-menu a:hover {
+    background-color: #D9D9D9;
+}
 
 footer {
     color: white;
@@ -271,20 +277,45 @@ footer {
 }
 
 .footer--ul {
+    position: relative;
+    left: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: flex;
-    flex-direction: row;
+    align-items: center;
+}
+
+.footer--ul a {
+    color: white;
+    text-decoration: none;
+    margin-right: 5px;
+    list-style-type: none;
+    padding-bottom: 3px;
 }
 
 .footer--li {
-    margin-right: 20px;
     list-style-type: none;
     text-decoration: underline;
+}
+
+.footer--li a {
+    text-decoration: none;
+    color: inherit;
+    padding: 0 10px;
+    font-size: 18px; 
+}
+
+.footer--divider {
+    font-size: 18px;
+    margin: 0 0px; 
+    color: #888888;
 }
 
 .footer--userAccount {
     position: relative;
     top: 30%;
-    margin-left: 900px;
+    margin-left: 200px;
     width: 200px;
     overflow: hidden;
 }
@@ -300,46 +331,6 @@ footer {
     color: black;
     border-bottom: 1px solid black;
     transition: all 0.2s;
-}
-
-/* Style the dropdown container */
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-/* Style the dropdown content */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-    /* Style the links inside the dropdown */
-    .dropdown-content a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-    }
-
-        /* Change color of dropdown links on hover */
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
-
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-/* Style the dropdown trigger */
-.drop-trigger {
-    cursor: pointer;
-    color: blue;
 }
 
 .container2 {
@@ -407,51 +398,6 @@ footer {
   right: 0;
 }
 
-.button2 {
-    display: inline-block;
-    border-radius: 4px;
-    background-color: #4E9FFE;
-    border: none;
-    color: #FFFFFF;
-    text-align: center;
-    font-size: 28px;
-    padding: 20px;
-    width: 200px;
-    transition: all 0.5s;
-    cursor: pointer;
-    margin: 6px;
-    float: left;
-}
-
-    .button2 span {
-        cursor: pointer;
-        display: inline-block;
-        position: relative;
-        transition: 0.5s;
-    }
-
-        .button2 span:after {
-            content: '\00bb';
-            position: absolute;
-            opacity: 0;
-            top: 0;
-            right: -20px;
-            transition: 0.5s;
-        }
-
-    .button2:hover span {
-        padding-right: 25px;
-    }
-
-        .button2:hover span:after {
-            opacity: 1;
-            right: 0;
-        }
-
-.col-md-4 {
-    text-align: center;
-}
-
 .editTable {
     padding: 100px;
     border-style: solid;
@@ -511,12 +457,12 @@ footer {
 /* Dropdown button */
 .dropbtn {
     background-color: gray;
-    color: white; /*Colour for heading*/
-    padding: 10px 20px; /*padding for dropdown*/
+    color: white;
+    padding: 10px 20px;
     font-size: 16px;
-    border: none; /*no border on dropdown */
-    cursor: pointer; /* when hovered over the cursor points*/
-    border-radius: 4px; /*makes the button more round*/
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
 }
 
 /* Dropdown content */
@@ -529,18 +475,18 @@ footer {
     z-index: 1;
 }
 
-    /* Links inside the dropdown */
-    .dropdown-content a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-    }
+/* Links inside the dropdown */
+.dropdown-content a {
+color: black;
+padding: 12px 16px;
+text-decoration: none;
+display: block;
+}
 
-        /* Change color of dropdown links on hover */
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
 
 /* Show the dropdown when hovering over the button */
 .dropdown:hover .dropdown-content {
@@ -557,3 +503,31 @@ footer {
     box-sizing: border-box;
 }
 
+/* This is the display error for not inputting the required fields on create topic page */
+.display-error {
+    display: block;
+    color: red;
+    font-size: 12px;
+    transform: translateY(-10px);
+    padding: 10px;
+    background-color: #fde8ec;
+    transition: transform 0.3s ease-out;
+}
+
+@media (max-width: 600px) {
+    .header--userAccount--standard.expanded {
+        right: -300px;
+    }
+
+    .header--userAccount--standard {
+        font-size: 0.8em;
+        right: 10px;
+    }
+}
+
+/* Button to upload file (image) */
+.uploadedImage {
+    padding: 2px;
+    margin: 5px;
+    margin-top: 270px;
+}

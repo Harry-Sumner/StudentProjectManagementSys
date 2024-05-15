@@ -9,16 +9,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Project_Management_System.Pages.AccountProfile
 {
-    [Authorize(Roles = "Student")]
-    public class StudentProfileModel : PageModel
+    [Authorize(Roles = "Co-ordinator")]
+    public class CoordinatorProfileModel : PageModel
     {
-        private readonly UserManager<SPMS_Student> _userManager;
+        private readonly UserManager<SPMS_User> _userManager;
         private readonly SignInManager<SPMS_User> _signInManager;
         private readonly SPMS_Context _db;
-        private readonly Project_Management_System.Data.SPMS_Context _context;
+        private readonly SPMS_Context _context;
 
-        public StudentProfileModel(Project_Management_System.Data.SPMS_Context context,
-            UserManager<SPMS_Student> userManager,
+
+        public CoordinatorProfileModel(SPMS_Context context,
+            UserManager<SPMS_User> userManager,
             SignInManager<SPMS_User> signInManager,
             SPMS_Context db)
         {
@@ -28,32 +29,21 @@ namespace Project_Management_System.Pages.AccountProfile
             _signInManager = signInManager;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public string Username { get; set; }
+        public IList<Division> Divisions { get; set; } = default!;
 
-        public IList<Course> Course { get; set; } = default!;
-
-
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
+        public IList<StaffDivision> StaffDivisions = default!;
+     
         [TempData]
         public string StatusMessage { get; set; }
 
-        private async Task LoadAsync(SPMS_Student user)
+        private async Task LoadAsync(SPMS_User user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+
             Username = userName;
         }
-
-
-       
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -65,18 +55,34 @@ namespace Project_Management_System.Pages.AccountProfile
 
             await LoadAsync(user);
 
-       
-
-            if (_context.Course != null)
+            if (_context.StaffDivision != null)
             {
-                Course = await _context.Course.ToListAsync();
+                StaffDivisions = await _context.StaffDivision.ToListAsync();
+            }
+
+            if (_context.Division != null)
+            {
+                Divisions = await _context.Division.ToListAsync();
             }
 
             return Page();
         }
 
-        [BindProperty]
-        public IFormFile UploadedImage { get; set; }
+        public async Task<IActionResult> OnPostDeleteAsync(int DivisionID) //takes id passed from button
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                var division = await _db.StaffDivision.FindAsync(user.Id, DivisionID);
+                if (division != null)
+                {
+                    _db.StaffDivision.Remove(division);
+                    await _db.SaveChangesAsync();
+                }
+            }
+            //save changes
+            return RedirectToPage(); //return to page
+        }
 
         public async Task<IActionResult> OnPostAsync(IFormFile uploadedImage)
         {
@@ -86,17 +92,22 @@ namespace Project_Management_System.Pages.AccountProfile
                 {
                     await uploadedImage.CopyToAsync(memoryStream);
                     byte[] imageBytes = memoryStream.ToArray();
-                    
+
                     // You can now use the byte array to store the image in your database
-                    
+
                     var user = await _userManager.GetUserAsync(User);
-                    user.ProfilePicture = imageBytes;
-                    await _userManager.UpdateAsync(user);
-                    await _signInManager.RefreshSignInAsync(user);
+                    if (user != null)
+                    {
+                        user.ProfilePicture = imageBytes;
+                        await _userManager.UpdateAsync(user);
+                        await _signInManager.RefreshSignInAsync(user);
+                    }
                 }
             }
-
             return RedirectToPage();
         }
+
     }
+
+
 }

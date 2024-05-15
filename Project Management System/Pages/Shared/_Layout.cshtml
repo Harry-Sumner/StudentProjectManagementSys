@@ -73,9 +73,9 @@
                             {
                                 <a asp-page="/AccountProfile/StudentProfile" class="dropdown-item">Profile</a>
                             }
-                            else 
+                            else if (User.IsInRole("Co-ordinator"))
                             {
-                                <a asp-area="Identity" asp-page="/Account/Manage/Index" class="dropdown-item">Profile</a>
+                                <a asp-page="/AccountProfile/CoordinatorProfile" class="dropdown-item">Profile</a>
                             }
                             <!--Form and anchor tag to logout-->
                             <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
@@ -106,19 +106,17 @@
     <footer class="footer--standard">
         <ul class="footer--ul">
             <!-- Add the hrefs to the portal and Moodle -->
-            <a href="https://apps.chester.ac.uk/v2apps/moodle">
-            <li class="footer--li">Moodle</li>
-            </a>
-            <a href="https://portal1.chester.ac.uk/Pages/default.aspx">
-            <li class="footer--li">Portal</li>
-            </a>
-            <a href="/crud/Index">
-            <li class="footer--li">Browse Topics</li>
-            </a>
-            <a href="/Shared/EditTopic">
-                <a asp-page="/crud/Edit" asp-route-id="4459">Edit Page</a>
-
-            </a>
+            <li class="footer--li">
+                <a href="https://apps.chester.ac.uk/v2apps/moodle">Moodle</a>
+            </li>
+            <li class="footer--divider">|</li>
+            <li class="footer--li">
+                <a href="https://portal1.chester.ac.uk/Pages/default.aspx">Portal</a>
+            </li>
+            <li class="footer--divider">|</li>
+            <li class="footer--li">
+                <a href="/Create">Add Topics</a>
+            </li>
         </ul>
    
 
@@ -131,7 +129,7 @@
                     @{
                         var user = await UserManager.GetUserAsync(User);
                     }
-                    @(user.UserName)<!-- Greet user by there name rather than username -->
+                    <u>@(user.UserName)</u><!-- Greet user by there name rather than username -->
                 </span>
                
             }

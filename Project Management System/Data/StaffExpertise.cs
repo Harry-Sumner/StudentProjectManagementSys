@@ -3,14 +3,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Project_Management_System.Data
 {
-    public class StaffInterest
+    public class StaffExpertise
     {
         [Required]
-        public int InterestID { get; set; }
+        public int ExpertiseID { get; set; }
         [Required]
         public required string StaffID { get; set; }
         [Required]
-        public required string Interest { get; set; }
+        public required string Expertise { get; set; }
 
     }
 }
