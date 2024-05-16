@@ -13,7 +13,9 @@ using System.Threading.Tasks;
 
 namespace Project_Management_System.Pages
 {
-    [Authorize]
+    // Created by Harry
+
+    [Authorize] // Users must be logged in to access the page.
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
@@ -34,10 +36,8 @@ namespace Project_Management_System.Pages
 
         // Properties to hold topics, courses, and search query
         public IList<Topic> Topic { get; set; } = new List<Topic>();
-
         public IList<Topic> Topics { get; set; } = default!;
         public IList<Course> Course { get; set; } = new List<Course>();
-
         public IList<CourseTopic> CourseTopic { get; set; } = default!;
         public string Search { get; set; } = default!;
 

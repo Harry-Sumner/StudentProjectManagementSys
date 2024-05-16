@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Project_Management_System.Data;
 using Project_Management_System.Migrations;
 
+// Created by Harry
+
 namespace Project_Management_System.Pages
 {
     [Authorize (Roles = "Student")]
@@ -14,8 +16,9 @@ namespace Project_Management_System.Pages
         public UndergraduateProposal proposal = new(); //Create new instance of Proposal
         private readonly SPMS_Context _db;
         private readonly UserManager<SPMS_Student> _UserManager;
-        private readonly SignInManager<SPMS_User> _signInManager;
         private readonly Project_Management_System.Data.SPMS_Context _context;
+
+        // Create variables and properties
 
         [BindProperty]
         public Topic Topic { get; set; } = default!;
@@ -35,17 +38,15 @@ namespace Project_Management_System.Pages
         public int Topic2 { get; set; }
         public int Topic3 { get; set; }
 
-        public Submit_ProposalModel(Project_Management_System.Data.SPMS_Context context, SPMS_Context db, UserManager<SPMS_Student> userManager, SignInManager<SPMS_User> signInManager)
+        public Submit_ProposalModel(Project_Management_System.Data.SPMS_Context context, SPMS_Context db, UserManager<SPMS_Student> userManager)
         {
             _context = context;
             _db = db;
             _UserManager = userManager;
-            _signInManager = signInManager;
-
         }
         public async Task OnGetAsync()
         {
-            var user = await _UserManager.GetUserAsync(User);
+            var user = await _UserManager.GetUserAsync(User); // Load in details from user
 
             if (user != null)
             {
@@ -56,6 +57,8 @@ namespace Project_Management_System.Pages
                 Course = _db.Course //select data from database
                 .FromSqlRaw("SELECT * FROM Course WHERE CourseID = {0}", user.CourseID)
                 .ToList();
+                
+                //Only select data that matches data contained in user
 
                 foreach(var course in Course)
                 {
@@ -65,40 +68,51 @@ namespace Project_Management_System.Pages
                     }
                 }
             }
+            // Checks if students course is postgraduate
 
             if (_context.Topic != null)
             {
                 Topics = await _context.Topic.ToListAsync();
-            }
+            } // Loads topics
 
-            UndergraduateProposals = _db.UndergraduateProposal //select data from database
-               .FromSqlRaw("SELECT * FROM UndergraduateProposal WHERE StudentID = {0}", user.Id)
-               .ToList();
-
-            if (UndergraduateProposals.Count() > 0)
+            if (Postgraduate && user != null)
             {
-                Submitted = true;
+                PostgraduateProposals = _db.PostgraduateProposal //select data from database
+              .FromSqlRaw("SELECT * FROM PostgraduateProposal WHERE StudentID = {0}", user.Id)
+              .ToList(); // Loads in proposal
+
+                if (PostgraduateProposals.Count() > 0)
+                {
+                    Submitted = true;
+                } //If submissions submitted is true
             }
-
-            PostgraduateProposals = _db.PostgraduateProposal //select data from database
-               .FromSqlRaw("SELECT * FROM PostgraduateProposal WHERE StudentID = {0}", user.Id)
-               .ToList();
-
-            if (PostgraduateProposals.Count() > 0)
+            else if(user != null)
             {
-                Submitted = true;
+                UndergraduateProposals = _db.UndergraduateProposal //select data from database
+              .FromSqlRaw("SELECT * FROM UndergraduateProposal WHERE StudentID = {0}", user.Id)
+              .ToList(); // Loads in proposals for specific student
+
+                if (UndergraduateProposals.Count() > 0)
+                {
+                    Submitted = true;
+                } // If there are submissions then mark as submitted
             }
         }
         public async Task<IActionResult> OnPostPostgradSubmitAsync()
-        {
+        { // Submit postgraduate module choices
 
             var user = await _UserManager.GetUserAsync(User);
-            TopicBasket = _db.TopicBasket //select data from database
+            if (user == null)
+            {
+                await OnGetAsync();
+                return Page();
+            }
+            TopicBasket = _db.TopicBasket //select data from database for students submissions
                 .FromSqlRaw("SELECT * FROM TopicBasket WHERE StudentID = {0}", user.Id)
                 .ToList();
 
             if(TopicBasket.Count() == 1)
-            {
+            { // Checks only one topic and then adds to database
                 PostgraduateProposal newPostTopic = new PostgraduateProposal
                 {
                     StudentID = user.Id,
@@ -109,20 +123,20 @@ namespace Project_Management_System.Pages
                 return RedirectToPage("/Index"); //return to home page
 
             }
-            return RedirectToPage();
+            return RedirectToPage(); // refreshs page if error
         }
 
         public async Task<IActionResult> OnPostAsync()
-        {
+        { // Submits create own topic
             if(Topic.TopicDescription == null || Topic.TopicName == null)
             {
                 await OnGetAsync();
-                return Page();
+                return Page(); // Checks that a topic has been entered
             }
             var currentTopic = _context.Topic.FromSqlRaw("SELECT * FROM Topic")
                 .OrderByDescending(b => b.TopicID)
                 .FirstOrDefault();
-            if (currentTopic != null)
+            if (currentTopic != null) 
             {
                 Topic.TopicID = currentTopic.TopicID + 1; //increment last id by 1
             }
@@ -132,8 +146,11 @@ namespace Project_Management_System.Pages
             }
             var user = await _UserManager.GetUserAsync(User);
 
-
-            Topic.StudentID = user.Id;
+            if(user == null)
+            {
+                return Page();
+            }
+            Topic.StudentID = user.Id; // Assigns student to topic
 
             _context.Topic.Add(Topic);
             await _context.SaveChangesAsync();
@@ -149,14 +166,19 @@ namespace Project_Management_System.Pages
             };
             _db.TopicBasket.Add(newTopic);
             await _db.SaveChangesAsync();
-
+            // Save topic to database
             return RedirectToPage("/Submit_Proposal");
         }
 
         public async Task<IActionResult> OnPostUndergradSubmitAsync()
         {
-
+            // Submits undergraduate proposals
             var user = await _UserManager.GetUserAsync(User);
+            if(user == null)
+            {
+                await OnGetAsync();
+                return Page();
+            }
             TopicBasket = _db.TopicBasket //select data from database
                 .FromSqlRaw("SELECT * FROM TopicBasket WHERE StudentID = {0}", user.Id)
                 .ToList();
@@ -164,7 +186,7 @@ namespace Project_Management_System.Pages
             if (TopicBasket.Count() == 3)
             {
                 UndergraduateProposal newTopic = new UndergraduateProposal
-                {
+                { // Stores new proposal
                     StudentID = user.Id,
                     TopicID1 = TopicBasket[0].TopicID,
                     TopicID2 = TopicBasket[1].TopicID,

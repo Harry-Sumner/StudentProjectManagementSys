@@ -38,14 +38,20 @@ namespace Project_Management_System.Pages
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            var user = await _UserManager.GetUserAsync(User);
+
+            if(user == null)
+            {
+                return Page();
+            }
+
             if (_context.Topic != null && User.IsInRole("Staff"))
             {
-                var user = await _UserManager.GetUserAsync(User);
+                
                 Topics = await _context.Topic.Where(i => string.IsNullOrEmpty(i.StudentID) && i.SupervisorID == user.Id).ToListAsync();
             }
             if (_context.Topic != null && User.IsInRole("Co-ordinator"))
             {
-                var user = await _UserManager.GetUserAsync(User);
                 Topics = await _context.Topic.Where(i => string.IsNullOrEmpty(i.StudentID)).ToListAsync();
             }
 /*
@@ -60,6 +66,12 @@ namespace Project_Management_System.Pages
         public async Task<IActionResult> OnPostAsync(string command)
         {
             var user = await _UserManager.GetUserAsync(User);
+
+            if(user == null)
+            {
+                return Page();
+            }
+
             if (command == "Delete")
             {
                 var topicToDelete = await _context.Topic.FindAsync(TopicID);
@@ -89,6 +101,8 @@ namespace Project_Management_System.Pages
                 CourseTopic = _db.CourseTopic //select data from database
                 .FromSqlRaw("SELECT * FROM CourseTopic WHERE TopicID = {0}", TopicID)
                 .ToList();
+
+                // Loads in all the tables that also may contain the topic that is about to be deleted
 
                 if (UndergraduateProposal != null)
                 {
@@ -129,6 +143,9 @@ namespace Project_Management_System.Pages
                     await _db.SaveChangesAsync();
 
                 }
+
+                //Iterates through tables where topic is stored and removes it
+
                 _context.Topic.Remove(topicToDelete);
                 await _context.SaveChangesAsync();
 

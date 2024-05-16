@@ -60,7 +60,7 @@
                     @(user.StudentNo)<!-- Greet user by there name rather than username -->
             </div>
         </div>
-
+        <!-- Iterates through all courses and displays course that matches logged in user -->
         @foreach (var course in Model.Course.Where(i => i.CourseID == user.CourseID))
         {
             <div class="body--profile--infoGroup">

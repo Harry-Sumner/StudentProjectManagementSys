@@ -63,7 +63,7 @@
 
                 <div class="body--profile--infoGroup">
                     <label for="department">Divisions</label>
-                    <!--For each loop here to display all departments, just use one li element-->
+                    <!--For each loop here to display all division, just use one li element-->
                     <ul class="departmentList">
                         @foreach (var divisionlink in Model.StaffDivisions.Where(i => i.StaffID == user.Id))
                         {
@@ -73,14 +73,14 @@
                                     <span>@Html.ValueFor(modelDivisions => division.DivisionName)</span>
                                     <form method="post">
                                         <button type="submit" class="removeDepartment" asp-route-DivisionID = "@division.DivisionID" asp-page-handler="Delete">
-                                            <div class="removeIcon"></div>
+                                            <div class="removeIcon"></div> 
                                         </button>
-                                    </form>
+                                    </form> @* Form that routes division to page handler which removes division *@
                                 </li>    
                             }
                         }
-                        <a asp-page="./DivisionAdd">
-                            <button class="editInfo"></button>
+                        <a asp-page="./DivisionAdd"> @* Link to page allowing staff to add more divisions *@
+                            <button class="editInfo"></button> 
                         </a>
                     </ul>
                 </div>
@@ -95,12 +95,12 @@
                     </div>
                 </div>
             </div>
-
+            <!-- Flexible boxes that expand containing interests, expertise and fields where StaffID = logged in staff -->
             <div class="body--profile--infoBoxes">
                 <div class="infoBox" id="expertise">
                     <a asp-page="./ExpertiseEdit">
                         <button class="editInfo"></button>
-                    </a>
+                    </a> <!-- Links to CRUD operations -->
                     <a asp-page="./InterestAdd">
                         <button class="AddInfo"></button>
                     </a>
@@ -117,7 +117,7 @@
                 <div class="infoBox" id="interests">
                     <a asp-page="./InterestEdit">
                         <button class="editInfo"></button>
-                    </a>
+                    </a>  <!-- Links to CRUD operations -->
                     <a asp-page="./InterestAdd">
                         <button class="AddInfo"></button>
                     </a>

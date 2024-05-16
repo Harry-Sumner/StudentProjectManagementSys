@@ -28,7 +28,7 @@ namespace Project_Management_System.Pages.AccountProfile
             _userManager = userManager;
             _signInManager = signInManager;
         }
-
+        // Creates properties and variables to be used.
         public IList<Division> Divisions { get; set; } = default!;
 
         public IList<StaffDivision> StaffDivisions = default!;
@@ -41,36 +41,36 @@ namespace Project_Management_System.Pages.AccountProfile
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await _userManager.GetUserAsync(User); // Get fields from logged in user
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
             if (_context.Topic != null)
-            {
+            { // Read in topics where there is a studentID assigned and no marker has been assigned (only display student proposals)
                 StudentProposals = await _context.Topic.Where(i => !string.IsNullOrEmpty(i.StudentID) && string.IsNullOrEmpty(i.MarkerID)).ToListAsync();
             }
             if (_context.Topic != null)
-            {
+            { // Read in list of topics from context
                 Topics = await _context.Topic.ToListAsync();
             }
             if (_context.UndergraduateProposal != null)
-            {
+            { // Read in undergrad proposal submissions
                 UndergraduateProposals = await _context.UndergraduateProposal.ToListAsync();
             }
             if (_context.PostgraduateProposal != null)
-            {
+            { // Read in postgrad proposal submissions
                 PostgraduateProposals = await _context.PostgraduateProposal.ToListAsync();
             }
 
             if (_context.StaffDivision != null)
-            {
+            { // Read in all staff and what division they are in
                 StaffDivisions = await _context.StaffDivision.ToListAsync();
             }
 
             if (_context.Division != null)
-            {
+            { // Read in division details
                 Divisions = await _context.Division.ToListAsync();
             }
 
@@ -78,7 +78,7 @@ namespace Project_Management_System.Pages.AccountProfile
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(int DivisionID) //takes id passed from button
-        {
+        { //Takes the divisionID of the division and locates the divion in the table then removes from database
             var user = await _userManager.GetUserAsync(User);
             if (user != null)
             {
@@ -95,21 +95,21 @@ namespace Project_Management_System.Pages.AccountProfile
 
         public async Task<IActionResult> OnPostAsync(IFormFile uploadedImage)
         {
-            if (uploadedImage != null && uploadedImage.Length > 0)
+            if (uploadedImage != null && uploadedImage.Length > 0) // Checks if image has been uploaded to form
             {
                 using (var memoryStream = new MemoryStream())
-                {
-                    await uploadedImage.CopyToAsync(memoryStream);
-                    byte[] imageBytes = memoryStream.ToArray();
+                { 
+                    await uploadedImage.CopyToAsync(memoryStream); 
+                    byte[] imageBytes = memoryStream.ToArray(); // Converts image to bytes
 
-                    // You can now use the byte array to store the image in your database
+                    // Finds user details and updates their profile picture in the database
 
                     var user = await _userManager.GetUserAsync(User);
                     if (user != null)
                     {
                         user.ProfilePicture = imageBytes;
                         await _userManager.UpdateAsync(user);
-                        await _signInManager.RefreshSignInAsync(user);
+                        await _signInManager.RefreshSignInAsync(user); // refresh user login to reflect changes
                     }
                 }
             }

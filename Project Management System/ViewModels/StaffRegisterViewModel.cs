@@ -1,7 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+// Created by Harry
+
 namespace Project_Management_System.ViewModels
 {
+    // Input view for Staff register
+
     public class StaffRegisterViewModel
     {
         [Required, DataType(DataType.Text), Display(Name = "First Name")]
@@ -9,9 +13,6 @@ namespace Project_Management_System.ViewModels
 
         [Required, DataType(DataType.Text), Display(Name = "Surname")]
         public required string Surname { get; set; }
-
-        /*[Required, DataType(DataType.Text), Display(Name = "School")]
-        public string School { get; set; }*/
 
         [Required, Display(Name = "Division")]
         public int DivisionID { get; set; }

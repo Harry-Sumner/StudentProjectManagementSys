@@ -14,6 +14,8 @@ using Project_Management_System.Migrations;
 
 namespace Project_Management_System.Pages.AccountProfile
 {
+    //Created by Harry
+
     [Authorize(Roles = "Staff, Co-ordinator")]
 
     public class DivisionAddModel : PageModel
@@ -35,7 +37,7 @@ namespace Project_Management_System.Pages.AccountProfile
             }
          
         }
-
+        // Declare variables and properties
         public IList<Division> Division { get; set; } = default!;
 
         public IList<StaffDivision> StaffDivisions { get; set; } = default!;
@@ -43,21 +45,26 @@ namespace Project_Management_System.Pages.AccountProfile
         [BindProperty]
         public StaffDivision StaffDivision { get; set; } = default!;
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
-        {
+        { //Clears any previos model errors
             ModelState.Clear();
             if (!ModelState.IsValid)
+            { // Error then return to page
+                await OnGetAsync();
+                return Page();
+            }
+
+            var user = await _UserManager.GetUserAsync(User); // Get fields of logged in user
+            // Only read in Division that staff is a member of
+            if(user == null)
             {
                 await OnGetAsync();
                 return Page();
             }
 
-            var user = await _UserManager.GetUserAsync(User);
-
             StaffDivisions = await _context.StaffDivision.FromSqlRaw("SELECT * FROM StaffDivision WHERE StaffID = {0}", user.Id).ToListAsync();
 
-            if(StaffDivisions != null)
+            if(StaffDivisions != null) //If they already belong to that division then do nothing
             {
                 foreach(var Division in StaffDivisions)
                 {
@@ -70,12 +77,12 @@ namespace Project_Management_System.Pages.AccountProfile
                 }
 
             }
-
+            // Allocate staffID
             StaffDivision.StaffID = user.Id;
 
-            _context.StaffDivision.Add(StaffDivision);
-            await _context.SaveChangesAsync();
-            if (User.IsInRole("Staff"))
+            _context.StaffDivision.Add(StaffDivision); //Allocate new divisionID
+            await _context.SaveChangesAsync(); //Save
+            if (User.IsInRole("Staff")) // Redirect to correct profile
             {
                 return RedirectToPage("/AccountProfile/StaffProfile");
             }

@@ -9,7 +9,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Project_Management_System.Pages.AccountProfile
 {
-    [Authorize(Roles = "Student")]
+    // Created by Harry
+
+    [Authorize(Roles = "Student")] //Only allow students to access page
     public class StudentProfileModel : PageModel
     {
         private readonly UserManager<SPMS_Student> _userManager;
@@ -28,10 +30,10 @@ namespace Project_Management_System.Pages.AccountProfile
             _signInManager = signInManager;
         }
 
-        public IList<Course> Course { get; set; } = default!;
+        public IList<Course> Course { get; set; } = default!; // Create property (list of courses)
 
         public async Task<IActionResult> OnGetAsync()
-        {
+        { // Finds details of logged in user and loads in a list of courses
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -47,26 +49,30 @@ namespace Project_Management_System.Pages.AccountProfile
         }
 
         [BindProperty]
-        public IFormFile UploadedImage { get; set; } = default!;
+        public IFormFile UploadedImage { get; set; } = default!; // Property to store uploaded file
 
         public async Task<IActionResult> OnPostAsync(IFormFile uploadedImage)
-        {
+        { // Checks if form has an image
             if (uploadedImage != null && uploadedImage.Length > 0)
             {
                 using (var memoryStream = new MemoryStream())
-                {
+                { // Converts image to byte
                     await uploadedImage.CopyToAsync(memoryStream);
                     byte[] imageBytes = memoryStream.ToArray();
                     
-                    // You can now use the byte array to store the image in your database
+                    // Byte is then stored in database table
                     
                     var user = await _userManager.GetUserAsync(User);
-                    user.ProfilePicture = imageBytes;
-                    await _userManager.UpdateAsync(user);
-                    await _signInManager.RefreshSignInAsync(user);
+                    if (user != null)
+                    {
+                        user.ProfilePicture = imageBytes;
+                        await _userManager.UpdateAsync(user);
+                        await _signInManager.RefreshSignInAsync(user);
+                    }
+                    
                 }
             }
-
+            //Reload page and user details
             return RedirectToPage();
         }
     }

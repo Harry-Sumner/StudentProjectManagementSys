@@ -44,6 +44,26 @@
                     <label for="topicDescription">Topic Description</label>
                     <textarea id="topicDescription" asp-for="Topic.TopicDescription"></textarea>
                 </div>
+                @if (User.IsInRole("Staff"))
+                {
+                    <div class="editGroup">
+                        <label for="topicMarker">Marker ID</label>
+                        <select asp-for="Topic.MarkerID">
+                            <option value= null>Choose marker here</option>
+                            @{
+                                var user = await StaffManager.GetUserAsync(User);
+                                if(user != null)
+                                {
+                                    foreach (var staff in StaffManager.Users.Where(i=> i.Id != user.Id))
+                                    {
+                                        <option value=@staff.Id>@staff.Name</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                }
+
                 @if (User.IsInRole("Co-ordinator"))
                 {
                     <div class="editGroup">

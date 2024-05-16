@@ -14,7 +14,7 @@
     var staff = await StaffManager.GetUserAsync(User);
 }
 
-<!--Front End layout Created by: George-->
+<!-- Front End layout Created by: George -->
 <!--Back End Implementation Created by: Harry & Scott-->
 
 <link rel="stylesheet" href="~/css/browseTopics.css">
@@ -23,7 +23,7 @@
 
 <body>
     <span class="body--browseTopics--title">Browse Topics</span>
-
+    <!-- Search bar text field -->
     <div class="body--search--container">
         <form method="get">
             <input type="text" name="Search" placeholder="Search for a topic">
@@ -31,7 +31,7 @@
                 <div class="submitIcon"></div>
             </button>
         </form>
-
+        <!-- Clear button that redirects to page -->
         <a asp-page = "/Index">
             <button class="clearbtn" type="button">Clear</button>
         </a>
@@ -42,18 +42,20 @@
         <button onclick="toggleDropdown()" class="dropbtn">Course</button>
         <div id="myDropdown" class="dropdown-content">
             <input type="text" placeholder="Search.." id="myInput" onkeyup="filterCourses()">
+            <!-- Drop down list for filter, searches through Courses list and displays name that routes courseID -->
             @foreach (var course in Model.Course)
             {
                 <form method="get">
                     <a asp-page-handler="get" asp-route-courseID="@course.CourseID">@course.CourseName</a>
                 </form>
             }
+            <!-- Form that when a course is selected it actions onget request -->
         </div>
     </div>
-
+    
     <div class="body--Topics--container">
         @if (User.IsInRole("Staff") | User.IsInRole("Co-ordinator"))
-        {
+        { <!-- Only allows staff and co-ordinators to have access to create page -->
             <div class="body--Topics--addTopicContainer">
                 <a asp-page="/Create">
                     <button>
@@ -63,11 +65,11 @@
             </div>
         }
         @foreach (var topic in Model.Topic)
-        {
+        { <!-- Iterates through the topics that are contained in Model.Topics and displays Name, Description and Name of Supervisor -->
             <div class="topicBox">
                 <span class="topicTitle">@topic.TopicName</span>
-                @if (topic.SupervisorID != null)
-                {
+                @if (topic.SupervisorID != null) 
+                { <!-- Finds the name of supervisor by passing in SupervisorID to staff manager then displays name if not null -->
                     var supervisor = await StaffManager.FindByIdAsync(topic.SupervisorID);
                     if (supervisor != null)
                     {
@@ -85,7 +87,7 @@
                         <div class="expandIcon"></div>
                     </button>
 
-                    <!--adjust the form as needed-->
+                    <!-- If the user is in the role student then this button will link to the addtopic handler (adds topic to basket)-->
                     @if (User.IsInRole("Student"))
                     {
                         <form method="post">
@@ -96,7 +98,7 @@
                     }
 
                     @if (User.IsInRole("Co-ordinator"))
-                    {
+                    { <!-- If user is a coordinator then display button that links to edit page on the topic -->
                         <form method="submit">
                             <button type="submit" class="addTopic" asp-page="/Edit">
                                 <div class="editIcon"></div>
@@ -105,7 +107,7 @@
                     }
 
                     @if (User.IsInRole("Staff") && staff.Id == topic.SupervisorID)
-                    {
+                    { <!-- If the user is staff then display the edit button but only on topics where they are supervisors on -->
                         <form method="submit">
                             <button type="submit" class="addTopic" asp-page="/Edit">
                                 <div class="editIcon"></div>
@@ -117,3 +119,5 @@
         }
     </div>
 </body>
+
+<!-- Code comments by Harry -->

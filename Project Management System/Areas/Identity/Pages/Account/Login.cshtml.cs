@@ -26,6 +26,7 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
         private readonly IEmailSender _emailSender;
         private readonly SPMS_Context _db;
 
+        // Declare and set properties and variables
 
         public StaffDivision StaffDivisions = new();
 
@@ -57,13 +58,11 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
         public StudentRegisterViewModel RegisterInput { get; set; }
 
         [BindProperty]
-        public StaffRegisterViewModel StaffRegisterInput { get; set; }
+        public StaffRegisterViewModel StaffRegisterInput { get; set; } // Import models
 
         public IList<Division> Division { get; set; } = default!;
 
         public IList<Course> Course { get; set; } = default!;
-
-        public IList<School> School { get; set; } = default!;
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
@@ -73,7 +72,7 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
         public string ErrorMessage { get; set; }
 
         public void NewDivision(string StaffID, int DivisionID)
-        {
+        { //Allocates staff their division
             StaffDivisions.StaffID = StaffID;
             StaffDivisions.DivisionID = DivisionID; // links user account to staff account
             _db.StaffDivision.Add(StaffDivisions);
@@ -88,15 +87,12 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
                 Division = await _context.Division.ToListAsync();
             }
 
-            if (_context.School != null)
-            {
-                School = await _context.School.ToListAsync();
-            }
-
             if (_context.Course != null)
             {
                 Course = await _context.Course.ToListAsync();
             }
+
+            // Reads in course and division
 
             returnUrl ??= Url.Content("~/");
 
@@ -164,7 +160,7 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = CreateStudent();
+                var user = CreateStudent(); // Run function
 
                 await _userStore.SetUserNameAsync(user, RegisterInput.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, RegisterInput.Email, CancellationToken.None);
@@ -172,13 +168,13 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
                 user.Surname = RegisterInput.Surname;
                 user.StudentNo = RegisterInput.StudentNo;
                 user.CourseID = RegisterInput.CourseID;
-                var result = await _userManager.CreateAsync(user, RegisterInput.Password);
+                var result = await _userManager.CreateAsync(user, RegisterInput.Password); // Store input from form
 
 
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-                    await _userManager.AddToRoleAsync(user, "Student");
+                    await _userManager.AddToRoleAsync(user, "Student"); // Assign role
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -211,14 +207,14 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostStaffRegisterAsync(string returnUrl = null)
         {
-            ModelState.Clear();
+            ModelState.Clear(); // Clear previous errors
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             if (ModelState.IsValid)
             {
                 var user = CreateStaff();
-
+                // Create structure and store details from form
                 await _userStore.SetUserNameAsync(user, StaffRegisterInput.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, StaffRegisterInput.Email, CancellationToken.None);
                 user.FirstName = StaffRegisterInput.FirstName;
@@ -230,7 +226,6 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-
                     if (StaffRegisterInput.ProjectCoordinator)
                     {
                         await _userManager.AddToRoleAsync(user, "Co-ordinator");
@@ -238,12 +233,12 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
                     else
                     {
                         await _userManager.AddToRoleAsync(user, "Staff");
-                    }
+                    } // Assign roles
                     
-
+                    // Create user and account
 
                     var userId = await _userManager.GetUserIdAsync(user);
-                    NewDivision(userId, StaffRegisterInput.DivisionID);
+                    NewDivision(userId, StaffRegisterInput.DivisionID); // Assign division
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
@@ -267,7 +262,6 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
                     }
                 }
             }
-
             await OnGetAsync();
             // If we got this far, something failed, redisplay form
             return Page();
@@ -285,6 +279,7 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
                     $"Ensure that '{nameof(SPMS_Student)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
+            //Create student account structure
         }
 
         private SPMS_Staff CreateStaff()
@@ -299,6 +294,7 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
                     $"Ensure that '{nameof(SPMS_Staff)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
+            // Create the staff account structure
         }
 
         private IUserEmailStore<SPMS_User> GetEmailStore()
@@ -309,7 +305,6 @@ namespace Project_Management_System.Areas.Identity.Pages.Account
             }
             return (IUserEmailStore<SPMS_User>)_userStore;
         }
-
-
+        //Store email
     }
 }

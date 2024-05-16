@@ -9,7 +9,9 @@ using Project_Management_System.Migrations;
 
 namespace Project_Management_System.Pages.AccountProfile
 {
-    [Authorize(Roles = "Staff")]
+    // Made by Harry
+
+    [Authorize(Roles = "Staff")] // Only allow staff to view page
     public class InterestEditModel : PageModel
     {
         private readonly UserManager<SPMS_Staff> _UserManager;
@@ -23,6 +25,8 @@ namespace Project_Management_System.Pages.AccountProfile
             _db = db;
         }
 
+        // Declare variables and properties
+
         [BindProperty]
         public StaffInterest StaffInterest { get; set; } = default!;
 
@@ -33,9 +37,15 @@ namespace Project_Management_System.Pages.AccountProfile
 
         public async Task<IActionResult> OnGetAsync()
         {
+            //Load details for logged in user
             var user = await _UserManager.GetUserAsync(User);
 
-            var interest = await _context.StaffInterest.FirstOrDefaultAsync();
+            if (user == null)
+            {
+                return Page();
+            }
+
+            var interest = await _context.StaffInterest.FirstOrDefaultAsync(); //reads all interest from context
             if (interest == null)
             {
                 return Page();
@@ -44,12 +54,12 @@ namespace Project_Management_System.Pages.AccountProfile
 
             StaffInterests = await _context.StaffInterest.FromSqlRaw("SELECT * FROM StaffInterest WHERE StaffID = {0}", user.Id).ToListAsync();
 
-            return Page();
+            return Page(); // Only loads in interests belonging to logged in user
         }
 
         public async Task<IActionResult> OnPostAsync(string command)
         {
-            if (command == "Delete")
+            if (command == "Delete") // If delete button is clicked find the interest in table and then remove
             {
                 var interestToDelete = await _context.StaffInterest.FindAsync(InterestID);
 
@@ -63,7 +73,7 @@ namespace Project_Management_System.Pages.AccountProfile
 
                 return RedirectToPage("/AccountProfile/StaffProfile");
             }
-            else if (command == "Save")
+            else if (command == "Save") // Save any change
             {
                 await _context.SaveChangesAsync();
                 return RedirectToPage("/AccountProfile/StaffProfile");
@@ -101,7 +111,7 @@ namespace Project_Management_System.Pages.AccountProfile
 
 
 
-        private bool InterestExists(int id)
+        private bool InterestExists(int id) // Flag to check interest exists
         {
             return _context.StaffInterest.Any(e => e.InterestID == id);
         }

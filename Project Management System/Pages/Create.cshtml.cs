@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using NuGet.ContentModel;
 using Project_Management_System.Data;
 
 namespace Project_Management_System.Pages
@@ -66,7 +60,7 @@ namespace Project_Management_System.Pages
 
             var user = await _UserManager.GetUserAsync(User);
 
-            if (User.IsInRole("Staff"))
+            if (User.IsInRole("Staff") && user != null)
             {
                 Topic.SupervisorID = user.Id;
             }

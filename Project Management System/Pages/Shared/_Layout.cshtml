@@ -1,10 +1,13 @@
-﻿@inject SignInManager<SPMS_User> SignInManager
+﻿
+<!-- Inject sign in and user manager dependancies -->
+@inject SignInManager<SPMS_User> SignInManager
 @inject UserManager<SPMS_User> UserManager
 
 @using Microsoft.AspNetCore.Identity
 @using Project_Management_System.Data
 
-
+<!--Front End layout Created by: George-->
+<!--Back End Implementation Created by: Harry -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +15,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Project_Management_System</title>
+    <!-- Links to stylesheets and JavaScript -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
@@ -30,6 +34,7 @@
                     <li>Home</li>
                 </a>
             </div>
+            @*  Checks if user is in role student. If they are they then the submit proposal link will show.  *@
             @if (User.IsInRole("Student")){
                 <div class="header--sidebar--section">
                     <a asp-area="" asp-page="/Submit_Proposal">
@@ -65,6 +70,10 @@
                             @(user.Name)<!-- Greet user by there name rather than username -->
                         </button>
                         <div class="dropdown-menu" style="display: none;">
+                            <!-- 
+                                This section of code will check roles of users and will send them to the correct profile
+                                based on the role they are in.
+                            -->
                             @if (User.IsInRole("Staff"))
                             {
                                 <a asp-page="/AccountProfile/StaffProfile" class="dropdown-item">Profile</a>
@@ -91,7 +100,7 @@
                 else
                 {
                     <div class="header--userAccount--standard">
-                        <!-- Hidden account button, show as needed -->
+                        <!-- Hidden account button, show as needed. Only shows when no user is logged in -->
                         <a asp-area="Identity" asp-page="/Account/Login" class="header--accountBtn">Login</a>
                     </div>
 

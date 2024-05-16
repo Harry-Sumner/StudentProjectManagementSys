@@ -1,6 +1,10 @@
 ﻿@page
 @model LoginModel
 
+<!--Front End layout Created by: George-->
+<!--Back End Implementation Created by: Harry -->
+<!-- Error messaging by Scott -->
+
 @{
     ViewData["Title"] = "Log in";
 }
@@ -20,13 +24,13 @@
     <link rel="stylesheet" href="~/css/loginRegister.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="~/js/loginRegisterToggler.js"></script>
-</head>
+</head> <!-- Links to stylesheets and javaScript -->
 
 <div class="body--login--container">
     <div class="body--login--uocContainer">
         <div class="body--login--uocLogo"></div>
     </div>
-
+    <!-- Form for user login -->
     <form class="loginForm" method="post">
         @{
             ModelState.Clear();
@@ -41,9 +45,9 @@
             <label asp-for="LoginInput.RememberMe" class="form-label">
                 <input class="form-check-input" asp-for="LoginInput.RememberMe" />
                 @Html.DisplayNameFor(m => m.LoginInput.RememberMe)
-            </label>
+            </label> 
         </div>
-        <a asp-page="./ForgotPassword" id="forgot-password">Forgotten your username or password?</a>
+        <a asp-page="./ForgotPassword" id="forgot-password">Forgotten your username or password?</a> <!-- Links to forgot password -->
 
         <button id="login-submit" type="submit" class="body--login--submitButton" asp-page-handler="Login">Login</button>
         <div asp-validation-summary="ModelOnly" class="body--register--errorMessage"></div>
@@ -52,7 +56,7 @@
 
     <div class="body--register--staffToggler" style="display: none;">
         <button class="studentBtn">Student</button>
-        <span> / </span>
+        <span> / </span> <!-- Toggle between staff / student registration page -->
         <button class="staffBtn">Staff</button>
     </div>
 
@@ -73,7 +77,7 @@
         <span asp-validation-for="RegisterInput.Email" class="error-message"></span> <!-- Display error message for email -->
 
         <select asp-for="RegisterInput.CourseID" required>
-            <option value="null"></option>
+            <option value= null></option><!-- Show list of courses -->
             @foreach (var course in Model.Course)
             {
                 <option value="@course.CourseID">@Html.ValueFor(modelDivision => course.CourseName)</option>
@@ -91,14 +95,14 @@
         <div asp-validation-summary="ModelOnly" class="body--register--errorMessage"></div>
     </form>
 
-
+    <!-- Register page for students -->
     <form class="registerFormStaff" method="post" style="display: none;">
         <input asp-for="StaffRegisterInput.FirstName" placeholder="Your first Name" required>
         <input asp-for="StaffRegisterInput.Surname" placeholder="Your last Name" required>
         <input asp-for="StaffRegisterInput.Email" placeholder="name@example.com" required>
         <p>If you belong to multiple divisions, please add one for now then head to the staff profile page to add more.</p>
         <select asp-for="StaffRegisterInput.DivisionID" required>
-            <option value=0></option>
+            <option value= null></option> <!-- Show list of divisions for staff to choose -->
             @foreach (var division in Model.Division)
             {
                 <option value="@division.DivisionID">@Html.ValueFor(modelDivision => division.DivisionName)</option>
@@ -116,7 +120,7 @@
         <button id="StaffRegisterSubmit" type="submit" class="body--register--submitButton" asp-page-handler="StaffRegister">Register</button>
         <div asp-validation-summary="ModelOnly" class="body--register--errorMessage"></div>
     </form>
-
+    <!-- Lets users switch between login and register on same page -->
     <div class="body--register--newUserToggler">
         <span class="body--login--newUser">New here? Register below: </span>
         <button class="body--register--inputToggle">Register</button>
@@ -126,13 +130,3 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
-
-
-@* <select asp-for="StaffRegisterInput.School" name="newSchool" id="newSchool" placeholder="Select your School..." required>
-
-    <option value="null"></option>
-    @foreach (var school in Model.School)
-    {
-    <option value="@Html.ValueFor(modelSchool => school.SchoolID)">@Html.ValueFor(modelSchool => school.SchoolName)</option>
-    }
-    </select> *@

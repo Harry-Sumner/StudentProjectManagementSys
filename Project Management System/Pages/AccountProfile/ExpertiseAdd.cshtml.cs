@@ -13,6 +13,9 @@ using Project_Management_System.Data;
 
 namespace Project_Management_System.Pages.AccountProfile
 {
+
+    // Created by Harry
+
     [Authorize(Roles = "Staff")]
 
     public class ExpertiseAddModel : PageModel
@@ -32,16 +35,17 @@ namespace Project_Management_System.Pages.AccountProfile
         }
 
         [BindProperty]
-        public StaffExpertise StaffExpertise { get; set; } = default!;
+        public StaffExpertise StaffExpertise { get; set; } = default!; // Declare property
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            ModelState.Clear();
-            if (!ModelState.IsValid)
+            ModelState.Clear(); // Clear previous form errors 
+            if (!ModelState.IsValid) // Return to page if errors
             {
                 return Page();
             }
+
+            // Checks what currentID is at and increments by 1 or set as 1 if nothing there
             var currentExpertise = _context.StaffExpertise.FromSqlRaw("SELECT * FROM StaffExpertise")
                 .OrderByDescending(b => b.ExpertiseID)
                 .FirstOrDefault();
@@ -53,8 +57,14 @@ namespace Project_Management_System.Pages.AccountProfile
             {
                 StaffExpertise.ExpertiseID = 1;
             }
-
+            // Assign new expertise and save changes
             var user = await _UserManager.GetUserAsync(User);
+            
+            if(user == null)
+            {
+                return Page();
+            }
+
             StaffExpertise.StaffID = user.Id;
 
             _context.StaffExpertise.Add(StaffExpertise);

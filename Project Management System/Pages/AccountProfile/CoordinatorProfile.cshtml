@@ -66,12 +66,14 @@
                             </li>
                         }
                     }
+                    @* Links to page allowing user to add division *@
                     <a asp-page="./DivisionAdd">
                         <button class="editInfo"></button>
                     </a>
                 </ul>
             </div>
-
+            
+            @* Display email of user *@
             <div class="body--profile--infoGroup">
                 <label for="email">Email</label>
                 <div class="staffInfoBox">
@@ -80,7 +82,7 @@
             </div>
         </div>
 
-        <!--Just modify the spans inside the "contentContainer" to suit your needs-->
+       
         <div class="body--coordinator--infoBoxes">
             
             <div class="infoBoxCoordinator">
@@ -89,11 +91,13 @@
                     <div class="expandIcon"></div>
                 </button>
                 <div class="coordinatorContent">
+                    @* Iterates through list of proposals from students and displays name, student number and description *@
                     @foreach(var topic in Model.StudentProposals)
                     {
                         <div class="contentContainer">
                             <span class="contentTitle">@topic.TopicName</span>
                             <span class="contentDescription">@topic.TopicDescription</span>
+                            @* Links to page allowing user to allocate supervior / marker *@
                             <a asp-page="./AllocateStaff" asp-route-id="@topic.TopicID">Allocate Supervisor / Marker</a>
                         </div>
                     }
@@ -108,6 +112,7 @@
                     <div class="expandIcon"></div>
                 </button>
                 <div class="coordinatorContent">
+                    @* Iterates through list of proposals from postgraduates and displays student number, title and description *@
                     @foreach (var proposal in Model.PostgraduateProposals)
                     {
                         @foreach (var topic in Model.Topics.Where(i => i.TopicID == proposal.TopicID))
@@ -138,7 +143,7 @@
                 <div class="coordinatorContent">
                     <div class="contentContainer">
                         @foreach (var proposal in Model.UndergraduateProposals)
-                        {
+                        { @* Iterates through list of proposals from undergraduates and displays student number and title of each three topics *@
                                 <div class="contentContainer">
                                     <span class="contentTitle">
 

@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Project_Management_System.Data;
 
+// Created by Harry
+
 namespace Project_Management_System.Pages.AccountProfile
 {
     public class AllocateStaffModel : PageModel
@@ -19,43 +21,45 @@ namespace Project_Management_System.Pages.AccountProfile
             _context = context;
         }
 
+        //Creates property
+
         [BindProperty]
         public Topic Topic { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int? id) //Reads in topic where TopicID = id passed to from previous page
         {
             if (id == null)
             {
                 return NotFound();
-            }
+            } 
 
             var topic =  await _context.Topic.FirstOrDefaultAsync(m => m.TopicID == id);
             if (topic == null)
             {
                 return NotFound();
             }
-            Topic = topic;
+            Topic = topic; // Allocate Topic
             return Page();
         }
         public async Task<IActionResult> OnPostAsync()
         {
-            var topicToUpdate = await _context.Topic.FindAsync(Topic.TopicID);
+            var topicToUpdate = await _context.Topic.FindAsync(Topic.TopicID); //Find the topic that matches the ID
 
             if (topicToUpdate == null)
             {
                 return Page();
-            }
+            } //Return if no topic found
 
-            if (Topic.SupervisorID != null)
+            if (Topic.SupervisorID != null) //If user has given Supervisor a value then update variable
             {
                 topicToUpdate.SupervisorID = Topic.SupervisorID;
             }
-            if (Topic.MarkerID != null)
+            if (Topic.MarkerID != null) //If user has given Marker a value then update variable
             {
                 topicToUpdate.MarkerID = Topic.MarkerID;
             }
 
-            try
+            try //Save changes to context
             {
                 await _context.SaveChangesAsync();
             }
@@ -70,10 +74,11 @@ namespace Project_Management_System.Pages.AccountProfile
                     throw;
                 }
             }
-
+            // Once complete send back to profile
             return RedirectToPage("/AccountProfile/CoordinatorProfile");
         }
 
+        // Flag that checks if topic exists
         private bool TopicExists(int id)
         {
             return _context.Topic.Any(e => e.TopicID == id);

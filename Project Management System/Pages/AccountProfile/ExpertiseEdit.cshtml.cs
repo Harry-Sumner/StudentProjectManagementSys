@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Project_Management_System.Data;
 
+// Created by Harry & Scott
 
 namespace Project_Management_System.Pages.AccountProfile
 {
@@ -23,8 +24,8 @@ namespace Project_Management_System.Pages.AccountProfile
             _db = db;
         }
 
-        [BindProperty]
-        public StaffExpertise StaffExpertise { get; set; }
+        [BindProperty] //Declare properties and variables
+        public StaffExpertise StaffExpertise { get; set; } = default!;
 
         [BindProperty]
         public int ExpertiseID { get; set; }
@@ -32,16 +33,20 @@ namespace Project_Management_System.Pages.AccountProfile
         public IList<StaffExpertise> StaffExpertises { get; set; } = new List<StaffExpertise>();
 
         public async Task<IActionResult> OnGetAsync()
-        {
+        { //Load in current logged in user details
             var user = await _UserManager.GetUserAsync(User);
-
+            if (user == null)
+            {
+                return Page();
+            }
+            // Reads in list of all experise
             var expertise = await _context.StaffExpertise.FirstOrDefaultAsync();
             if (expertise == null)
             {
                 return Page();
             }
             StaffExpertise = expertise;
-
+            // Loads in expertise of only logged in user
             StaffExpertises = await _context.StaffExpertise.FromSqlRaw("SELECT * FROM StaffExpertise WHERE StaffID = {0}", user.Id).ToListAsync();
 
             return Page();
@@ -49,7 +54,7 @@ namespace Project_Management_System.Pages.AccountProfile
 
         public async Task<IActionResult> OnPostAsync(string command)
         {
-            if (command == "Delete")
+            if (command == "Delete") //If delete then remove the Expertise from context and save changes.
             {
                 var expertiseToDelete = await _context.StaffExpertise.FindAsync(ExpertiseID);
 
@@ -63,7 +68,7 @@ namespace Project_Management_System.Pages.AccountProfile
 
                 return RedirectToPage("/AccountProfile/StaffProfile");
             }
-            else if (command == "Save")
+            else if (command == "Save") // If save then save changes
             {
                 await _context.SaveChangesAsync();
                 return RedirectToPage("/AccountProfile/StaffProfile");

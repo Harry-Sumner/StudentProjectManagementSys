@@ -18,14 +18,14 @@
 
 <body>
     <div class="body--edit--container">
+        <!-- Form that allows staff to delete and edit their interest -->
         <form method="post">
             <span class="editTitle">Edit an Interest</span>
-
             <div class="editGroup">
                 <label asp-for="InterestID"></label>
                 <select id="topicDropdown" asp-for="InterestID">
                     <option value="">-- Select Interest --</option>
-                   
+                   @* Iterates through each interest in the IList and displays interest in drop down list *@
                     @foreach (var interest in Model.StaffInterests)
                     {
                         <option value="@interest.InterestID" data-interest="@interest.Interest">@interest.Interest</option>
@@ -39,7 +39,7 @@
                     <label for="topicName">Interest</label>
                     <input id="topicName" asp-for="StaffInterest.Interest" />
                 </div>
-                <div class="editButtonsGroup">
+                <div class="editButtonsGroup"> <!-- Buttons to edit and delete interest -->
                     <input type="submit" value="Save" class="saveBtn" />
                     <input type="submit" value="Delete" name="command" class="DeleteBtn" />
                 </div>

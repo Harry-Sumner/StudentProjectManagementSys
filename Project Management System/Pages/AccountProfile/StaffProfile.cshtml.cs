@@ -9,7 +9,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Project_Management_System.Pages.AccountProfile
 {
-    [Authorize(Roles = "Staff")]
+    //Made by Harry
+
+    [Authorize(Roles = "Staff")] //Only allow staff to view page
     public class StaffProfileModel : PageModel
     {
         private readonly UserManager<SPMS_User> _userManager;
@@ -27,6 +29,8 @@ namespace Project_Management_System.Pages.AccountProfile
             _userManager = userManager;
             _signInManager = signInManager;
         }
+        
+        // Declare and assign properties and variables
 
         public IList<Division> Divisions { get; set; } = default!;
         public IList<Topic> Topic { get; set; } = default!;
@@ -36,7 +40,7 @@ namespace Project_Management_System.Pages.AccountProfile
         public IList<StaffExpertise> StaffExpertise { get; private set; } = default!;
 
         public async Task<IActionResult> OnGetAsync()
-        {
+        { // Read in details of usdr
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -53,11 +57,13 @@ namespace Project_Management_System.Pages.AccountProfile
                 Divisions = await _context.Division.ToListAsync();
             }
 
+            // Read in list of division and staffDivision
+
             Topic = _db.Topic //select data from database
                 .FromSqlRaw("SELECT * FROM Topic WHERE SupervisorID = {0}", user.Id)
                 .ToList();
 
-            Topic = Topic.Where(i=> i.MarkerID != null).ToList();
+            Topic = Topic.Where(i=> i.MarkerID != null).ToList(); // Only load in projects that have been fully assigned
 
             StaffInterest = _db.StaffInterest //select data from database
                 .FromSqlRaw("SELECT * FROM StaffInterest WHERE StaffID = {0}", user.Id)
@@ -67,11 +73,13 @@ namespace Project_Management_System.Pages.AccountProfile
                 .FromSqlRaw("SELECT * FROM StaffExpertise WHERE StaffID = {0}", user.Id)
                 .ToList();
 
+            // Only load in topics, interests and expertise where staffID = logged in user
+
             return Page();
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(int DivisionID) //takes id passed from button
-        {
+        { // Finds division given the ID of the staff and removes from database
             var user = await _userManager.GetUserAsync(User);
             if (user != null)
             {
@@ -89,13 +97,13 @@ namespace Project_Management_System.Pages.AccountProfile
         public async Task<IActionResult> OnPostAsync(IFormFile uploadedImage)
         {
             if (uploadedImage != null && uploadedImage.Length > 0)
-            {
+            { // Gets image from form and converts to bytes
                 using (var memoryStream = new MemoryStream())
                 {
                     await uploadedImage.CopyToAsync(memoryStream);
                     byte[] imageBytes = memoryStream.ToArray();
 
-                    // You can now use the byte array to store the image in your database
+                    // Save to database as a byte
 
                     var user = await _userManager.GetUserAsync(User);
                     if (user != null)
@@ -106,8 +114,7 @@ namespace Project_Management_System.Pages.AccountProfile
                     }
                 }
             }
-
-            return RedirectToPage();
+            return RedirectToPage(); // Reload user profile and page
         }
     }
 }
