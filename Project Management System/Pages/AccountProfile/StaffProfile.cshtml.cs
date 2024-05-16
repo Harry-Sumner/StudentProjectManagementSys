@@ -57,6 +57,8 @@ namespace Project_Management_System.Pages.AccountProfile
                 .FromSqlRaw("SELECT * FROM Topic WHERE SupervisorID = {0}", user.Id)
                 .ToList();
 
+            Topic = Topic.Where(i=> i.MarkerID != null).ToList();
+
             StaffInterest = _db.StaffInterest //select data from database
                 .FromSqlRaw("SELECT * FROM StaffInterest WHERE StaffID = {0}", user.Id)
                 .ToList();
