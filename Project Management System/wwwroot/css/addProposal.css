@@ -8,7 +8,7 @@ body {
     top: 180px;
     left: 50%;
     width: 90%;
-    min-height: 300px;
+    min-height: 880px;
     transform: translateX(-50%);
     border: 1px solid #ccc;
     background-color: #F0F0F0;
@@ -72,5 +72,5 @@ body {
 }
 
 footer {
-    top: 900px !important;
+    top: 1200px !important;
 }
