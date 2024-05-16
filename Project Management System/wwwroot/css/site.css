@@ -1,3 +1,6 @@
+/* Following CSS Created by: George */
+
+
 body {
     font-family: 'Inter', sans-serif;
 }
@@ -333,6 +336,8 @@ footer {
     transition: all 0.2s;
 }
 
+/* Following CSS Created by: Scott */
+
 .container2 {
     background-color: #F0F0F0;
 }
@@ -355,7 +360,6 @@ footer {
 .pb-3 {
     padding: 100px;
 }
-
 
 .button {
     display: inline-block;

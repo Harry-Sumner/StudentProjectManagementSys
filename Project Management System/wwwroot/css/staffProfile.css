@@ -1,4 +1,6 @@
-﻿.body--staffProfile--title {
+﻿/* Following CSS Created by: George */
+
+.body--staffProfile--title {
     position: absolute;
     top: 120px;
     left: 25px;
@@ -47,7 +49,8 @@
     height: 100%;
     width: 80%;
     background-image: url(../images/demoIMG.svg);
-    background-size: scale(0.8);
+    background-size: 
+    scale(0.8);
     background-position: center;
     background-repeat: no-repeat;
 }
