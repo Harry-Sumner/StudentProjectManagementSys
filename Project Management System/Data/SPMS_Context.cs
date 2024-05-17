@@ -26,7 +26,7 @@ namespace Project_Management_System.Data
             modelBuilder.Entity<UndergraduateProposal>().HasKey(t => new { t.StudentID });
             modelBuilder.Entity<StaffInterest>().HasKey(t => new { t.InterestID });
             modelBuilder.Entity<StaffExpertise>().HasKey(t => new { t.ExpertiseID });
-        }
+        } // Set primary keys for each table and create a table for staff and student users
 
         public DbSet<SPMS_User> SPMS_Account { get; set; }
         public DbSet<SPMS_Student> Student { get; set; }
@@ -42,5 +42,5 @@ namespace Project_Management_System.Data
         public DbSet<UndergraduateProposal> UndergraduateProposal { get; set; }
         public DbSet<PostgraduateProposal> PostgraduateProposal { get; set; }
         public DbSet<TopicBasket> TopicBasket { get; set; } = default!;
-    }
+    } // Connect database tables with data classes
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
+// Sets up additional fields for users and seperates into Student and Staff using inheritance
 
 namespace Project_Management_System.Data
 {

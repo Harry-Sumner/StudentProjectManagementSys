@@ -14,10 +14,10 @@ builder.Services.AddDefaultIdentity<SPMS_User>(options => options.SignIn.Require
     .AddRoles<IdentityRole>()
     .AddDefaultUI()
     .AddDefaultTokenProviders()
-    .AddEntityFrameworkStores<SPMS_Context>();
+    .AddEntityFrameworkStores<SPMS_Context>(); // Set up identity store
 
 builder.Services.AddIdentityCore<SPMS_Student>().AddEntityFrameworkStores<SPMS_Context>();
-builder.Services.AddIdentityCore<SPMS_Staff>().AddEntityFrameworkStores<SPMS_Context>();
+builder.Services.AddIdentityCore<SPMS_Staff>().AddEntityFrameworkStores<SPMS_Context>(); // Set up seperate student and staff accounts
 
 // Add services to the container.
 builder.Services.AddRazorPages();
