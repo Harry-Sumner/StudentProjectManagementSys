@@ -522,6 +522,13 @@ display: block;
     transition: transform 0.3s ease-out;
 }
 
+/* Button to upload file (image) */
+.uploadedImage {
+    padding: 2px;
+    margin: 5px;
+}
+
+/*Media Queries created by George*/
 @media(max-width: 768px) {
     
     .header--sidebar--userAccount {
@@ -540,10 +547,4 @@ display: block;
         font-size: 0.8em;
         right: 10px;
     }
-}
-/* Button to upload file (image) */
-.uploadedImage {
-    padding: 2px;
-    margin: 5px;
-    margin-top: 270px;
 }
